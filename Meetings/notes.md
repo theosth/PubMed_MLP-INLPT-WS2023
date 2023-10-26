@@ -1,3 +1,19 @@
+# Meetingnotes 26.10.2023
+
+## Participants
+* [X] Lukas
+* [X] Benedikt
+* [X] Theo
+* [X] Dominik
+
+## Topics
+* Explore PubMed API using Python library
+* Explore OpenSearch capabilities for finding relevant documents for a search query
+and analysis of text data (topic recognition etc.). 
+=> can integrate word embedding model to find semantic similarities
+* Experiment with Google Colab and Github and integrating them into our dev process. 
+
+
 # Meetingnotes 23.10.2023
 
 ## Participants
