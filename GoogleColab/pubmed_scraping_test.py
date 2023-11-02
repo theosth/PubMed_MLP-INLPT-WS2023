@@ -28,3 +28,15 @@ print('total size:')
 print(len(allIds))
 assert len(allIds) == len(set(allIds))  # assert unique IDs
 
+handle = Entrez.efetch(db='pubmed', id=allIds[:1000])
+# handle = Entrez.efetch(db='pubmed', id=allIds[:10], rettype='docsum', retmode='xml')
+result = Entrez.read(handle)
+
+#abstracts = [article['MedlineCitation']['Article']['Abstract']['AbstractText'] for article in result['PubmedArticle']]
+
+import pickle
+with open('test.pkl', 'wb') as f:
+  pickle.dump(result, f)
+
+# with open('test_abstract.pkl', 'wb') as f:
+#   pickle.dump(abstracts, f)
