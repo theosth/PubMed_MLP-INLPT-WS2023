@@ -1,5 +1,9 @@
 from Bio import Entrez
 import math
+from tqdm import tqdm
+import pickle
+import datetime
+import os
 
 Entrez.email = 'benedikt.vidic@gmx.de'
 
@@ -21,22 +25,27 @@ for x in range(0,22):
     result = Entrez.read(handle)
 
     batch_ids = result['IdList']
-    print('batch size:',len(batch_ids))
+    print('ids in batch:',len(batch_ids))
     allIds += batch_ids
 
-print('total size:')
+print('total number of IDs fetched:')
 print(len(allIds))
 assert len(allIds) == len(set(allIds))  # assert unique IDs
 
-handle = Entrez.efetch(db='pubmed', id=allIds[:1000])
-# handle = Entrez.efetch(db='pubmed', id=allIds[:10], rettype='docsum', retmode='xml')
-result = Entrez.read(handle)
+batch_size = 1000
+all_results = []
+for i in tqdm(range(0, len(allIds), batch_size)):
+    handle = Entrez.efetch(db='pubmed', id=allIds[i:i + batch_size])
+    # handle = Entrez.efetch(db='pubmed', id=allIds[i:i+step_size], rettype='docsum', retmode='xml')
+    batch = Entrez.read(handle)
+    all_results.append(batch)
+print('download to memory complete.')
 
 #abstracts = [article['MedlineCitation']['Article']['Abstract']['AbstractText'] for article in result['PubmedArticle']]
 
-import pickle
-with open('test.pkl', 'wb') as f:
-  pickle.dump(result, f)
-
-# with open('test_abstract.pkl', 'wb') as f:
-#   pickle.dump(abstracts, f)
+print('saving results...')
+if not os.path.exists('data'):
+    os.mkdir('data')
+with open('data/raw.pkl', 'wb') as f:
+    pickle.dump({'batched_data': all_results, 'timestamp': datetime.datetime.now()}, f)
+print('results saved as pkl.')

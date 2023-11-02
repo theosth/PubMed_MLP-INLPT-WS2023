@@ -5,7 +5,8 @@
 .DS_Store
 *.DS_Store
 
-
+# datasets
+data/
 
 
 
