@@ -40,3 +40,20 @@ and analysis of text data (topic recognition etc.).
 * [ ] Analyze data set
 * [ ] Maybe already look into pre-trained models, which could be used for the project (Should we do this already? Maybe it will be more efficient later because it gets introduced in the lecture)
 * [ ] Look into simple first frontend implementation
+
+
+# Meetingnotes 13.11.2023
+
+## Participants
+* [X] Lukas
+* [X] Benedikt
+* [X] Theo
+* [X] Dominik
+
+## Topics
+* Discuss and decide on openSearch for data storage, further work on including data into openSearch
+* Look into further vector features of openSearch (that were not discussed in the tutorial)
+* Show progress with streamlit, decision to try further stuff (frontend) with streamlit
+
+## Open Tasks
+See above
