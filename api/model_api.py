@@ -15,8 +15,7 @@ model, tokenizer = None, None
 async def load_model():
     global model, tokenizer
     # load the model and tokenizer
-    # model, tokenizer = hf_misc.get_model_tokenizer("distilbert-base-uncased-distilled-squad")
-    model, tokenizer = hf_misc.get_model_tokenizer("deepset/bert-base-cased-squad2")
+    model, tokenizer = hf_misc.get_model_tokenizer("distilbert-base-uncased-distilled-squad")
 
 @app.post("/question")
 async def question_model(question: Question):
