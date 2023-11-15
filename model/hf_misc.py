@@ -26,9 +26,9 @@ def get_dataset(dataset_name = 'theosth/PubMedScraped'):
 
     return dataset
 
-def get_model_tokenizer():
-    tokenizer = AutoTokenizer.from_pretrained("microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract")
-    model = AutoModelForQuestionAnswering.from_pretrained("microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract")
+def get_model_tokenizer(model_name = "microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract"):
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = AutoModelForQuestionAnswering.from_pretrained(model_name)
     return model, tokenizer
 
 def print_dataset_structure(dataset):
