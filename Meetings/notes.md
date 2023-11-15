@@ -57,3 +57,28 @@ and analysis of text data (topic recognition etc.).
 
 ## Open Tasks
 See above
+
+
+# Meetingnotes 15.11.2023
+## Participants
+* [X] Lukas
+* [X] Benedikt
+* [X] Theo
+* [X] Dominik
+
+## Topics
+* Quick meeting planning prior to the meeting with our supervisor tomorrow
+* Discuss current progress and next steps
+
+## Closed Tasks
+* [ ] writing a scraper and scraping the dataset
+* [ ] frontend implementation with streamlit
+* [ ] setup project structure and api (with FastAPI) for the backend (that later hosts the model)
+
+## Open Tasks
+* next steps will be filled after the meeting with our supervisor
+
+
+# Meetingnotes 16.11.2023 - Meeting with Supervisor
+To be filled
+
