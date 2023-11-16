@@ -80,5 +80,18 @@ See above
 
 
 # Meetingnotes 16.11.2023 - Meeting with Supervisor
-To be filled
+## Participants
+* [X] Lukas
+* [X] Benedikt
+* [X] Theo
+* [X] Dominik
+* [X] Ashish
+
+## Topics
+* Discuss current progress and next steps
+* Look at MoSCoW and discuss which features are mandatory, optional, should have and could have
+* --> Team needs to further specify the features and the scope of the project. Especially functional requirements regarding types of questions the system should be able to answer.
+* Talk about OpenSearch and further steps of storing the data -> include a vector field for now and rather over-collect the metadata instead of not including it
+* maybe research vector-databases -> embeddings will later be discussed in the lect. delay that part until we know more about it
+* talk our current workflow pipeline ideas and first implementations that can the be later improved upon
 
