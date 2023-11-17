@@ -1,5 +1,14 @@
 # PubMed_MLP-INLPT-WS2023
 
+### Contributors
+
+| **Username**      | **Real Name**      |
+|---------------|----------------|
+|  theosth       | Theo Stempel-Hauburger       |
+|BenediktV | Benedikt Vidic |
+|llambdaa | Lukas Rapp |
+|4kills | Dominik Ochs |
+
 ### Setup project environment
 1. Setup a venv with python
 ```bash
