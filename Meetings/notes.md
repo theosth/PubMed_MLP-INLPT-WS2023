@@ -95,3 +95,20 @@ See above
 * maybe research vector-databases -> embeddings will later be discussed in the lect. delay that part until we know more about it
 * talk our current workflow pipeline ideas and first implementations that can the be later improved upon
 
+
+# Meetingnotes 27.11.2023
+
+## Participants
+* [X] Lukas
+* [X] Benedikt
+* [X] Theo
+* [X] Dominik
+
+## Topics
+
+* Discussion of results of the investigation of OpenSearch as database. 
+* Discussion of Search/Embedding Method to use.
+    * Consultation by Dr. Prof. Gertz
+* Discussion of project strategy:
+    * Create High level plan
+    * Document ideas and discussions regarding selected tech
