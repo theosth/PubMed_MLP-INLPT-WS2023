@@ -1,5 +1,6 @@
 # other stuff
 .idea
+.env*
 
 # Apple Folder stuff
 .DS_Store
