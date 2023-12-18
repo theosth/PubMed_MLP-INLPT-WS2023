@@ -1,0 +1,46 @@
+import json
+from tqdm import tqdm
+import sys
+from langchain.text_splitter import SentenceTransformersTokenTextSplitter
+
+embed_model_id = 'pritamdeka/S-PubMedBert-MS-MARCO'
+chunk_overlap = 32
+token_per_chunk = 256
+
+print("Loading text splitter using tokenizer of model:", embed_model_id)
+splitter = SentenceTransformersTokenTextSplitter(
+    model_name=embed_model_id,  
+    chunk_overlap=chunk_overlap,  
+    tokens_per_chunk=token_per_chunk
+)
+
+print("Loading dataset...")
+with open('data/dataset.json', 'r') as f:
+    dataset = json.load(f)
+
+documents = dataset['documents']
+
+print("Splitting documents into fragments...")
+fragments = []
+for doc in tqdm(documents, total=len(documents), file=sys.stdout):
+    chunks = splitter.split_text(text=doc['abstract'])
+    
+    for i, c in enumerate(chunks):
+        doc_chunk = doc.copy()
+
+        doc_chunk['fragment_id'] = i
+        doc_chunk['number_of_fragments'] = len(chunks) 
+        doc_chunk['abstract_fragment'] = c
+        doc_chunk['id'] = f"{doc['pmid']}_{i}"
+
+        fragments.append(doc_chunk)
+
+print(f"Collected {len(fragments)} fragments from {len(documents)} documents")
+
+dataset['documents'] = fragments
+
+loc = "data/fragment-dataset.json"
+print("Saving fragmented dataset to", loc)
+with open(loc, 'w') as f:
+    json.dump(dataset, f, indent=2)
+print("Success!")

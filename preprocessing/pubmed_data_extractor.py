@@ -95,8 +95,3 @@ print('saving cleaned dataset as json...')
 with open('data/dataset.json', 'w') as f:
     json.dump(dataset, f, indent=2, default=str)
 print('cleaned dataset saved as json.')
-
-print('saving cleaned dataset as pickle...')
-with open('data/dataset.pkl', 'wb') as f:
-    pickle.dump(dataset, f)
-print('cleaned dataset saved as pkl.')
