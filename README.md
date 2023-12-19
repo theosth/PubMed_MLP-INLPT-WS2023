@@ -13,8 +13,9 @@
 
 ### OpenSearch
 
-For development purposes, especially for an easy installation of *OpenSearch*, we use *Docker*. 
 On Windows, one can install OpenSearch directly on the system. We have not tested that, though.
+
+For development purposes, especially for an easy installation of *OpenSearch*, we use *Docker*. 
 
 On Mac, we use *Colima* together with the free-to-use, open-source Docker Engine. When installing *docker-compose* via *brew* remember to symlink it to docker as plugin. The instructions can be found on the brew page.
 Furthermore you have to add the following code snippet to your Colima vm configuration (via `colima start --edit`): 
@@ -53,6 +54,11 @@ pip install -r requirements.txt
 ```env
 HF_TOKEN=YOUR_HUGGINGFACE_API_TOKEN
 ```
+
+### Settings
+
+If necessary (for example to adjust your OpenSearch credentials), edit `commons/env.py`. However, if you have set up the project using docker,
+this should not be necessary and the defaults in `commons/env.py` should work for you. 
 
 ## Run project
 ```bash

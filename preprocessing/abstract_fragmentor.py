@@ -3,8 +3,9 @@ from tqdm import tqdm
 import sys
 from langchain.text_splitter import SentenceTransformersTokenTextSplitter
 import datetime
+import commons.env as env
 
-embed_model_id = 'pritamdeka/S-PubMedBert-MS-MARCO'
+embed_model_id = env.embedding_model_name
 chunk_overlap = 32
 token_per_chunk = 256
 
@@ -44,7 +45,7 @@ dataset = {'dataset_scraped_on': dataset['dataset_scraped_on'],
            'dataset_fragmented_on': datetime.datetime.now(),
            'documents': fragments}
 
-loc = "data/fragment-dataset.json"
+loc = env.fragment_dataset_location
 print("Saving fragmented dataset to", loc)
 with open(loc, 'w') as f:
     json.dump(dataset, f, indent=2, default=str)

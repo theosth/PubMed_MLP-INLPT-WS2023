@@ -3,31 +3,17 @@ from opensearchpy import OpenSearch, helpers
 from opensearchpy.exceptions import NotFoundError
 from opensearch_py_ml.ml_commons import MLCommonClient
 from opensearch_py_ml.ml_models import SentenceTransformerModel
-from commons.utils import get_model_id
+from commons.utils import get_model_id, get_opensearch_client
 import sys
 from tqdm import tqdm
+import commons.env as env
 
-# Opensearch creds
-host = 'localhost'  # Replace with your opensearch host
-port = 9200  # Replace with your opensearch port
-auth = ('admin', 'admin')  # Replace with your opensearch creds
 
-embedding_model_name = 'pritamdeka/S-PubMedBert-MS-MARCO'
-embedding_dim = 768  # must match output of embedding model
-
-dataset_location = 'data/fragment-dataset.json'
-index_name = 'abstracts'
 content_name = 'abstract_fragment'
 content_emb_name = "abstract_fragment_embedding"
+embedding_model_download_path = "data/embedding_model"
 
-client = OpenSearch(
-    hosts=[{'host': host, 'port': port}],
-    http_auth=auth,
-    use_ssl=True,
-    verify_certs=False,
-    ssl_assert_hostname=False,
-    ssl_show_warn=False,
-)
+client = get_opensearch_client()
 
 
 def set_up_embedding_model():
@@ -54,11 +40,10 @@ def set_up_embedding_model():
     except LookupError:
         print("Embedding model not registered yet. Registering now...")
 
-        print(f"Setting up model {embedding_model_name}. This might take a while...", flush=True)
+        print(f"Setting up model {env.embedding_model_name}. This might take a while...", flush=True)
         print("Downloading model...")
-        model_path = "data/embedding_model"
-        emb_model = SentenceTransformerModel(model_id=embedding_model_name, folder_path=model_path, overwrite=True)
-        model_save_path = emb_model.save_as_pt(model_id=embedding_model_name, save_json_folder_path=model_path, sentences=["Example sentence"])
+        emb_model = SentenceTransformerModel(model_id=env.embedding_model_name, folder_path=embedding_model_download_path, overwrite=True)
+        model_save_path = emb_model.save_as_pt(model_id=env.embedding_model_name, save_json_folder_path=embedding_model_download_path, sentences=["Example sentence"])
         model_config_path = emb_model.make_model_config_json()  # max_length is contained in the tokenizer config
 
         print("Uploading model...")
@@ -105,7 +90,7 @@ def create_ingest_pipeline(model_id):
 def create_index(ingest_pipeline_id):
     # delete index if already there. This facilitates "reindexing"
     try: 
-        print(f'Delete index {index_name}:', client.indices.delete(index_name))
+        print(f'Delete index {env.opensearch_index_name}:', client.indices.delete(env.opensearch_index_name))
     except NotFoundError:
         pass
 
@@ -148,7 +133,7 @@ def create_index(ingest_pipeline_id):
                 },
                 content_emb_name: {
                     "type": "knn_vector",
-                    "dimension": embedding_dim,
+                    "dimension": env.embedding_dim,
                     "method": {
                         "space_type": "cosinesimil",
                         "name": "hnsw",
@@ -158,7 +143,7 @@ def create_index(ingest_pipeline_id):
         }
     }
 
-    print(f'Create index {index_name}:', client.indices.create(index=index_name, body=settings))
+    print(f'Create index {env.opensearch_index_name}:', client.indices.create(index=env.opensearch_index_name, body=settings))
 
 
 def _bulk_data(documents, index_name):
@@ -175,12 +160,12 @@ def _bulk_data(documents, index_name):
 
 def ingest_fragments():
     # Load documents
-    with open(dataset_location, 'r') as f:
+    with open(env.fragment_dataset_location, 'r') as f:
         documents = json.load(f)['documents']
 
     # Ingest data using the bulk api
     print('Bulk insert data:')
-    generator = _bulk_data(documents, index_name)
+    generator = _bulk_data(documents, env.opensearch_index_name)
     nb_inserted, errors = helpers.bulk(client, generator, chunk_size=64, max_retries=2, timeout=60)
     
     if nb_inserted != len(documents):
@@ -190,7 +175,7 @@ def ingest_fragments():
 
 
 if __name__ == "__main__":
-    # ingestion takes 2 hours on my M2 Macbook Pro with 16GB RAM
+    # ingestion takes 3 hours on my M2 Macbook Pro with 16GB RAM
     model_id = set_up_embedding_model()
     ingest_pipeline_id = create_ingest_pipeline(model_id)
     create_index(ingest_pipeline_id)
