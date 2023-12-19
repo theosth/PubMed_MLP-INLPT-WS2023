@@ -37,7 +37,7 @@ def set_up_embedding_model():
     try:
         model_id = get_model_id(client)
         print("Embedding model already registered with id:", model_id)
-    except LookupError:
+    except NotFoundError:
         print("Embedding model not registered yet. Registering now...")
 
         print(f"Setting up model {env.embedding_model_name}. This might take a while...", flush=True)

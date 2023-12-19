@@ -13,7 +13,10 @@
 
 ### OpenSearch
 
-On Windows, one can install OpenSearch directly on the system. We have not tested that, though.
+On Windows, one can install OpenSearch directly on the system. Keep in mind that this somewhat complicates the insertion of 
+the OpenSearch volume found under `data/opensearch`. We have not tested running it bare-bones on Windows.
+
+#### Docker
 
 For development purposes, especially for an easy installation of *OpenSearch*, we use *Docker*. 
 
@@ -31,7 +34,17 @@ as well as `sysctl -w vm.max_map_count=262144` to make the initial change. Howev
 
 For Windows or Mac, one can also use *Docker Desktop* (free for educational use). 
 
-After installation of Docker and Docker Compose, simply use `docker compose up` in the base directory. 
+#### Index
+
+To skip the tedious and long process of ingesting and embedding the documents yourself, you can use our pre-packaged OpenSearch index.
+To do that, create the folder `data/opensearch` and unpack our `opensearch-index.zip` into that folder. You can find `opensearch-index.zip`
+in our Github release. After unpacking, check if `data/opensearch/nodes` along with other files exists.  
+
+If you, however, want to ingest the data yourself using `ingestor.py` (takes 3-6 hours), you can do so by just creating `data/opensearch`
+and leaving it empty.
+
+In any case, use  `docker compose up` in the base directory to start OpenSearch. 
+
 
 ### Python
 
