@@ -112,3 +112,33 @@ See above
 * Discussion of project strategy:
     * Create High level plan
     * Document ideas and discussions regarding selected tech
+
+
+
+# Meetingnotes 18.12.2023
+
+## Participants
+* [X] Lukas
+* [X] Benedikt
+* [X] Theo
+* [X] Dominik
+
+## Topics
+
+* Discussion of next steps
+    * Retrieval-System:
+        1) Fill in database (Script)
+        2) Token-Splitting (~ 3 Documents per Abstract, overlapping documents; use same Tokenizer, write explanation on why this splitting)
+        3) Embedding-Model for Splits (BM25, pritamdeka/S-PubMedBert-MS-MARCO, 3. model?)
+        4) Retrieval-Testset (Question should refer to document (not abstract); Yes/No and factual questions; Create questions using ChatGPT, test set should be used to evaluate embedding model and different search types)
+        5) experiments for search (k-Nearest-Neighbors for Embeddings (PubMedBert), syntactical search (BM25), Hybrid with metadata (Keywords, title, etcare syntactical (BM25) content semantical (PubMedBert)); use different searches, same Splitting), try out different hybrid strategies
+        6) make some tests for different hybrid strategies and/or do some research on best practices/variants that have proven to be good
+    * QA-System (Extractive), probably just use existing model, no finetuning? -> At least not in the next steps, Requirements for the model:
+        1) Yes/No and factual questions should be answered by same model (mandatory)
+        2) Input of model is text (mandatory)
+        3) Should support PubMed vocabulary (optional)
+        4) Should support large inputs (optional) -> Input size of most models should be enough
+
+* What do we want to do until the milestone?
+    * Mostly finish retrieval-system, maybe start some research for QA-Model
+    * Test different variations of retrieval system and decide on which parts we use
