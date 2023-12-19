@@ -2,6 +2,7 @@ import json
 from tqdm import tqdm
 import sys
 from langchain.text_splitter import SentenceTransformersTokenTextSplitter
+import datetime
 
 embed_model_id = 'pritamdeka/S-PubMedBert-MS-MARCO'
 chunk_overlap = 32
@@ -28,6 +29,7 @@ for doc in tqdm(documents, total=len(documents), file=sys.stdout):
     for i, c in enumerate(chunks):
         doc_chunk = doc.copy()
 
+        del doc_chunk['abstract']
         doc_chunk['fragment_id'] = i
         doc_chunk['number_of_fragments'] = len(chunks) 
         doc_chunk['abstract_fragment'] = c
@@ -37,10 +39,13 @@ for doc in tqdm(documents, total=len(documents), file=sys.stdout):
 
 print(f"Collected {len(fragments)} fragments from {len(documents)} documents")
 
-dataset['documents'] = fragments
+dataset = {'dataset_scraped_on': dataset['dataset_scraped_on'],
+           'dataset_cleaned_on': dataset['dataset_cleaned_on'],
+           'dataset_fragmented_on': datetime.datetime.now(),
+           'documents': fragments}
 
 loc = "data/fragment-dataset.json"
 print("Saving fragmented dataset to", loc)
 with open(loc, 'w') as f:
-    json.dump(dataset, f, indent=2)
+    json.dump(dataset, f, indent=2, default=str)
 print("Success!")
