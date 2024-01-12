@@ -38,13 +38,34 @@ For Windows or Mac, one can also use *Docker Desktop* (free for educational use)
 
 To skip the tedious and long process of ingesting and embedding the documents yourself, you can use our pre-packaged OpenSearch index.
 To do that, create the folder `data/opensearch` and unpack our `opensearch-index.zip` into that folder. You can find `opensearch-index.zip`
-in our Github release. After unpacking, check if `data/opensearch/nodes` along with other files exists.  
+in our Github release. After unpacking, check if `data/opensearch/nodes` along with other files exists. 
+
+The structure of the data folder should look something like this:
+```
+data
+└── opensearch
+    ├── ml_cache
+    │   ├── cache
+    │   ├── models_cache
+    │   ├── pytorch
+    │   └── tokenizers
+    └── nodes
+        └── 0
+```
 
 If you, however, want to ingest the data yourself using `ingestor.py` (takes 3-6 hours), you can do so by just creating `data/opensearch`
 and leaving it empty.
 
 In any case, use  `docker compose up` in the base directory to start OpenSearch. 
 
+If you used the pre-packaged index, it's still necessary to enable the model backupped in `data/opensearch` by running the following command after OpenSearch has started:
+```bash
+curl -XPOST "http://localhost:9200/_plugins/_ml/models/0x9sgowBKAf_E-Dqahic/_deploy"
+```
+or with the following command though the OpenSearch dev-tools console:
+```
+POST /_plugins/_ml/models/0x9sgowBKAf_E-Dqahic/_deploy
+```
 
 ### Python
 
