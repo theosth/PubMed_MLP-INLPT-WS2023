@@ -98,3 +98,8 @@ this should not be necessary and the defaults in `commons/env.py` should work fo
 ```bash
 ./run.sh
 ```
+
+## Troubleshooting
+- If your machine learning model is not responding (see dashboard http://localhost:5601/app/ml-commons-dashboards/overview) try:
+    - `POST /_plugins/_ml/models/<MODEL_ID>/_deploy` in the development console in the dashboard. If that doesn't work (error in returned task: model content changed)
+    - Delete the model with `DELETE /_plugins/_ml/models/<MODEL_ID>` and run `set_up_embedding_model()` of `ingestor.py`. Be careful not to recreate the index! Preferably, open a python interpreter with the `python` command and `from ingestor import set_up_embedding_model` followed by `set_up_embedding_model()`
