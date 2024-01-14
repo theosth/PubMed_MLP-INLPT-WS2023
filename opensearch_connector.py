@@ -27,14 +27,14 @@ def execute_query(query, pipeline_id=None, index='abstracts', source_includes=['
                 body=query_body,
                 index=index,
                 _source_includes=source_includes,
-                _source_excludes=source_excludes,
+                # _source_excludes=source_excludes,
             )
         case _:
             return CLIENT.search(
                 body=query_body,
                 index=index,
                 _source_includes=source_includes,
-                _source_excludes=source_excludes,
+                # _source_excludes=source_excludes,
                 params={
                     'search_pipeline': pipeline_id
                 }
@@ -93,23 +93,24 @@ def create_hybrid_multimatch_neural_query(query_text, match_on_fields=['abstract
         }
     }
 
-
+# How to Use:
 if __name__ == "__main__":
     query_simple_match = create_simple_match_query('artificial intelligence')
-
+    query_simple_neural = create_neural_query('artificial intelligence')
     query_hybrid_multimatch_neural = create_hybrid_multimatch_neural_query(
         query_text = 'artificial intelligence',
         match_on_fields = ['abstract_fragment', 'title', 'keyword_list']
         )
     
     response = execute_query(
-        query = query_hybrid_multimatch_neural, 
-        pipeline_id = 'basic-nlp-search-pipeline',
-        index = 'abstracts',
+        query = query_simple_match, 
+        # pipeline_id = 'basic-nlp-search-pipeline',
+        # index = 'abstracts',
         size=2,
         source_includes=['_id', 'fragment_id', 'title']
         )
+    # print(json.dumps(response, indent=2))
     hits = extract_hits_from_response(response)
-    print(json.dumps(hits, indent=2))
+    #print(json.dumps(hits, indent=2))
 
 
