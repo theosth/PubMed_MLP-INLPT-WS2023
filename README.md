@@ -67,6 +67,58 @@ or with the following command though the OpenSearch dev-tools console:
 POST /_plugins/_ml/models/0x9sgowBKAf_E-Dqahic/_deploy
 ```
 
+Now, if you want to use the hybrid search functionality, you have to run the following command to create the hybrid search pipeline after OpenSearch has started:
+```bash
+curl -XPUT "http://localhost:9200/_search/pipeline/basic-nlp-search-pipeline" -H 'Content-Type: application/json' -d'
+{
+  "description": "Post processor for hybrid search",
+  "phase_results_processors": [
+    {
+      "normalization-processor": {
+        "normalization": {
+          "technique": "min_max"
+        },
+        "combination": {
+          "technique": "arithmetic_mean",
+          "parameters": {
+            "weights": [
+              0.3,
+              0.7
+            ]
+          }
+        }
+      }
+    }
+  ]
+}'
+```
+
+or with the following command though the OpenSearch dev-tools console:
+```
+PUT /_search/pipeline/basic-nlp-search-pipeline
+{
+  "description": "Post processor for hybrid search",
+  "phase_results_processors": [
+    {
+      "normalization-processor": {
+        "normalization": {
+          "technique": "min_max"
+        },
+        "combination": {
+          "technique": "arithmetic_mean",
+          "parameters": {
+            "weights": [
+              0.3,
+              0.7
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
 ### Python
 
 1. Setup a venv with python
