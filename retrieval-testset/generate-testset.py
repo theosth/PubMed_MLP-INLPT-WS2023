@@ -40,14 +40,13 @@ def addQuestionToJson(questionObject, filename):
     
 
 def promptChatGPT(prompt, apiClient):
-    return prompt
     response = apiClient.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "user", "content": prompt},
         ]
     )
-    return response['choices'][0]['message']['content']
+    return response.choices[0].message.content
 
 
 def askYesNoQuestion(context, apiClient):
@@ -56,9 +55,12 @@ Limit the output to the generated question.
 Context: ```{context}```""", apiClient)
 
 def askFactualQuestion(context, apiClient):
-    return promptChatGPT(f"""Generate a question that can be answered with the context information delimited by triple backticks. The question should be answerable with a simple yes or no. Only use phrases that don't require context for the person reading the question, meaning you should not use references like 'in the study' or 'in the context' because the reader of the question doesn't have the context and therefore can not know which study is meant. Take everything written in the context as generally true statements, meaning there is no need to add phrases like 'in the text', 'in the context', 'in the study' or anything equivalent to this.
+    return promptChatGPT(f"""Generate a question that can be answered with the information delimited by triple backticks. The question should be answerable with specific factual information. This means not a yes/no question but a question where some short information is the answer. 
+Take everything written in the context as generally true statements, meaning there is no need to add phrases like "in the text", "in the context", "in the study" or anything equivalent to this.
 Limit the output to the generated question.
-Context: ```{context}```""", apiClient)
+```${context}```
+Remember to only use phrases that don't require context for the person reading the question, meaning you should not use references like "in the study" or "in the context" because the reader of the question doesn't have the context and therefore can not know which study is meant."""
+, apiClient)
 
 
 
@@ -70,9 +72,9 @@ def validateQuestion(question):
 
     return True
 
-client = OpenAI(api_key = <YOUR_API:KEY>)
+client = OpenAI(api_key = <YOUR_API_KEY>)
 
-numberOfQuestionsToBeGenerated = 1 
+numberOfQuestionsToBeGenerated = 100
 
 validCounter = 0
 needManualCheckCounter = 0
@@ -81,13 +83,14 @@ randomDocuments = loadRandomDocuments('../../fragment-dataset.json', numberOfQue
 
 for x in range(0,numberOfQuestionsToBeGenerated):
     # Randomly assign whether to ask yes/no or factual question
-    isYesNoQuestion = random.randint(0, 1)
-
-    doc = randomDocuments[x]
+    #isYesNoQuestion = random.randint(0, 1)
+    isYesNoQuestion = True
+    doc = randomDocuments[x-1]
     if isYesNoQuestion:
         question = askYesNoQuestion(doc['abstract_fragment'], client)
     else:
         question = askFactualQuestion(doc['abstract_fragment'], client)
+    print("Question "+str(x))
     print(question)
     isValid = validateQuestion(question)
     questionObject = {

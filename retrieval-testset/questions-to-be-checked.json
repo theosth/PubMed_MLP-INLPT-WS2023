@@ -1,1 +1,46 @@
-{}
+{
+  "questions": [
+    {
+      "question": "Did protruding ears in the study have a negative perception of personality traits?",
+      "pmid": "25790132",
+      "fragment_id": 1,
+      "id": "25790132_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Were the nurses in the study found to have moderate levels of cultural intelligence and intercultural communication apprehension?",
+      "pmid": "35481386",
+      "fragment_id": 0,
+      "id": "35481386_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is the information provided in the context accurate?",
+      "pmid": "34753321",
+      "fragment_id": 1,
+      "id": "34753321_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is the research progress and differences in hotspots of coal mine accidents in China analyzed in this paper?",
+      "pmid": "36554469",
+      "fragment_id": 0,
+      "id": "36554469_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Did the diagnostic model in the study achieve an accuracy of 92.5% in distinguishing fats?",
+      "pmid": "37064374",
+      "fragment_id": 1,
+      "id": "37064374_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is the approach described in this work applicable to sensing technology?",
+      "pmid": "30769805",
+      "fragment_id": 1,
+      "id": "30769805_1",
+      "question_type": "yes/no"
+    }
+  ]
+}
