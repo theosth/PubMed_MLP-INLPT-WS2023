@@ -142,3 +142,29 @@ See above
 * What do we want to do until the milestone?
     * Mostly finish retrieval-system, maybe start some research for QA-Model
     * Test different variations of retrieval system and decide on which parts we use
+
+# Meetingnotes 09.02.2023
+
+## Participants
+* [X] Lukas
+* [X] Benedikt
+* [X] Theo
+* [X] Dominik
+
+## Topics
+
+* Architecture decisions
+    * Retrieval-System:
+        * Consideration of using a different database instead of OpenSearch (maybe Pinecone)
+        * Talk about how to evaluate it
+        * discuss several further refinements of the retrieval steps that could potentially increase the performance of the retrieval system (like question enrichment, query transformation etc.)
+    * Answer-System:
+        * how to support the different question types
+            * were to focus on in evaluation
+            * how to automate the evaluation to get better overall results 
+            * discuss our focus on yes/no and potentially factual question for the main part of the anwer system. Idea to rather focus on one part and do it very well than doing everything a bit. (yes/no and factual can be evaluated the best -> then also on more test pairs)
+
+* Discussion of how we will organize the final phase of our project
+    * discuss further meetings
+    * discuss internal deadlines for the next steps
+    * distribute work among the team members
