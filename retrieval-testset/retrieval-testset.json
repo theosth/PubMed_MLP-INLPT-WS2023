@@ -657,6 +657,3261 @@
       "fragment_id": 0,
       "id": "35584585_0",
       "question_type": "yes/no"
+    },
+    {
+      "question": "Is it necessary to recognize the surrounding environment and develop control methods for path tracking of various systems applied to autonomous driving technology?",
+      "pmid": "37050714",
+      "fragment_id": 0,
+      "id": "37050714_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Does verbal intelligence predict metaphor processing in middle childhood and early adolescence?",
+      "pmid": "30560743",
+      "fragment_id": 0,
+      "id": "30560743_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the main focus of this article?",
+      "pmid": "30079847",
+      "fragment_id": 0,
+      "id": "30079847_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the sensitivity and specificity of conventional logistic regression for detecting ovarian cancer using genome-wide DNA methylation profiling?",
+      "pmid": "36329159",
+      "fragment_id": 0,
+      "id": "36329159_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Are artificial intelligence techniques being adopted in decision support systems for advanced type 1 diabetes management that use continuous glucose monitoring sensors?",
+      "pmid": "32664432",
+      "fragment_id": 0,
+      "id": "32664432_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Has the association of neonatal morbidities and maternal educational levels with adult cognitive performance been investigated in individuals born very preterm/very low birth weight?",
+      "pmid": "34047752",
+      "fragment_id": 0,
+      "id": "34047752_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Were established baselines or criterion standards lacking for model evaluation in dental machine learning?",
+      "pmid": "36801145",
+      "fragment_id": 1,
+      "id": "36801145_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Do mutations in the rdh11 gene cause diseases?",
+      "pmid": "34988992",
+      "fragment_id": 0,
+      "id": "34988992_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Has psychology and neuroscience contributed significantly to understanding compassion?",
+      "pmid": "36467146",
+      "fragment_id": 0,
+      "id": "36467146_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What were the percentages of pregnancies exposed to antiepileptic drugs in utero based on monotherapy, polytherapy, and no exposure?",
+      "pmid": "25310353",
+      "fragment_id": 0,
+      "id": "25310353_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Did the researchers compare energy-minimized structures generated using cryo-EM vs af2 templates?",
+      "pmid": "36800498",
+      "fragment_id": 1,
+      "id": "36800498_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Can ML-based virtual screening be used for AD drug development?",
+      "pmid": "29879881",
+      "fragment_id": 1,
+      "id": "29879881_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What were the outcomes of the social media training program for resident physicians?",
+      "pmid": "31008220",
+      "fragment_id": 0,
+      "id": "31008220_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Was the image noise significantly increased with the ultra-low dose (ULD) protocol compared to the standard protocol?",
+      "pmid": "32499192",
+      "fragment_id": 0,
+      "id": "32499192_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is post-epilepsy surgery PNES significantly associated with other factors?",
+      "pmid": "27554951",
+      "fragment_id": 1,
+      "id": "27554951_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the result of applying the wann (wavelet - ann) model to all four water quality parameters?",
+      "pmid": "36919749",
+      "fragment_id": 1,
+      "id": "36919749_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are some characteristic features of the 16q24.3 microdeletion syndrome?",
+      "pmid": "23885231",
+      "fragment_id": 0,
+      "id": "23885231_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are some commonly used diagnostic methods for detecting COVID-19, and why is there a need for the development of new detection methods?",
+      "pmid": "36462906",
+      "fragment_id": 0,
+      "id": "36462906_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Did the randomized clinical trial find significant improvement in dispatchers' ability to recognize cardiac arrest with machine learning support?",
+      "pmid": "33404620",
+      "fragment_id": 2,
+      "id": "33404620_2",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Do patients with temporal lobe epilepsy exhibit a different community structure of cognitive networks compared to healthy controls?",
+      "pmid": "27532489",
+      "fragment_id": 0,
+      "id": "27532489_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is smile designing primarily focused on cosmetic and esthetic dental reconstruction visible during smiling, with an emphasis on tooth shape and shade principles and individualized treatment for pleasing esthetic outcomes?",
+      "pmid": "35738740",
+      "fragment_id": 0,
+      "id": "35738740_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What are the potential benefits of using the given method?",
+      "pmid": "35610166",
+      "fragment_id": 1,
+      "id": "35610166_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is aki a prominent complication of critical illness?",
+      "pmid": "35292532",
+      "fragment_id": 0,
+      "id": "35292532_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Can machine learning classifiers predict clinical parameters related to epithelial ovarian cancer with advanced clinical stages and platinum-sensitivity?",
+      "pmid": "34040391",
+      "fragment_id": 0,
+      "id": "34040391_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is the dental team still the key in treating patients even in the era of digital dentistry?",
+      "pmid": "32197311",
+      "fragment_id": 0,
+      "id": "32197311_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What are some interventions that have shown positive outcomes in reducing teacher stress and burnout?",
+      "pmid": "37174145",
+      "fragment_id": 1,
+      "id": "37174145_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the training accuracy of the proposed iomt framework using the gbts classifier?",
+      "pmid": "35912366",
+      "fragment_id": 1,
+      "id": "35912366_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Will machine learning and pharmacogenomics play a unique role in improving personalized treatments in psychiatry in the future?",
+      "pmid": "37559539",
+      "fragment_id": 1,
+      "id": "37559539_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is needed to establish the scientific validity and maximum potential of neuroradiology in optimizing and providing accurate imaging interpretation?",
+      "pmid": "34506699",
+      "fragment_id": 1,
+      "id": "34506699_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the AI model for predicting postendoscopic retrograde cholangiopancreatography pancreatitis based on the random forest and logistic regression algorithms?",
+      "pmid": "37448120",
+      "fragment_id": 0,
+      "id": "37448120_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Can liver fibrosis be assessed using non-invasive CT and MRI quantitative techniques?",
+      "pmid": "37290363",
+      "fragment_id": 0,
+      "id": "37290363_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is needed for integrating the gig economy into the ehealth system in Saudi Arabia and improving future healthcare operations?",
+      "pmid": "34326645",
+      "fragment_id": 1,
+      "id": "34326645_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What limitations were identified in the reviewed articles regarding fairness, generalisability, bias control, and reproducibility in rop and AI studies?",
+      "pmid": "37558406",
+      "fragment_id": 1,
+      "id": "37558406_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Are large multicentre studies needed to evaluate the true potential of AI in diagnosing nec in a clinical setting?",
+      "pmid": "36195629",
+      "fragment_id": 1,
+      "id": "36195629_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Can the data obtained from replacing nanolubricant with the base lubricant in refrigerator systems be reused for simulation and modelling vapour compression energy systems?",
+      "pmid": "32904096",
+      "fragment_id": 1,
+      "id": "32904096_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What regions showed degenerated functional connectivity with the bilateral pcu/pcc in BECTS patients, particularly in the slow-5, slow-4, and slow-3 frequency bands?",
+      "pmid": "30048931",
+      "fragment_id": 1,
+      "id": "30048931_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What percentage of the total association between 1-year milestones related to standing and walking and adult intelligence is accounted for by direct associations in each subsample of animals at different age ranges?",
+      "pmid": "30047773",
+      "fragment_id": 1,
+      "id": "30047773_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Can artificial intelligence be applied to pathology, including bone marrow histology, to support diagnostics, guide investigations, and answer questions about whole slide images of bone marrow biopsies?",
+      "pmid": "36791682",
+      "fragment_id": 0,
+      "id": "36791682_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What are some factors that have contributed to the increasing complexity of revenue cycle management in healthcare?",
+      "pmid": "23855249",
+      "fragment_id": 0,
+      "id": "23855249_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Can the products enrich the medical quality and real-time accessibility?",
+      "pmid": "33618640",
+      "fragment_id": 1,
+      "id": "33618640_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is the processing time for analyzing heart dysfunctions using ANN faster than using the fuzzy classifier?",
+      "pmid": "33134090",
+      "fragment_id": 1,
+      "id": "33134090_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Did the biomat model outperform the benchmark models in terms of prediction accuracy?",
+      "pmid": "37447628",
+      "fragment_id": 1,
+      "id": "37447628_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the topic of the current search algorithms?",
+      "pmid": "35445626",
+      "fragment_id": 1,
+      "id": "35445626_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Do wisdom and related knowledge have distinct facets?",
+      "pmid": "29267970",
+      "fragment_id": 1,
+      "id": "29267970_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What were the observed effects of predominant breast milk feeding on various cognitive and physical measures in very preterm infants at 7 years of age?",
+      "pmid": "27480198",
+      "fragment_id": 1,
+      "id": "27480198_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the detection rate of upper gi lesions influenced by the use of the Intelligent Detection Endoscopic Assistant (IDEA) system?",
+      "pmid": "34973966",
+      "fragment_id": 0,
+      "id": "34973966_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What was the discrimination of the rsrs compared to the fsrp and srsrf?",
+      "pmid": "36653543",
+      "fragment_id": 1,
+      "id": "36653543_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Does the study explore the role of dopamine relative genes in the health effect of low-moderate fluoride exposure on children's intelligence?",
+      "pmid": "33360592",
+      "fragment_id": 0,
+      "id": "33360592_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is the digital health scorecard being proposed as a globally available digital tool?",
+      "pmid": "25690381",
+      "fragment_id": 0,
+      "id": "25690381_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Does the study propose a social intelligence conceptual model to improve person-centered care and oral health?",
+      "pmid": "37553283",
+      "fragment_id": 1,
+      "id": "37553283_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Did the average auc and auafroc across observers significantly increase with AI assistance in the test dataset?",
+      "pmid": "34973101",
+      "fragment_id": 1,
+      "id": "34973101_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Did the improvements increase specificity and auc without losing sensitivity and reduce unnecessary biopsies?",
+      "pmid": "36653206",
+      "fragment_id": 1,
+      "id": "36653206_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the name of the automated evaluation and assessment system that provides feedback to mental health counselors on the quality of their care?",
+      "pmid": "30027158",
+      "fragment_id": 0,
+      "id": "30027158_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Did the hl achieve a higher accuracy level compared to the drilling data quality improvement subject matter expert's level?",
+      "pmid": "35601287",
+      "fragment_id": 1,
+      "id": "35601287_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Do the results of the analysis show that employee autonomy has been reduced in the digital work context?",
+      "pmid": "33612139",
+      "fragment_id": 0,
+      "id": "33612139_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What was the overall interobserver agreement on landmark identification in colon capsule endoscopy, specifically for the ileocecal valve, hepatic flexure, splenic flexure, and anus?",
+      "pmid": "37036637",
+      "fragment_id": 0,
+      "id": "37036637_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is required to properly increase the reliability of AI models in the medical field?",
+      "pmid": "36452194",
+      "fragment_id": 1,
+      "id": "36452194_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is effective legislation and oversight needed for governing bodies when implementing AI devices in clinical practice?\n",
+      "pmid": "36652171",
+      "fragment_id": 1,
+      "id": "36652171_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the detection rate of the adjusted model for preterm birth prediction that incorporates cytokines compared to the full model?",
+      "pmid": "37762154",
+      "fragment_id": 0,
+      "id": "37762154_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "How does cognitive reserve affect the age of onset, speed of progression, and clinical manifestations of Alzheimer's disease?",
+      "pmid": "32174124",
+      "fragment_id": 0,
+      "id": "32174124_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the range of negative predictive values observed for AI models using HIE data?",
+      "pmid": "37761781",
+      "fragment_id": 1,
+      "id": "37761781_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Will artificial intelligence and new drugs be able to face the increasing need for therapy?",
+      "pmid": "29249247",
+      "fragment_id": 0,
+      "id": "29249247_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Do preterm infants diagnosed with autism spectrum disorder (ASD) at 6.5 years show brain structural alterations in specific regions?",
+      "pmid": "26689588",
+      "fragment_id": 0,
+      "id": "26689588_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is this article the first to respond to the question of whether nurses can ascribe responsibility to intelligent robots and artificial intelligence when they commit errors?",
+      "pmid": "35727571",
+      "fragment_id": 0,
+      "id": "35727571_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is it valuable to know how to assess the quality of AI prediction models and understand how these models influence clinical practice?",
+      "pmid": "37164481",
+      "fragment_id": 1,
+      "id": "37164481_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What percentage of Taiwanese pediatric leukemia survivors were found to have problems in executive function?",
+      "pmid": "30913362",
+      "fragment_id": 1,
+      "id": "30913362_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the Cohen \u03ba value obtained from the radiomic approach for AMD using explainable feature extraction combined with machine learning for UW-FRT?",
+      "pmid": "37761333",
+      "fragment_id": 1,
+      "id": "37761333_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Do deep learning models perform better than non-deep learning models in terms of the accuracy of MVI prediction?",
+      "pmid": "35280776",
+      "fragment_id": 2,
+      "id": "35280776_2",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the potential application of artificial intelligence techniques, specifically deep learning, in diagnostic radiology and how might it affect radiological practice in the coming decades?",
+      "pmid": "33604607",
+      "fragment_id": 0,
+      "id": "33604607_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Can machine learning deliver better algorithmic rules than traditional simple legal rules, as defended by Epstein in \"Simple Rules for a Complex World\"?",
+      "pmid": "35923160",
+      "fragment_id": 0,
+      "id": "35923160_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the proposed eemd - yolo accurate in rotor detection compared to the gold standard in literature?",
+      "pmid": "37440380",
+      "fragment_id": 1,
+      "id": "37440380_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Did echonet - labs achieve an AUC of 0.74 in detecting elevated BUN?",
+      "pmid": "34656880",
+      "fragment_id": 1,
+      "id": "34656880_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What does our analysis support the use of LSTM (PCA) models for?",
+      "pmid": "35901029",
+      "fragment_id": 1,
+      "id": "35901029_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What factors are associated with lower quality of life among adults with autism spectrum disorder compared to neuro-typical adults?",
+      "pmid": "29228834",
+      "fragment_id": 0,
+      "id": "29228834_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are the two machine learning models proposed in the paper for predicting patient severity levels and clinical departments in emergency department triage?",
+      "pmid": "37659113",
+      "fragment_id": 0,
+      "id": "37659113_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is machine learning used in emergency care for improving decision-making?",
+      "pmid": "35593754",
+      "fragment_id": 0,
+      "id": "35593754_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Can the parameters be optimized as a whole by connecting modules?",
+      "pmid": "29997493",
+      "fragment_id": 1,
+      "id": "29997493_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What was the area under the curve (AUC) for the Cox proportional hazards regression model in predicting 3-year survival based on the validation dataset?",
+      "pmid": "37439167",
+      "fragment_id": 0,
+      "id": "37439167_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the use of electronic health records an important milestone in the digitization and intelligence of the entire medical industry?",
+      "pmid": "37657713",
+      "fragment_id": 0,
+      "id": "37657713_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is the semi-supervised deep learning model trained with only 30% labeled samples able to achieve a comparable effect with the fully supervised learning model?",
+      "pmid": "37159696",
+      "fragment_id": 1,
+      "id": "37159696_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What was the average time taken to diagnose non immunohistochemistry (IHC) requested cases compared to IHC-requested cases?",
+      "pmid": "34017063",
+      "fragment_id": 0,
+      "id": "34017063_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Were joint dislocations readily identified with high accuracy by CNNs?",
+      "pmid": "36183620",
+      "fragment_id": 1,
+      "id": "36183620_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Did the study find that most medical students expressed an intention to integrate dhealth technologies in their practice?",
+      "pmid": "35898286",
+      "fragment_id": 0,
+      "id": "35898286_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What potential do AI technologies have in transplant pathology?",
+      "pmid": "37760142",
+      "fragment_id": 1,
+      "id": "37760142_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is a commonly prescribed mood stabilizer for individuals with bipolar disorder that is known to affect treatment outcomes based on genetic background?",
+      "pmid": "36307327",
+      "fragment_id": 0,
+      "id": "36307327_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the Pearson correlation coefficient of the i3m scores between the expert and a u-net model 0.93 when combined with tda and 0.89 with tda-dl?",
+      "pmid": "36901630",
+      "fragment_id": 1,
+      "id": "36901630_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What are the main contributions of the proposed architecture for emotion aware automation platforms in smart offices?",
+      "pmid": "29748468",
+      "fragment_id": 0,
+      "id": "29748468_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is adherence to treatment in the elderly in an urban environment in Spain a problem?",
+      "pmid": "27409075",
+      "fragment_id": 7,
+      "id": "27409075_7",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "How many papers were selected in the final stage of the study that focused on the changes in the cosmetics market due to the emergence of cosmetics curation services after the COVID-19 pandemic and advanced consumer purchase patterns following the 4th industrial revolution?",
+      "pmid": "36039807",
+      "fragment_id": 1,
+      "id": "36039807_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the focus of the framework of the neuroscience literature comparing music and language processing?",
+      "pmid": "24926248",
+      "fragment_id": 1,
+      "id": "24926248_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the purpose of brain-machine interfaces (BMIs) in individuals with spinal cord injuries (SCIs)?",
+      "pmid": "32446984",
+      "fragment_id": 0,
+      "id": "32446984_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What were the clusters of themes identified in the qualitative study on emotional intelligence in nursing leadership?",
+      "pmid": "31778341",
+      "fragment_id": 0,
+      "id": "31778341_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the purpose of utilizing artificial intelligence technologies in clinical research for anticancer drug discovery?",
+      "pmid": "36179510",
+      "fragment_id": 0,
+      "id": "36179510_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is early recognition of neurodegenerative diseases becoming increasingly important in modern healthcare?",
+      "pmid": "36900031",
+      "fragment_id": 0,
+      "id": "36900031_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What are the potential applications of artificial intelligence in critical care for enhancing patient outcomes?",
+      "pmid": "37153088",
+      "fragment_id": 0,
+      "id": "37153088_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Was the performance of the convolutional neural network (cnn) model for detecting dhcm evaluated using single-lead ecgs?",
+      "pmid": "37152425",
+      "fragment_id": 0,
+      "id": "37152425_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What do these findings contribute to in terms of the relationship between EI and TC from the perspective of brain structural basis?",
+      "pmid": "29962984",
+      "fragment_id": 1,
+      "id": "29962984_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What concept could explain the emergence of multimodal, spatially wide superinferences in neural networks and potentially be used to define indicators of consciousness in various entities?",
+      "pmid": "35718232",
+      "fragment_id": 1,
+      "id": "35718232_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What percentage of participants agreed that the chatbot functions well?",
+      "pmid": "36301616",
+      "fragment_id": 0,
+      "id": "36301616_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the accuracy of the artificial intelligence model in interpreting ultrasound videos of the sliding sign for determining the presence of pod scarring?",
+      "pmid": "35118401",
+      "fragment_id": 2,
+      "id": "35118401_2",
+      "question_type": "factual"
+    },
+    {
+      "question": "What was the sensitivity rate for detecting cancer with AI support compared to unaided reading?",
+      "pmid": "30457482",
+      "fragment_id": 1,
+      "id": "30457482_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the purpose of the updated 2022 CAD-RADS 2.0 classification system?",
+      "pmid": "36436841",
+      "fragment_id": 0,
+      "id": "36436841_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Are the tree classifier, random forest classifier, and gradient boosted tree classifier compared across platforms?",
+      "pmid": "36033548",
+      "fragment_id": 1,
+      "id": "36033548_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What accuracy percentage did the proposed facial emotion recognition method achieve on the affectnet dataset?",
+      "pmid": "36772117",
+      "fragment_id": 0,
+      "id": "36772117_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is x-linked ichthyosis an uncommon dermatological condition resulting from a deficiency of steroid sulfatase?",
+      "pmid": "32139392",
+      "fragment_id": 0,
+      "id": "32139392_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Which model achieves the highest accuracy for classifying CT scan images into the categories of normal or COVID-19 positive?",
+      "pmid": "36173078",
+      "fragment_id": 1,
+      "id": "36173078_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is this special issue dedicated to issues and challenges related to pandemic risk and resilience, with a focus on policy and operations of global systems in the COVID-19 pandemic?",
+      "pmid": "34002395",
+      "fragment_id": 0,
+      "id": "34002395_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Did the least deprived areas have more admissions in 2011 compared to the most deprived areas?",
+      "pmid": "31253916",
+      "fragment_id": 1,
+      "id": "31253916_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What was the overall uptake of rapid lateral flow SARS-CoV-2 antigen tests among males in Liverpool during the period from November 6, 2020, to January 31, 2021?",
+      "pmid": "34002172",
+      "fragment_id": 0,
+      "id": "34002172_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Do academic mindsets play a critical role in educational achievement?",
+      "pmid": "26581725",
+      "fragment_id": 0,
+      "id": "26581725_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Can AI agents learn exploration ability from raw sensory input and accomplish autonomous exploration across different mazes?",
+      "pmid": "34956359",
+      "fragment_id": 0,
+      "id": "34956359_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Was the logistic regression model's performance very well for predicting operative management of patients with asd?",
+      "pmid": "32434029",
+      "fragment_id": 1,
+      "id": "32434029_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Do biological networks enable molecules within cells, and even cells themselves, to communicate with each other and their environment?",
+      "pmid": "25101076",
+      "fragment_id": 0,
+      "id": "25101076_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What accuracy did the deep learning algorithm achieve in detecting frontotemporal dementia?",
+      "pmid": "35888037",
+      "fragment_id": 0,
+      "id": "35888037_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the objective of this account regarding the controllable deformations and motions of hydrogels?",
+      "pmid": "35413187",
+      "fragment_id": 0,
+      "id": "35413187_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What was the average accuracy achieved by the 6d CNN model in classifying ADHD and normal children based on EEG signals?",
+      "pmid": "36569562",
+      "fragment_id": 0,
+      "id": "36569562_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What technologies were used to create the proposed design for a multirobot system to care for elderly people?",
+      "pmid": "36298332",
+      "fragment_id": 0,
+      "id": "36298332_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What was the measure used to determine the accuracy of the artificial intelligence system in designing biomimetic single-molar dental prostheses?",
+      "pmid": "36631366",
+      "fragment_id": 0,
+      "id": "36631366_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What types of experts and analysts are involved in practical data analysis scenarios?",
+      "pmid": "31395538",
+      "fragment_id": 0,
+      "id": "31395538_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What does the preventable burden of disease produced by toxic waste sites emphasize the need for?",
+      "pmid": "24853976",
+      "fragment_id": 1,
+      "id": "24853976_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the classification of university course timetabling and why is it difficult to construct optimal timetables without an intelligence timetabling tool?",
+      "pmid": "33997791",
+      "fragment_id": 0,
+      "id": "33997791_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the significance of the information enclosed by triple backticks?",
+      "pmid": "36027757",
+      "fragment_id": 1,
+      "id": "36027757_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Does the artificial intelligence assisted software show good agreement with autoceph and manual tracing for all cephalometric measurements?",
+      "pmid": "37018830",
+      "fragment_id": 1,
+      "id": "37018830_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the purpose of using artificial intelligence in studying medical images for the diagnosis and characterization of soft tissue sarcomas?",
+      "pmid": "34637568",
+      "fragment_id": 0,
+      "id": "34637568_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is stroke one of the leading causes of disability and death worldwide?",
+      "pmid": "37372920",
+      "fragment_id": 0,
+      "id": "37372920_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What did the rank reversal playback experiments on vervet monkey females suggest about their knowledge of the female hierarchy?",
+      "pmid": "23520521",
+      "fragment_id": 0,
+      "id": "23520521_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Are there clinical outcomes in dermatology?",
+      "pmid": "32596246",
+      "fragment_id": 1,
+      "id": "32596246_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the average precision achieved by the proposed deep learning framework in the detection of micronuclei?",
+      "pmid": "36889248",
+      "fragment_id": 0,
+      "id": "36889248_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the highest accuracy value achieved in the shallow position label?",
+      "pmid": "36294776",
+      "fragment_id": 1,
+      "id": "36294776_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Are copy number variants associated with psychiatric conditions?",
+      "pmid": "29687944",
+      "fragment_id": 0,
+      "id": "29687944_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Do numerous cross-sectional studies link age-related differences in white matter anisotropy and concomitant decrements in cognitive ability using diffusion tensor imaging?",
+      "pmid": "26545457",
+      "fragment_id": 0,
+      "id": "26545457_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Are personality tests currently utilized in the medical school admissions process?",
+      "pmid": "36564835",
+      "fragment_id": 0,
+      "id": "36564835_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Can a convolutional neural network (CNN) significantly reduce variability in the grading of osteoarthritis severity based on knee radiographs?",
+      "pmid": "32418746",
+      "fragment_id": 0,
+      "id": "32418746_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What branch of the MSCEIT test showed deficits in patients with first-episode schizophrenia, even after controlling for neurocognition?",
+      "pmid": "35407652",
+      "fragment_id": 0,
+      "id": "35407652_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is digital health part of a vision for systems medicine?",
+      "pmid": "33794130",
+      "fragment_id": 0,
+      "id": "33794130_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Are the guidelines comprehensive?",
+      "pmid": "37425598",
+      "fragment_id": 1,
+      "id": "37425598_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What were the main challenges faced by patients and health services in achieving optimal lung cancer management according to public health sector stakeholders?",
+      "pmid": "33571312",
+      "fragment_id": 1,
+      "id": "33571312_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are some potential delivery systems in breast cancer therapy?",
+      "pmid": "35574366",
+      "fragment_id": 1,
+      "id": "35574366_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What effect does increasing the salinity of brine have on the solubility of the CO2-N2 gas mixtures in aqueous systems?",
+      "pmid": "35256623",
+      "fragment_id": 2,
+      "id": "35256623_2",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the focus of the proposal to improve learning efficiency in reinforcement learning with the actor-critic method used as a muscle controller for posture stabilization of the human arm?",
+      "pmid": "33080164",
+      "fragment_id": 0,
+      "id": "33080164_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the association between germline pathogenic variants in foxc1 and anterior segment dysgenesis and axenfeld-rieger syndrome?",
+      "pmid": "37424725",
+      "fragment_id": 0,
+      "id": "37424725_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are the benefits of play for emerging adults in terms of their emotional intelligence, emotional traits, and resilience?",
+      "pmid": "36562058",
+      "fragment_id": 0,
+      "id": "36562058_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What type of neural network was trained to predict treatment indication based on central retinal OCT scans?",
+      "pmid": "29127485",
+      "fragment_id": 0,
+      "id": "29127485_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Did the use of certain DCT apps help older adults combat social isolation and loneliness?",
+      "pmid": "37531187",
+      "fragment_id": 2,
+      "id": "37531187_2",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What were the findings regarding the total volume and proportion of bilateral pulmonary consolidation shadow in patients with and without diabetes?",
+      "pmid": "33790965",
+      "fragment_id": 1,
+      "id": "33790965_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are the odds of service-related traumatic brain injury for enlisted service members in \"infantry/gun crews/seamanship\" and \"electrical/mechanical equipment repairers\"?",
+      "pmid": "35253039",
+      "fragment_id": 1,
+      "id": "35253039_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the novel combined model most predictive and could it become a useful tool to guide subsequent personalized treatment of hcc?",
+      "pmid": "35402463",
+      "fragment_id": 2,
+      "id": "35402463_2",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What are the three methods that demonstrated high prognostic accuracy in predicting outcomes using artificial intelligence in cardiac magnetic resonance imaging (CMR) for patients with cardiovascular disease?",
+      "pmid": "36013554",
+      "fragment_id": 0,
+      "id": "36013554_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Was one-way analysis of variation ( ANOVA ) used for statistical analysis?",
+      "pmid": "37529805",
+      "fragment_id": 0,
+      "id": "37529805_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Are interventions to enhance privacy and confidentiality issues limited and in need of further research?",
+      "pmid": "31216619",
+      "fragment_id": 1,
+      "id": "31216619_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Can intelligence be introduced into middle school fine art education for the benefit of students' deep learning?",
+      "pmid": "35401322",
+      "fragment_id": 1,
+      "id": "35401322_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the most effective parameter in determining frost thermal conductivity according to the present work?",
+      "pmid": "33785779",
+      "fragment_id": 1,
+      "id": "33785779_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are the three stages of the knowledge service model in the field of risk management described in the article?",
+      "pmid": "34456516",
+      "fragment_id": 0,
+      "id": "34456516_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Did participants demonstrate improvement in mean eq - i scores from baseline/pretraining to posttraining and assessment 1 year later?",
+      "pmid": "25011036",
+      "fragment_id": 1,
+      "id": "25011036_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Who are the contributors to this special issue?",
+      "pmid": "34943534",
+      "fragment_id": 0,
+      "id": "34943534_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What were the odds of positive behavior in high intelligence quotient children compared to low intelligence quotient children in relation to the parental active presence technique?",
+      "pmid": "34454468",
+      "fragment_id": 1,
+      "id": "34454468_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the execution time of the simulation conducted to test the efficacy of the proposed internet of things-based enhanced machine learning model?",
+      "pmid": "36156969",
+      "fragment_id": 1,
+      "id": "36156969_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is this methodology a useful tool in early diagnosis of patients with seminal disorders or in the selection of candidates to become semen donors?",
+      "pmid": "23446456",
+      "fragment_id": 1,
+      "id": "23446456_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the prevalence of autism spectrum disorder in individuals with agenesis of the corpus callosum?",
+      "pmid": "24771497",
+      "fragment_id": 0,
+      "id": "24771497_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is machine learning effective in diagnosing COVID-19 from medical images?",
+      "pmid": "34175533",
+      "fragment_id": 0,
+      "id": "34175533_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What demonstrated that the combination of radiomic features and deep learning algorithms is more efficient for class differentiation than the comparison of mean or median values?",
+      "pmid": "36557302",
+      "fragment_id": 1,
+      "id": "36557302_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Does unsupervised nanomorphology grouping identify both the diversity and similarity of nanomaterial across different synthesis conditions and reveal how synthetic parameters guide nanomorphology development?",
+      "pmid": "36285804",
+      "fragment_id": 1,
+      "id": "36285804_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Do patients with myopic CNV have larger vessel density and more vascular branches?",
+      "pmid": "36874950",
+      "fragment_id": 2,
+      "id": "36874950_2",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Are anxiety disorder subjects more likely to make errors and require more time to complete the Tower of Hanoi task compared to subjects without anxiety disorders?",
+      "pmid": "30818146",
+      "fragment_id": 0,
+      "id": "30818146_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What was found to be a significant predictor of the overall change in emotional intelligence among medical undergraduates?",
+      "pmid": "33298046",
+      "fragment_id": 2,
+      "id": "33298046_2",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is China one of the countries publishing the most articles in AI research?",
+      "pmid": "36618779",
+      "fragment_id": 0,
+      "id": "36618779_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What was the negative predictive value achieved by AI for the removal of normal cases, compared to radiologists?",
+      "pmid": "34623478",
+      "fragment_id": 1,
+      "id": "34623478_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are the accurate rates achieved by the Huaxi intelligent endoscopic skill training system for vision location, clamping, delivering, shearing, and suturing?",
+      "pmid": "30378343",
+      "fragment_id": 0,
+      "id": "30378343_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What were the outcomes of visual perception and visuospatial abilities in Mexican boys with hemophilia who experienced intracranial hemorrhages compared to boys with hemophilia without intracranial hemorrhage and boys without hemophilia?",
+      "pmid": "26835360",
+      "fragment_id": 0,
+      "id": "26835360_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What factors significantly influence customers' social creativity according to the study?",
+      "pmid": "31354370",
+      "fragment_id": 1,
+      "id": "31354370_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Are Bayesian networks and structural equation models commonly used in ecological risk assessment and natural resource management?",
+      "pmid": "26832914",
+      "fragment_id": 0,
+      "id": "26832914_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Can deep convolutional neural networks be used for automated classification of 2D mammography views, determination of breast laterality, and assessment of breast tissue density?",
+      "pmid": "31197559",
+      "fragment_id": 0,
+      "id": "31197559_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What was the cumulative incidence of any neuroendocrine deficit at 5 years?",
+      "pmid": "26830377",
+      "fragment_id": 2,
+      "id": "26830377_2",
+      "question_type": "factual"
+    },
+    {
+      "question": "Was the method superior to the physicians?",
+      "pmid": "35875151",
+      "fragment_id": 2,
+      "id": "35875151_2",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is the ANN model shown to have an improvement in terms of determination coefficients of anti A. tumefaciens activity when compared to response surface methodology (RSM)?",
+      "pmid": "29626659",
+      "fragment_id": 1,
+      "id": "29626659_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Do recruiters exhibit a higher level of trust toward human expert recommendations compared with algorithmic recommendations?",
+      "pmid": "35874355",
+      "fragment_id": 1,
+      "id": "35874355_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Do vlbw young adults report more problems regarding attention / executive function in daily life than controls?",
+      "pmid": "24735984",
+      "fragment_id": 1,
+      "id": "24735984_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Does the American Joint Committee on Cancer eighth edition schema for pancreatic ductal adenocarcinoma treat T and N stage as independent factors and use positive lymph nodes to define N stage?",
+      "pmid": "34936469",
+      "fragment_id": 0,
+      "id": "34936469_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What may our understanding of the relationships among anatomy, function, and behavior be advanced by?",
+      "pmid": "31348912",
+      "fragment_id": 1,
+      "id": "31348912_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What was the primary endpoint of the study assessing the effect of an AI-driven automated medical history-taking system on diagnostic errors?",
+      "pmid": "35084347",
+      "fragment_id": 0,
+      "id": "35084347_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are some components of the existing aops and what are some possible linkages between pfas exposure and metabolic outcomes that could be addressed in future research?",
+      "pmid": "36006128",
+      "fragment_id": 1,
+      "id": "36006128_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Can AI-based machine learning models provide actionable prediction models for faster and accurate diagnosis of complications associated with diabetes mellitus?",
+      "pmid": "32389114",
+      "fragment_id": 0,
+      "id": "32389114_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the coefficient of variation for R10 when scored manually compared to X12?",
+      "pmid": "36869577",
+      "fragment_id": 1,
+      "id": "36869577_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the proposed method effective in assessing the effectiveness of modeling, identifying, and classifying cardiac system dynamics between normal and mi cardiac vector signals?",
+      "pmid": "37522048",
+      "fragment_id": 1,
+      "id": "37522048_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Which area of the image was found to be the most important for the discrimination of glaucoma?",
+      "pmid": "30798379",
+      "fragment_id": 0,
+      "id": "30798379_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the association between bullying victimization in adolescence and psychotic symptomatology in adulthood after controlling for covariates?",
+      "pmid": "26804185",
+      "fragment_id": 0,
+      "id": "26804185_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the approach using DNN and AAE useful for bioethanol fermentation and other bioproductions using raw materials?",
+      "pmid": "32081620",
+      "fragment_id": 0,
+      "id": "32081620_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Can flexible electronics control various systems?",
+      "pmid": "35238534",
+      "fragment_id": 1,
+      "id": "35238534_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is a scoring system needed for the evaluation of radiomics research?",
+      "pmid": "37733025",
+      "fragment_id": 2,
+      "id": "37733025_2",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Are children with FASD's cognitive and adaptive functioning related to significantly stronger reported behaviors?",
+      "pmid": "36745739",
+      "fragment_id": 2,
+      "id": "36745739_2",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Can the hybrid machine learning - deep learning model outperform simpler models in streamflow forecasting?",
+      "pmid": "37120698",
+      "fragment_id": 0,
+      "id": "37120698_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What were the estimated heritabilities for discrimination learning, inhibitory control, and spatial ability in the investigated pheasants?",
+      "pmid": "32821079",
+      "fragment_id": 0,
+      "id": "32821079_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is demonstrated by the work on paired-pulse facilitation/depression (PPF/PPD) and short-term plasticity (STP)?",
+      "pmid": "35557652",
+      "fragment_id": 1,
+      "id": "35557652_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What were the mean average precision and mean intersection over union values for test sets 1, 2, 3, and 4 in the evaluation of deep neural network generalizability for surgical instrument segmentation?",
+      "pmid": "35869249",
+      "fragment_id": 0,
+      "id": "35869249_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What were the specificity values of the DL model for assessing glaucomatous structural progression from SD-OCT RNFL thickness measurements?",
+      "pmid": "36410708",
+      "fragment_id": 1,
+      "id": "36410708_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the increase in the maximum mean control utilization achieved by the ddpg-anfis network compared to the anfis-only network and the ddpg-only network in five simulated real-world driving conditions?",
+      "pmid": "34260359",
+      "fragment_id": 1,
+      "id": "34260359_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What can Medisys do besides detecting similar anomalies?",
+      "pmid": "34776774",
+      "fragment_id": 1,
+      "id": "34776774_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "How did respondents in the surveys perceive the association between race and intelligence, personality, and religion?",
+      "pmid": "31687939",
+      "fragment_id": 0,
+      "id": "31687939_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is family socioeconomic status positively associated with executive functioning, and does parental educational involvement mediate this association?",
+      "pmid": "36994922",
+      "fragment_id": 0,
+      "id": "36994922_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the minimal right atrial area mean and standard deviation for automatic measurements compared to observer 2?",
+      "pmid": "35387651",
+      "fragment_id": 1,
+      "id": "35387651_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the average accuracy rate of the cancer datasets?",
+      "pmid": "33543413",
+      "fragment_id": 1,
+      "id": "33543413_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Does the proposed framework, medicine-based evidence (MBE), aim to overcome the weakness of evidence-based medicine (EBM) by utilizing big data and deep learning techniques to create a real-time digital counterpart of a patient?",
+      "pmid": "34926630",
+      "fragment_id": 0,
+      "id": "34926630_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What are the four factors identified in the adaptation and initial validation of the clinical psychology supervisory relationship measure for GP registrars in an Australian context?",
+      "pmid": "32816649",
+      "fragment_id": 0,
+      "id": "32816649_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are the correlations between intelligence and short-term reproductive success, long-term reproductive success, and age at first birth in a group of postreproductive individuals?",
+      "pmid": "28504891",
+      "fragment_id": 0,
+      "id": "28504891_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "How does the contribution of alphafold models to the structural coverage of non-human organisms, including important pathogenic bacteria, compare to that of the human proteome?",
+      "pmid": "35073311",
+      "fragment_id": 1,
+      "id": "35073311_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Does this multicenter randomized controlled trial aim to compare AI-assisted colonoscopy with conventional colonoscopy for adenoma detection in an asymptomatic population?",
+      "pmid": "35863686",
+      "fragment_id": 0,
+      "id": "35863686_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Do the findings provide important insight into the genetic determinants contributing to human intelligence?",
+      "pmid": "31165785",
+      "fragment_id": 1,
+      "id": "31165785_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Are evoked gamma oscillations vulnerable in cognitive decline?",
+      "pmid": "32066102",
+      "fragment_id": 1,
+      "id": "32066102_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What specific cognitive impairments were observed in patients treated with vegfr tki compared to healthy controls?",
+      "pmid": "24661373",
+      "fragment_id": 1,
+      "id": "24661373_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the existence of right and left shoulders a significant parameter in evaluating the level of severity associated with fixed object crashes among elderly drivers?",
+      "pmid": "32065912",
+      "fragment_id": 1,
+      "id": "32065912_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the relationship between high school students' prior achievement and their school engagement?",
+      "pmid": "29021772",
+      "fragment_id": 0,
+      "id": "29021772_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Does the deep learning model achieve expert-level performance in delineating 21 distinct head and neck organs at risk commonly segmented in clinical practice?",
+      "pmid": "34255661",
+      "fragment_id": 0,
+      "id": "34255661_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the average improvement in accuracy of our model compared to the covidhub-ensemble over a 4-week forecast horizon?",
+      "pmid": "35071733",
+      "fragment_id": 1,
+      "id": "35071733_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Can convolutional neural networks be used for automated detection of tumor tissue in digitally stained ex vivo clsm images?",
+      "pmid": "34771684",
+      "fragment_id": 0,
+      "id": "34771684_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Did the presence of fellows and computer-aided diagnosis/artificial intelligence tools result in significant decreases in burnout among cardiothoracic radiologists?",
+      "pmid": "37115947",
+      "fragment_id": 1,
+      "id": "37115947_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What benefits does the proposed approach bring to the learning process?",
+      "pmid": "33042313",
+      "fragment_id": 1,
+      "id": "33042313_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are the potential biotechnological applications of microalgae cultivation in hydroponics systems?",
+      "pmid": "36272573",
+      "fragment_id": 0,
+      "id": "36272573_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the sensitivity of the novel AI-based diagnostic system for detecting pharyngeal cancer compared to white light imaging?",
+      "pmid": "32064684",
+      "fragment_id": 1,
+      "id": "32064684_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is it possible to use a simplified set of equations to identify a bolus dose required to achieve a specified target effect site concentration?",
+      "pmid": "32812097",
+      "fragment_id": 0,
+      "id": "32812097_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Was a deep learning angiography method developed to generate 3D cerebral angiograms from a single contrast-enhanced C-arm conebeam CT acquisition in order to reduce image artifacts and radiation dose?",
+      "pmid": "29567655",
+      "fragment_id": 0,
+      "id": "29567655_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What are the emotions that are associated with the preferential looking effects described in infants?",
+      "pmid": "36271230",
+      "fragment_id": 1,
+      "id": "36271230_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Can the results of this scoping review be disseminated through publication in a peer-reviewed journal?",
+      "pmid": "33753441",
+      "fragment_id": 1,
+      "id": "33753441_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Can a mixed reality system be a powerful motivator of healthy activity in children?",
+      "pmid": "24650979",
+      "fragment_id": 0,
+      "id": "24650979_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What percentage of ad buys in 2012 were e-cigarette advertising expenditures?",
+      "pmid": "24650844",
+      "fragment_id": 1,
+      "id": "24650844_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Does the decision tree method outperform the genetic programming method in distinguishing postural sway patterns between healthy and stroke individuals based on 16 widely used posturographic variables?",
+      "pmid": "26737860",
+      "fragment_id": 0,
+      "id": "26737860_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What role do imaging biomarkers play in the treatment of cancer patients?",
+      "pmid": "36991494",
+      "fragment_id": 0,
+      "id": "36991494_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Can a non-fatty portion of bone marrow greater than 0.93% anticipate osteolytic lesions and diagnose multiple myeloma?",
+      "pmid": "34921619",
+      "fragment_id": 0,
+      "id": "34921619_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Are growth students aware that imr are learning opportunities?",
+      "pmid": "30327350",
+      "fragment_id": 1,
+      "id": "30327350_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the prognostic value of tumour-stroma ratio (TSR) in colorectal cancer, and how did researchers develop a deep learning model to quantify TSR?",
+      "pmid": "33039706",
+      "fragment_id": 0,
+      "id": "33039706_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Does the group that indicated not understanding the concept of AI have more distrust in the use of AI?",
+      "pmid": "37831495",
+      "fragment_id": 2,
+      "id": "37831495_2",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What factors were found to be related to the prognosis of dn patients in terms of renal function and imaging results?",
+      "pmid": "35860185",
+      "fragment_id": 1,
+      "id": "35860185_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What technologies make up the era of multiomics in cancer medicine?",
+      "pmid": "35380712",
+      "fragment_id": 0,
+      "id": "35380712_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What were the results of studies on the use of artificial intelligence in improving the polyp detection rate and adenoma detection rate with colonoscopy?",
+      "pmid": "32804846",
+      "fragment_id": 0,
+      "id": "32804846_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What options are available for prenatal testing and preimplantation genetic testing if an increased risk of a genetic condition is identified in a family member?",
+      "pmid": "33570896",
+      "fragment_id": 3,
+      "id": "33570896_3",
+      "question_type": "factual"
+    },
+    {
+      "question": "Are brain metastases associated with poor survival?",
+      "pmid": "33747933",
+      "fragment_id": 0,
+      "id": "33747933_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the overall concordance rate between recommended treatments by IBM's Watson for Oncology (WFO) and actual surgical procedures for patients with thyroid carcinoma?",
+      "pmid": "33746898",
+      "fragment_id": 0,
+      "id": "33746898_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Do the Wilson-Cowan equations generate hyperchaos with linearly increasing complexity as the number of oscillators increases?",
+      "pmid": "31664870",
+      "fragment_id": 0,
+      "id": "31664870_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Does deepac provide improved diagnostic accuracy for obstructive cad as compared to nc images?",
+      "pmid": "36137759",
+      "fragment_id": 2,
+      "id": "36137759_2",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What was the reduction in mean reading time achieved by the deep model compared to endoscopists?",
+      "pmid": "35372443",
+      "fragment_id": 1,
+      "id": "35372443_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is autism spectrum disorder characterized by difficulties with social skills, repetitive activities, speech, and nonverbal communication?",
+      "pmid": "37509498",
+      "fragment_id": 0,
+      "id": "37509498_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Can the inter-observer agreement among embryologists for the decision to freeze blastocysts of borderline morphology be improved with a modified grading system?",
+      "pmid": "32358601",
+      "fragment_id": 0,
+      "id": "32358601_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Will a significant increase in the incidence of cancer worldwide require concerted efforts at various levels and make high-quality oncological imaging particularly important?",
+      "pmid": "36542107",
+      "fragment_id": 0,
+      "id": "36542107_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What should be considered regarding the incorporation of training on the use of DHTs into medical curricula and continuous training schedules?",
+      "pmid": "36601281",
+      "fragment_id": 1,
+      "id": "36601281_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What has high emotional intelligence (EQ) been linked to in the workplace for perioperative professionals?",
+      "pmid": "28958317",
+      "fragment_id": 0,
+      "id": "28958317_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are the six clinical competencies that can guide teaching and learning programs related to the use of AI-based tools in healthcare?",
+      "pmid": "36731054",
+      "fragment_id": 1,
+      "id": "36731054_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Did the high IQ group show more negative vmmn amplitudes than the average IQ group in the happy condition for the early vmmn?",
+      "pmid": "26375031",
+      "fragment_id": 1,
+      "id": "26375031_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is parietal the best-ranked method on Philips scanners?",
+      "pmid": "34137113",
+      "fragment_id": 1,
+      "id": "34137113_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Does the cyclegan-based deep learning method improve the image quality of ultralow-dose CT scans in the evaluation of pulmonary tuberculosis?",
+      "pmid": "33739634",
+      "fragment_id": 0,
+      "id": "33739634_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Did the model based on DWI + FLAIR sequences achieve a higher accuracy than the model based on DWI sequences alone?",
+      "pmid": "31648967",
+      "fragment_id": 1,
+      "id": "31648967_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Do very few studies address the convenience of government investments in failing banks from the taxpayers' standpoint?",
+      "pmid": "36396640",
+      "fragment_id": 0,
+      "id": "36396640_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Did the study find a significant decrease in alpha power during the attention tasks in patients with Prader-Willi syndrome compared to the control participants?",
+      "pmid": "35368678",
+      "fragment_id": 0,
+      "id": "35368678_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Can characteristics evoke camouflaging in autistic and nonautistic individuals?",
+      "pmid": "36600963",
+      "fragment_id": 4,
+      "id": "36600963_4",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is mass spectrometry coupled with artificial neural networks a minimally invasive approach for multiple myeloma diagnostics?",
+      "pmid": "31138828",
+      "fragment_id": 0,
+      "id": "31138828_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the aim of the project mentioned in the passage?",
+      "pmid": "32348293",
+      "fragment_id": 0,
+      "id": "32348293_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are some emerging techniques in fighting against the pandemic that have proven to be powerful tools in pandemic prevention and control?",
+      "pmid": "34421492",
+      "fragment_id": 1,
+      "id": "34421492_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Does loihi scale notably well in terms of run-time performance as the simulated networks become larger?",
+      "pmid": "36726406",
+      "fragment_id": 1,
+      "id": "36726406_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What types of information were provided to children through the xploro digital therapeutic platform?",
+      "pmid": "32780025",
+      "fragment_id": 0,
+      "id": "32780025_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is human reasoning best emulated by applying task-specific knowledge acquired from prior experience, or is it based on the domain-general manipulation and comparison of mental representations?",
+      "pmid": "37718474",
+      "fragment_id": 0,
+      "id": "37718474_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the relationship between resilience, emotional intelligence, self-concept, and academic achievement based on a study of university students from southern Spain?",
+      "pmid": "35058836",
+      "fragment_id": 0,
+      "id": "35058836_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is there a strategy for a rational design of catalytic materials using the artificial intelligence approach?",
+      "pmid": "35058444",
+      "fragment_id": 0,
+      "id": "35058444_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Was the deep learning model the most accurate algorithm in classifying the prognosis of cervical myelopathy based on DTI features?",
+      "pmid": "31131933",
+      "fragment_id": 0,
+      "id": "31131933_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What are hypothetical proteins and why are they considered a knowledge gap in biological research?",
+      "pmid": "36725215",
+      "fragment_id": 0,
+      "id": "36725215_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Can sensor faults impede the functionality of monitoring and control systems for bioprocesses?",
+      "pmid": "31286180",
+      "fragment_id": 0,
+      "id": "31286180_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What percentage of participants perceived empathy, intelligence, and moral character as fixed attributes?",
+      "pmid": "31633998",
+      "fragment_id": 1,
+      "id": "31633998_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are the three primary areas that have boosted the application of data science in cancer research?",
+      "pmid": "31632915",
+      "fragment_id": 0,
+      "id": "31632915_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are the six major recurring themes identified in the systematic evaluation of dental practitioners' clinical decision-making processes?",
+      "pmid": "36980383",
+      "fragment_id": 0,
+      "id": "36980383_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Does music therapy have a positive impact on mental well-being?",
+      "pmid": "33733192",
+      "fragment_id": 0,
+      "id": "33733192_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What are the main areas of application in radiology that will be impacted by the use of artificial intelligence?",
+      "pmid": "34230692",
+      "fragment_id": 0,
+      "id": "34230692_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Can chat bots be useful in public health research and health or pharmacy systems operations?",
+      "pmid": "31632598",
+      "fragment_id": 0,
+      "id": "31632598_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Can authors use DICOM query and retrieve functions to pull a study from a cloud or public PACS, run an AI algorithm on those images, and store the results back to another cloud PACS?",
+      "pmid": "33937854",
+      "fragment_id": 0,
+      "id": "33937854_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What organizations provided funding for the research on the host immune response in COVID-19?",
+      "pmid": "34127431",
+      "fragment_id": 2,
+      "id": "34127431_2",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are the characteristics and outcomes associated with individuals who have never been diagnosed with a mental disorder compared to those who have been diagnosed at least once?",
+      "pmid": "27929304",
+      "fragment_id": 0,
+      "id": "27929304_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is suggested about the relationship between ubiquinone levels and ADHD pathogenesis?",
+      "pmid": "33245486",
+      "fragment_id": 1,
+      "id": "33245486_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Was a delay in diagnosis of early onset epilepsy found to have a negative impact on developmental outcomes in young children?\n",
+      "pmid": "24313635",
+      "fragment_id": 0,
+      "id": "24313635_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Can financial stress across assets and continents be predicted accurately with the hybrid predictive frameworks utilized in the current research?",
+      "pmid": "36589898",
+      "fragment_id": 0,
+      "id": "36589898_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the impact of taking potential sources of uncertainty into account when deploying screenings?",
+      "pmid": "34126827",
+      "fragment_id": 1,
+      "id": "34126827_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Was the survey data collected for three contiguous time periods?",
+      "pmid": "34414063",
+      "fragment_id": 0,
+      "id": "34414063_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "By how much did our agent improve its performance at recognizing new visual information, according to a controlled field experiment?",
+      "pmid": "36122244",
+      "fragment_id": 1,
+      "id": "36122244_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are the three philosophical challenges faced by the big data and AI movement in healthcare?",
+      "pmid": "31281120",
+      "fragment_id": 0,
+      "id": "31281120_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are the components of the Embrace program for underrepresented undergraduate students?",
+      "pmid": "30709461",
+      "fragment_id": 0,
+      "id": "30709461_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the new figural matrices test less prone to the use of response elimination strategies?",
+      "pmid": "37103258",
+      "fragment_id": 0,
+      "id": "37103258_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is a promising line of research that can uncover the physiological underpinnings of fluid intelligence?",
+      "pmid": "27919297",
+      "fragment_id": 0,
+      "id": "27919297_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Does a highly intelligent brain communicate more extensively, while being less dependent on rich club communications during adolescence?",
+      "pmid": "28900176",
+      "fragment_id": 0,
+      "id": "28900176_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is the expanding cancer registry network across Europe an excellent way forward for future cancer surveillance?",
+      "pmid": "25934439",
+      "fragment_id": 3,
+      "id": "25934439_3",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the focus of research in the medical field regarding the application of intelligent decision-making systems in the field of cancer?",
+      "pmid": "30704208",
+      "fragment_id": 0,
+      "id": "30704208_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is lack of clinical validation a limitation of endoscopic assessment and scoring of disease severity in patients with ulcerative colitis?",
+      "pmid": "36254822",
+      "fragment_id": 0,
+      "id": "36254822_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is the sensitivity of 96853 94.167% and the specificity 92.105%?",
+      "pmid": "24509074",
+      "fragment_id": 1,
+      "id": "24509074_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the performance of the transfer learning emotion model when applied to 10 previously published data sets?",
+      "pmid": "36718270",
+      "fragment_id": 1,
+      "id": "36718270_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is current smoking associated with higher rates of severe ird?",
+      "pmid": "37347589",
+      "fragment_id": 0,
+      "id": "37347589_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What was the result of the study on the performance variability of a large AI model in detecting functional neurological symptom disorder?",
+      "pmid": "37101589",
+      "fragment_id": 1,
+      "id": "37101589_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Which journals published approximately 10 to 20 times more papers than the Korean journals, KJME and KMER, from 2009 to 2018?",
+      "pmid": "31620617",
+      "fragment_id": 0,
+      "id": "31620617_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What method was used to analyze the proteomes of cardioembolic and atherothrombotic cerebrovascular human thrombi?",
+      "pmid": "33240201",
+      "fragment_id": 0,
+      "id": "33240201_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Does ECG-LAE have higher prognostic value compared to echo-LAE?",
+      "pmid": "35207802",
+      "fragment_id": 1,
+      "id": "35207802_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Can neural activity during phonological processing be used to distinguish between children who have recovered from stuttering and those whose stuttering persists?",
+      "pmid": "26284147",
+      "fragment_id": 0,
+      "id": "26284147_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is trustworthiness of AI a concern for mental health nurses?",
+      "pmid": "36715172",
+      "fragment_id": 0,
+      "id": "36715172_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What parameters can be used as specific indicators for evaluating premature ovarian failure (POF)?",
+      "pmid": "35664646",
+      "fragment_id": 2,
+      "id": "35664646_2",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the growth mindset model a cognitive psychology model?",
+      "pmid": "32022735",
+      "fragment_id": 0,
+      "id": "32022735_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What do the simulation results show about the behavior of agents in relation to thermals and their impact on swarm survival?",
+      "pmid": "36975354",
+      "fragment_id": 1,
+      "id": "36975354_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are some challenges that classical robots face in mimicking the complexity of living beings, and how can these challenges be addressed in the field of biohybrid soft robotics?",
+      "pmid": "31267628",
+      "fragment_id": 0,
+      "id": "31267628_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the integration of new technologies in dentistry currently lagging behind general medicine?",
+      "pmid": "35352184",
+      "fragment_id": 0,
+      "id": "35352184_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Was the llm's performance on the written board examination below the passing threshold?",
+      "pmid": "37220190",
+      "fragment_id": 2,
+      "id": "37220190_2",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is the primary screening test recommended by the World Health Organization for cervical screening programs high-risk human papillomavirus (hrhpv) testing?",
+      "pmid": "35840949",
+      "fragment_id": 0,
+      "id": "35840949_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What are some potential contributions towards addressing reliability, scalability, fault tolerance, and inter-operability?",
+      "pmid": "28384312",
+      "fragment_id": 1,
+      "id": "28384312_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What proportion of articles emphasized the need for leaders capable of making evidence-based decisions and driving innovation in response to the emergency?",
+      "pmid": "37709494",
+      "fragment_id": 1,
+      "id": "37709494_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the rejection of scientific evidence preferentially associated with right-wing or libertarian worldviews?",
+      "pmid": "34218027",
+      "fragment_id": 0,
+      "id": "34218027_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is a risk for patients with tyrosinemia type I who are treated with nitisinone, despite following a protein-restricted diet?",
+      "pmid": "24238861",
+      "fragment_id": 1,
+      "id": "24238861_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What were the observed behavioral improvements in children with higher baseline nonverbal intelligence quotients after umbilical cord blood infusions?",
+      "pmid": "28378499",
+      "fragment_id": 1,
+      "id": "28378499_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the proposed model characterized by five questions that can assist in the effective implementation of AI-based models in daily clinical practice?",
+      "pmid": "37097338",
+      "fragment_id": 0,
+      "id": "37097338_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What factors have been found to predict cognitive change in later life and what are some interventions that have shown benefits in maintaining cognitive functioning?",
+      "pmid": "33499254",
+      "fragment_id": 0,
+      "id": "33499254_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the backpropagation neural network (bpnn) algorithm used to simulate the driving process of a car and predict vehicle safety risks?",
+      "pmid": "36248936",
+      "fragment_id": 0,
+      "id": "36248936_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Does the use of technologies that provide predictive analytics also involve considering potential consequences associated with algorithmic bias?",
+      "pmid": "35505893",
+      "fragment_id": 1,
+      "id": "35505893_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is the objective of this article to determine if the emotional intelligence of a young person is linked with subjective assessment of physical state, depressiveness, anxiety, and psychological well-being?",
+      "pmid": "28844563",
+      "fragment_id": 0,
+      "id": "28844563_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Did controlling for education reduce the effect of functional hearing on verbal reasoning?",
+      "pmid": "26244401",
+      "fragment_id": 1,
+      "id": "26244401_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Does training on the inverse approach increase the diagnostic accuracy of readers compared to classic pattern analysis?",
+      "pmid": "32592885",
+      "fragment_id": 0,
+      "id": "32592885_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is the area under curve (auc) achieved by alpha-satellite 0.9202?",
+      "pmid": "32750960",
+      "fragment_id": 1,
+      "id": "32750960_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is ethical behavior the base of transformational leadership?",
+      "pmid": "30235022",
+      "fragment_id": 0,
+      "id": "30235022_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the recognition accuracy rate of the improved VGG-16 classification network based on the hyper-column scheme for target recognition and positioning?",
+      "pmid": "33716703",
+      "fragment_id": 0,
+      "id": "33716703_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the context providing an experimental reference for industrial robots' application and development?",
+      "pmid": "33716703",
+      "fragment_id": 1,
+      "id": "33716703_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What tests can assist physicians in diagnosing patients with acute vestibular syndrome?",
+      "pmid": "34889806",
+      "fragment_id": 0,
+      "id": "34889806_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the proposed ontology able to harness the definitions of metaphoric terms by decomposing them into their visual elements?",
+      "pmid": "37596573",
+      "fragment_id": 0,
+      "id": "37596573_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What method was used to analyze the collected data from the questionnaire?",
+      "pmid": "33493130",
+      "fragment_id": 0,
+      "id": "33493130_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Can a message engine be used to suggest messages for web-based campaigns?",
+      "pmid": "35040800",
+      "fragment_id": 1,
+      "id": "35040800_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is the lifespan of dental restorations limited?",
+      "pmid": "25866792",
+      "fragment_id": 0,
+      "id": "25866792_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Could artificial intelligence - enhanced electrocardiography assist in early coronavirus disease 2019 severity prediction?",
+      "pmid": "37704692",
+      "fragment_id": 0,
+      "id": "37704692_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What was the preference of Latinx patients with diabetes regarding teleophthalmology compared to traditional in-person dilated eye exams?",
+      "pmid": "37908628",
+      "fragment_id": 0,
+      "id": "37908628_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Did survivors who received no cranial radiation therapy show an increased impairment in all neurocognitive domains?",
+      "pmid": "24190124",
+      "fragment_id": 0,
+      "id": "24190124_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the purpose of using semantic web technologies in healthcare information systems?",
+      "pmid": "33489061",
+      "fragment_id": 0,
+      "id": "33489061_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "How do men and women differ in their preferences for convenience versus monetary rewards after being treated with external help?",
+      "pmid": "31083705",
+      "fragment_id": 0,
+      "id": "31083705_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "How many participants have been recruited to date in the three-arm randomized clinical trial investigating the effects of different types of intelligent technology solutions on promoting physical activity in cancer survivors?",
+      "pmid": "29434016",
+      "fragment_id": 0,
+      "id": "29434016_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is chatgpt proficient in basic science medical knowledge and applied clinical knowledge?",
+      "pmid": "37490183",
+      "fragment_id": 1,
+      "id": "37490183_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the goal of pharmaceutical researchers in regards to delivering therapeutics more quickly and economically, and how does the advent of artificial intelligence contribute to achieving this goal?",
+      "pmid": "35653613",
+      "fragment_id": 0,
+      "id": "35653613_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What factors contribute to the diverse clinical presentations seen in liver autoimmunity?",
+      "pmid": "32743505",
+      "fragment_id": 1,
+      "id": "32743505_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Did the CFN models produce better outcomes than the RBF models according to the results of appraisal?",
+      "pmid": "36966845",
+      "fragment_id": 1,
+      "id": "36966845_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Which machine-learning model showed the highest performance in terms of f measure and accuracy among all nine models, when trained on 80% of both the NASH patients and healthy controls data and tested on 20% of both groups?",
+      "pmid": "36367682",
+      "fragment_id": 1,
+      "id": "36367682_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What should be included in the multistage clinical evaluation of ADHD if problems in motor skills are detected in a child?",
+      "pmid": "30215837",
+      "fragment_id": 1,
+      "id": "30215837_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the impact of smad6 gene mutations on the numerical operations performance of midline nonsyndromic synostosis patients?",
+      "pmid": "31592950",
+      "fragment_id": 0,
+      "id": "31592950_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Do traditional methods of estimating body composition have limitations in their application?",
+      "pmid": "31991450",
+      "fragment_id": 0,
+      "id": "31991450_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What could be done to increase the impact and influence of a certain area?",
+      "pmid": "34886446",
+      "fragment_id": 1,
+      "id": "34886446_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Does the proposed framework combine mobility of UAV with IoT measurements and full-stack WebRTC communications?",
+      "pmid": "34204805",
+      "fragment_id": 0,
+      "id": "34204805_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the objective of this report and what are the potential implications of machine learning in the field of orthodontics?",
+      "pmid": "31074158",
+      "fragment_id": 0,
+      "id": "31074158_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the use of language important for mathematics performance and learning?",
+      "pmid": "32297751",
+      "fragment_id": 1,
+      "id": "32297751_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What does the current study provide in terms of a roadmap for implementing and sustaining fms interventions?",
+      "pmid": "34732223",
+      "fragment_id": 1,
+      "id": "34732223_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Can an appropriate role for AI in dermatology be achieved in the not so distant future?",
+      "pmid": "32296706",
+      "fragment_id": 1,
+      "id": "32296706_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What are some key ethical and legal challenges identified in the deployment of a risk prediction tool for oesophageal cancer in primary care?",
+      "pmid": "37903120",
+      "fragment_id": 0,
+      "id": "37903120_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is cognitive ability associated with risk-taking behavior in various contexts and life domains?",
+      "pmid": "30203932",
+      "fragment_id": 0,
+      "id": "30203932_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the first major contribution of the paper?",
+      "pmid": "34884048",
+      "fragment_id": 0,
+      "id": "34884048_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What makes monolayer a promising candidate for applications in spintronic nanodevices?",
+      "pmid": "31066565",
+      "fragment_id": 1,
+      "id": "31066565_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the estimated energy of x-rays that can be blocked by the tube structure?",
+      "pmid": "37803487",
+      "fragment_id": 0,
+      "id": "37803487_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What areas require further attention by the PHM community in relation to XAI and what is requested in terms of assessment metrics?",
+      "pmid": "34884024",
+      "fragment_id": 1,
+      "id": "34884024_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Was there a retrospective cohort study conducted in Australia on the effectiveness of a chatbot-led digital lifestyle medicine program in aiding rehabilitation for return-to-work?",
+      "pmid": "37209933",
+      "fragment_id": 0,
+      "id": "37209933_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Did the proposed approach achieve a higher recall rate than existing conventional machine learning methods such as DBN, CNN, and RNN?",
+      "pmid": "34385552",
+      "fragment_id": 1,
+      "id": "34385552_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is fermentation a green and sustainable process for the production of food, chemicals, fuels, and materials?",
+      "pmid": "37699686",
+      "fragment_id": 0,
+      "id": "37699686_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is the Dato method used to complement the Pico method in the application of evidence-based radiology?",
+      "pmid": "37086062",
+      "fragment_id": 0,
+      "id": "37086062_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is bias in ML systems a topic of interest in studies related to CVD risk prediction?",
+      "pmid": "35033879",
+      "fragment_id": 0,
+      "id": "35033879_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What were the 95% confidence intervals for the diagnostic odds ratio (DOR) and the area under the curve (AUC)?",
+      "pmid": "36100781",
+      "fragment_id": 1,
+      "id": "36100781_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the score of the senior otolaryngologist significantly higher compared to the score of chatgpt?",
+      "pmid": "37698703",
+      "fragment_id": 1,
+      "id": "37698703_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is one specific way that artificial intelligence technology can improve drug research and development?",
+      "pmid": "37589011",
+      "fragment_id": 1,
+      "id": "37589011_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Does the method offer a promising complementary assessment method for characterizing the neural basis of trait EI?",
+      "pmid": "31057467",
+      "fragment_id": 1,
+      "id": "31057467_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What are the contributions of this paper in the field of image quality assessment and enhancement?",
+      "pmid": "28287984",
+      "fragment_id": 0,
+      "id": "28287984_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What classification scores were achieved in the z24 bridge use case using data compression, optimized machine learning architectures, and environmental information?",
+      "pmid": "35336399",
+      "fragment_id": 1,
+      "id": "35336399_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Did the researchers use deep neural networks to process the mass spectrometry imaging data of mouse muscle and human cancer tissues?",
+      "pmid": "37083759",
+      "fragment_id": 0,
+      "id": "37083759_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Are disease detection approaches based on deep learning becoming increasingly important in AI-based research in the field of agriculture?",
+      "pmid": "35958771",
+      "fragment_id": 0,
+      "id": "35958771_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Can health insurance claims data improve our understanding of current health provision and identify patient care challenges?",
+      "pmid": "37207237",
+      "fragment_id": 0,
+      "id": "37207237_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Does the support vector machine model have an accuracy of 86.3%?",
+      "pmid": "33686418",
+      "fragment_id": 1,
+      "id": "33686418_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the level of accuracy in predicting COVID status on chest x-rays when considering them alone versus when considering them with another factor?",
+      "pmid": "33471219",
+      "fragment_id": 2,
+      "id": "33471219_2",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are the characteristics of shoulder joint dysfunction in volleyball players and how does rehabilitation training under the background of artificial intelligence affect them?",
+      "pmid": "35814584",
+      "fragment_id": 0,
+      "id": "35814584_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What was the sensitivity and specificity of the machine-learning algorithm Atarantula for extracting warfarin-related ADEs from online social discussion forums?",
+      "pmid": "36097239",
+      "fragment_id": 1,
+      "id": "36097239_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What technology can be used to detect a driver's internal states in a panic situation while driving?",
+      "pmid": "35333671",
+      "fragment_id": 1,
+      "id": "35333671_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are the main drivers of change in the healthcare sector that necessitate the use of e-health and digitization?",
+      "pmid": "29372263",
+      "fragment_id": 0,
+      "id": "29372263_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are some of the diverse signal sources used in recent research on artificial intelligence applications to predicting osteoporosis?",
+      "pmid": "31045948",
+      "fragment_id": 0,
+      "id": "31045948_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Was a single-layer perceptron (SLP) used as the main instrument in the XAI study?",
+      "pmid": "36359687",
+      "fragment_id": 0,
+      "id": "36359687_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the accuracy of algorithm i in five-fold cross-validation?",
+      "pmid": "34722502",
+      "fragment_id": 1,
+      "id": "34722502_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What factors independently predicted a poorer intelligence quotient at 4 years in infants undergoing open-heart surgery for congenital heart disease?",
+      "pmid": "27453368",
+      "fragment_id": 1,
+      "id": "27453368_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What was the full scale IQ of the participants who received the high-docosahexaenoic acid (DHA) diet compared to those who received the standard-DHA diet?",
+      "pmid": "25787990",
+      "fragment_id": 0,
+      "id": "25787990_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What challenges are associated with accessing \"real\" healthcare data and electronic health records (EHRs)?",
+      "pmid": "37203680",
+      "fragment_id": 0,
+      "id": "37203680_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the joint nrmse between ts - 5 and slr 0.0098 \u00b1 0.0024?",
+      "pmid": "33200468",
+      "fragment_id": 1,
+      "id": "33200468_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is the proposed MSE 28,967.85 and RMSE 81.17?",
+      "pmid": "34721709",
+      "fragment_id": 1,
+      "id": "34721709_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Does coaching in surgical residency provide a structured program for residents to develop skills in planning and orchestrating team operations, listening and communicating effectively, mitigating conflict, and managing professional and personal responsibilities?",
+      "pmid": "37479647",
+      "fragment_id": 2,
+      "id": "37479647_2",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Does perspective-taking develop differently in the research traditions of theory of mind and wisdom?",
+      "pmid": "28266717",
+      "fragment_id": 0,
+      "id": "28266717_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What was the overall intraclass correlation for agreement between novice learner images post-processed with AI technology and expert review?",
+      "pmid": "34191132",
+      "fragment_id": 0,
+      "id": "34191132_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Are there more cases of language difficulties?",
+      "pmid": "37326312",
+      "fragment_id": 1,
+      "id": "37326312_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Are AI systems utilizing deep neural networks and machine learning algorithms widely used for solving critical problems in bioinformatics, biomedical informatics, and precision medicine?",
+      "pmid": "37478371",
+      "fragment_id": 0,
+      "id": "37478371_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the association between cognitive reserve factors (estimated premorbid IQ, years of education, and occupational attainment) and functional and neuropsychological outcomes 1 to 5 years following traumatic brain injury (TBI)?",
+      "pmid": "28731870",
+      "fragment_id": 0,
+      "id": "28731870_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are some areas in which clinicians in today's learning health systems can benefit from improvement?",
+      "pmid": "35811037",
+      "fragment_id": 1,
+      "id": "35811037_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are the four categories of facial image manipulation techniques?",
+      "pmid": "36949178",
+      "fragment_id": 0,
+      "id": "36949178_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What were the results of the study comparing the treatment group using product-based pedagogy (pbp) with the control group using direct instruction?",
+      "pmid": "36092027",
+      "fragment_id": 0,
+      "id": "36092027_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What was the area under the curve (AUC) for the random forest algorithm when used with clinical features?",
+      "pmid": "34871817",
+      "fragment_id": 1,
+      "id": "34871817_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the random forest algorithm the most accurate method for predicting carbon dioxide production from green waste composting?",
+      "pmid": "35809871",
+      "fragment_id": 0,
+      "id": "35809871_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Does the n-mtlr method outperform km for the entire post-operative follow-up time?",
+      "pmid": "36693560",
+      "fragment_id": 1,
+      "id": "36693560_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Are late sequelae of cancer effectively managed?",
+      "pmid": "36231542",
+      "fragment_id": 1,
+      "id": "36231542_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Does the study include pre-operative 3-t MRN, x-rays, and electrophysiology for patients with upper extremity amputations?",
+      "pmid": "35635556",
+      "fragment_id": 0,
+      "id": "35635556_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is improving communication between different software solutions a challenge to be addressed by the vendor?",
+      "pmid": "36504142",
+      "fragment_id": 1,
+      "id": "36504142_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is the developed automated approach for quantitative analysis of tunneling nanotubes able to detect tnts that were not originally detected by human experts?",
+      "pmid": "36230881",
+      "fragment_id": 0,
+      "id": "36230881_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the objective of the pilot study using the Healthy Moms perinatal depression intervention in Kenya?",
+      "pmid": "31033448",
+      "fragment_id": 0,
+      "id": "31033448_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What approach is recommended for ensuring sound and ethical decisions when utilizing artificial intelligence in precision medicine?",
+      "pmid": "34870283",
+      "fragment_id": 0,
+      "id": "34870283_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the eus - cnn model accurate for the discrimination of gastric subepithelial tumors?",
+      "pmid": "34369001",
+      "fragment_id": 0,
+      "id": "34369001_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is the accuracy of the ocr-based method in identifying fine-grained attributes of the device higher than the results of the shodan cyber search engine by a considerable margin of 11.39%?",
+      "pmid": "35808388",
+      "fragment_id": 1,
+      "id": "35808388_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What are the findings regarding positive screening for developmental delay in preschool-aged patients with pcd compared to patients with cf and healthy children?",
+      "pmid": "31030258",
+      "fragment_id": 1,
+      "id": "31030258_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is deep learning criticized as a \"black box\" in cell imaging data?",
+      "pmid": "34077708",
+      "fragment_id": 0,
+      "id": "34077708_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What dataset was used to validate the approach for investigating possible causes of drift in effectiveness in smart homes?",
+      "pmid": "33451006",
+      "fragment_id": 1,
+      "id": "33451006_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are three open-access platforms that were transformative for global public health surveillance during the COVID-19 pandemic?",
+      "pmid": "37318761",
+      "fragment_id": 0,
+      "id": "37318761_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the average number of publications per year from 2010 to 2021?",
+      "pmid": "36820427",
+      "fragment_id": 1,
+      "id": "36820427_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Are deep learning algorithms effective tools for risk stratification and screening of myopic macular degeneration and high myopia?",
+      "pmid": "33890579",
+      "fragment_id": 1,
+      "id": "33890579_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is there currently a framework for generating hyperbolic based single neuronal spiking patterns in real-time?",
+      "pmid": "36086228",
+      "fragment_id": 0,
+      "id": "36086228_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What does the internet of things (IoT) enable machines and objects to do?",
+      "pmid": "30149582",
+      "fragment_id": 0,
+      "id": "30149582_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Does prenatal exposure to maternal metabolic complications have a significant association with neurodevelopmental problems in 3 - 4 year old children?",
+      "pmid": "30149267",
+      "fragment_id": 0,
+      "id": "30149267_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Did chatgpt - 4.0 have a statistically significant difference in the proportions of correct answers among different medical themes?",
+      "pmid": "37792871",
+      "fragment_id": 0,
+      "id": "37792871_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is it difficult to predict the need for multiple linear stapler cartridges during dst anastomosis based on pelvic magnetic resonance imaging (mri)?",
+      "pmid": "36688017",
+      "fragment_id": 0,
+      "id": "36688017_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Was treatment with memantine associated with improvements in verbal recognition memory as measured by the narrative memory - recognition (nepsy - ii)?",
+      "pmid": "34543081",
+      "fragment_id": 1,
+      "id": "34543081_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Did the models account for potential confounders including prenatal or postnatal urinary BPA concentrations, child age at CBCL assessment, ethnicity, gestational age, maternal intelligence, maternal education and demoralization, quality of child's home environment, prenatal environmental tobacco smoke exposure, and prenatal mono - n - butyl phthalate concentration?",
+      "pmid": "25724466",
+      "fragment_id": 1,
+      "id": "25724466_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is the hras variant c. 176c > t p. (ala59gly) a germline variant that has been previously reported in patients?",
+      "pmid": "37194190",
+      "fragment_id": 0,
+      "id": "37194190_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the name of the working group that proposed an updated response criteria for the evaluation of glial tumors?",
+      "pmid": "37470973",
+      "fragment_id": 0,
+      "id": "37470973_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the sensitivity of the assessors' opinion in newly registered patients at the outpatient clinic?",
+      "pmid": "33184817",
+      "fragment_id": 1,
+      "id": "33184817_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the purpose of the platform described in the paper?",
+      "pmid": "34072963",
+      "fragment_id": 0,
+      "id": "34072963_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What was the functional sample size after combining datasets using the multi-trait analysis of genome-wide association studies?",
+      "pmid": "29326435",
+      "fragment_id": 0,
+      "id": "29326435_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Can genetic diagnosis for inherited retinal diseases be slow, expensive, and not widely accessible?",
+      "pmid": "36940949",
+      "fragment_id": 0,
+      "id": "36940949_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What should be considered when interpreting the results of ERCP or IOC tests for common bile duct stones?",
+      "pmid": "25719222",
+      "fragment_id": 4,
+      "id": "25719222_4",
+      "question_type": "factual"
+    },
+    {
+      "question": "Can a new efficient 1D CNN-LSTM model be used for early PDAC diagnosis using four proteomic urine biomarkers?",
+      "pmid": "37069681",
+      "fragment_id": 1,
+      "id": "37069681_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is it possible to predict the future mental state of a patient using the available data?",
+      "pmid": "30135774",
+      "fragment_id": 0,
+      "id": "30135774_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Did the gang truce in El Salvador in 2012 significantly lower the homicide rate?",
+      "pmid": "27708471",
+      "fragment_id": 0,
+      "id": "27708471_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Which algorithm has the highest recall for overall performance and what is the granularity of the printability map generated by it compared to other algorithms?",
+      "pmid": "37469394",
+      "fragment_id": 1,
+      "id": "37469394_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the prevalence of suspected mild intellectual disability (MID) or borderline intellectual functioning (BIF) across different mental healthcare settings?",
+      "pmid": "33883055",
+      "fragment_id": 0,
+      "id": "33883055_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What features were selected in the machine learning model to obtain the best performance in da classification for different subgroups?",
+      "pmid": "33443602",
+      "fragment_id": 1,
+      "id": "33443602_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What were the median dice similarity coefficients for the penile bulb and corpora cavernosa achieved by the NNU-Net?",
+      "pmid": "37312973",
+      "fragment_id": 0,
+      "id": "37312973_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "How many children aged 6 - 18 years were selected for the survey conducted in China?",
+      "pmid": "36222029",
+      "fragment_id": 0,
+      "id": "36222029_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Does the OMO algorithm obtain an excellent leakage source tracing result in the application examples of 16, 9, and 4 sensors?",
+      "pmid": "35009615",
+      "fragment_id": 1,
+      "id": "35009615_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is d-orb available at https://d-orb.major.iric.ca/?",
+      "pmid": "37468182",
+      "fragment_id": 1,
+      "id": "37468182_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What technologies are key to extract relevant information from microbiome data for the study of gastrointestinal diseases?",
+      "pmid": "33880762",
+      "fragment_id": 0,
+      "id": "33880762_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the conclusion emphasizing the role of AI as a catalyst for change in radiology based on sustained innovation, dynamic partnerships, and a steadfast commitment to ethical responsibility?",
+      "pmid": "37685300",
+      "fragment_id": 1,
+      "id": "37685300_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is the Saudi Data and Artificial Intelligence Authority (SDAIA) responsible for facilitating the transition to a learning economy using data and AI technologies in Saudi Arabia?",
+      "pmid": "33876596",
+      "fragment_id": 0,
+      "id": "33876596_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What supports associative learning by providing reinforcement for behavior conditioning?",
+      "pmid": "31868538",
+      "fragment_id": 1,
+      "id": "31868538_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the topic of discussion?",
+      "pmid": "34702908",
+      "fragment_id": 1,
+      "id": "34702908_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the context information delimited by triple backticks?",
+      "pmid": "35314140",
+      "fragment_id": 1,
+      "id": "35314140_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Did the deep learning-based early warning system outperform the modified early warning score, random forest algorithm, and logistic regression?",
+      "pmid": "29945914",
+      "fragment_id": 1,
+      "id": "29945914_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is needed to overcome the limitations of intelligent hsi and implement it into clinical practice?",
+      "pmid": "35798904",
+      "fragment_id": 1,
+      "id": "35798904_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the most common problem identified in students with Specific Learning Disabilities (SLD) and Squamous Cell Carcinoma (SQ)?",
+      "pmid": "31865523",
+      "fragment_id": 1,
+      "id": "31865523_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Can novel magnetic resonance imaging techniques reveal altered neurovascular status in idiopathic Parkinson's disease?",
+      "pmid": "25379411",
+      "fragment_id": 0,
+      "id": "25379411_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Does our definition of the field of robophilosophy mirror an already existing definition?",
+      "pmid": "36211890",
+      "fragment_id": 1,
+      "id": "36211890_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Can using machine learning and deep learning methods significantly improve the performance of interpreting and managing healthcare data?",
+      "pmid": "37303531",
+      "fragment_id": 1,
+      "id": "37303531_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Were 87 papers deemed relevant for further review?",
+      "pmid": "36679626",
+      "fragment_id": 1,
+      "id": "36679626_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is artificial intelligence being used in dermatology research?",
+      "pmid": "33165383",
+      "fragment_id": 0,
+      "id": "33165383_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Did the second phase of precise learning improve the map and auc values?",
+      "pmid": "31856051",
+      "fragment_id": 1,
+      "id": "31856051_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What does the study suggest about the association between genetic liability for schizophrenia and cognitive performance?",
+      "pmid": "34347035",
+      "fragment_id": 2,
+      "id": "34347035_2",
+      "question_type": "factual"
+    },
+    {
+      "question": "Does the study address the challenge of balancing public health and individual privacy in government policies regarding technology use?",
+      "pmid": "33643498",
+      "fragment_id": 1,
+      "id": "33643498_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Did the deep learning system applied to single-lead ECGs achieve an AUROC of 0.91?",
+      "pmid": "34998740",
+      "fragment_id": 2,
+      "id": "34998740_2",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Did the study explore effective methodologies for utilizing the generative artificial intelligence (AI) system, ChatGPT, in improving clinical reasoning abilities among clinicians?",
+      "pmid": "37779351",
+      "fragment_id": 0,
+      "id": "37779351_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What were the findings regarding the effects of using a smartphone application on achievement motivation and social intelligence in female students at Taif University?",
+      "pmid": "32677032",
+      "fragment_id": 0,
+      "id": "32677032_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What was the level of agreement between Watson for Oncology and the multidisciplinary team for lung cancer treatment recommendations?",
+      "pmid": "32676314",
+      "fragment_id": 0,
+      "id": "32676314_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Does the development of a user-friendly metadata annotation system for neuroscience data improve the pace of data release?",
+      "pmid": "32219575",
+      "fragment_id": 0,
+      "id": "32219575_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What is the breaking strain of the polyacrylamide / carboxymethyl chitosan composite hydrogels obtained through the proposed one-step strategy?",
+      "pmid": "37778581",
+      "fragment_id": 0,
+      "id": "37778581_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What was the sensitivity, specificity, positive predictive value, negative predictive value, false omission rate, and f1 score for alexnet with the sgd optimizer in comparison to other state-of-the-art CNN architectures?",
+      "pmid": "35746208",
+      "fragment_id": 1,
+      "id": "35746208_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What ocular abnormalities are typically observed in patients with Alstrom syndrome?",
+      "pmid": "30578508",
+      "fragment_id": 0,
+      "id": "30578508_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Does DL CAC from SPECT/CT attenuation maps agree well with expert CAC annotations and provide a similar risk stratification but can be obtained automatically?",
+      "pmid": "36207138",
+      "fragment_id": 2,
+      "id": "36207138_2",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Did the 3DMTM algorithm achieve an AUC of 0.956 in the external test cohort?",
+      "pmid": "35305027",
+      "fragment_id": 1,
+      "id": "35305027_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Can children with autism spectrum disorder apply analogical reasoning to social information?",
+      "pmid": "27178998",
+      "fragment_id": 0,
+      "id": "27178998_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is rfid technology expected to play a vital role in the healthcare arena?",
+      "pmid": "23943057",
+      "fragment_id": 0,
+      "id": "23943057_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Does research on the neural efficiency hypothesis of intelligence reveal that the brains of more intelligent individuals consume less energy when performing easy cognitive tasks but more energy when engaged in difficult mental operations?",
+      "pmid": "25625894",
+      "fragment_id": 0,
+      "id": "25625894_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What percentage of breast and lymph node ctvs met the criteria of being fulfilled based on d98 > 95%?",
+      "pmid": "35618100",
+      "fragment_id": 1,
+      "id": "35618100_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Are computer vision and artificial intelligence being used in medicine to aid in clinical diagnosis and treatment?",
+      "pmid": "34341753",
+      "fragment_id": 0,
+      "id": "34341753_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Does proposed frameworks help increase trust in deep learning models by unveiling whether the network relies on clinically significant features for detecting cardiac abnormalities from 12-lead ECG signals?",
+      "pmid": "34689625",
+      "fragment_id": 1,
+      "id": "34689625_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What does the theme issue on advanced computation in cardiovascular physiology focus on?",
+      "pmid": "34689624",
+      "fragment_id": 0,
+      "id": "34689624_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is machine learning being used to improve the efficiency of identifying sound evidence in biomedical literature?",
+      "pmid": "34847061",
+      "fragment_id": 0,
+      "id": "34847061_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What are the significant correlations observed with full-scale intelligence quotient (FSIQ) in patients with the salt-wasting (SW) form of congenital adrenal hyperplasia (CAH)?",
+      "pmid": "30088136",
+      "fragment_id": 1,
+      "id": "30088136_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is suggested by the variability in agreement between human reviewers in debating controversial arguments and how does it impact the evaluation process?",
+      "pmid": "35923956",
+      "fragment_id": 1,
+      "id": "35923956_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is a particle-filter-based path tracking algorithm used for the recognition of target RGB in autonomous vehicles?",
+      "pmid": "37050714",
+      "fragment_id": 0,
+      "id": "37050714_0",
+      "question_type": "yes/no"
     }
   ]
 }

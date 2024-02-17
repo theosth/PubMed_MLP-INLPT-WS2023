@@ -41,6 +41,244 @@
       "fragment_id": 1,
       "id": "30769805_1",
       "question_type": "yes/no"
+    },
+    {
+      "question": "What tasks were the performance on correlated with (11)C-PBR28 binding in the study?",
+      "pmid": "23775979",
+      "fragment_id": 1,
+      "id": "23775979_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Does this study provide evidence of a potential negative impact of minority stress on cognitive performance in sexual minorities?",
+      "pmid": "37868765",
+      "fragment_id": 1,
+      "id": "37868765_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Does this study aim to evaluate the association between residential exposure to greenness and cognitive development at age 7?",
+      "pmid": "33131710",
+      "fragment_id": 0,
+      "id": "33131710_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is deep transfer learning used for the detection and classification of COVID-19 on CXR images in this study?",
+      "pmid": "36045956",
+      "fragment_id": 0,
+      "id": "36045956_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What model is proposed in this study to classify the positive psychology of online physical education teaching resources and demonstrate its better classification effect?",
+      "pmid": "35899016",
+      "fragment_id": 0,
+      "id": "35899016_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the automatic estimation of the Glasgow Coma Scale studied in this paper?",
+      "pmid": "37155550",
+      "fragment_id": 0,
+      "id": "37155550_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is the statement in the context information true or false?",
+      "pmid": "37435473",
+      "fragment_id": 1,
+      "id": "37435473_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Does this study suggest that daily trips between 250 and 500 mi contribute to predicting daily new cases of Covid-19?",
+      "pmid": "37153208",
+      "fragment_id": 0,
+      "id": "37153208_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What was the area under the receiver operating characteristic curve for the best classifier in the study?",
+      "pmid": "29721515",
+      "fragment_id": 0,
+      "id": "29721515_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the problem of emergent cognitive capabilities and their detection addressed in this article?",
+      "pmid": "36173656",
+      "fragment_id": 0,
+      "id": "36173656_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What were the achieved precision, recall, and f1 score for the question classification performance in the study?",
+      "pmid": "28634156",
+      "fragment_id": 1,
+      "id": "28634156_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the aim of this study on health data and AI governance mechanisms?",
+      "pmid": "35099403",
+      "fragment_id": 0,
+      "id": "35099403_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Does this study provide a software tool that utilizes deep-learning to overcome signal segmentation challenges?",
+      "pmid": "35573197",
+      "fragment_id": 0,
+      "id": "35573197_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Did this study conclude that data mining and predictive analytical models like the weka tool can improve patient outcomes and identify variables for effective interventions in tobacco cessation?",
+      "pmid": "36042799",
+      "fragment_id": 1,
+      "id": "36042799_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What was the impact of recovering previously unentered data on the sample sizes in the study?",
+      "pmid": "26497158",
+      "fragment_id": 0,
+      "id": "26497158_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Was a commercial software package used for efficient annotation and data management in this study?",
+      "pmid": "31358460",
+      "fragment_id": 0,
+      "id": "31358460_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Does the 3D pose model in this study have the ability to correct motion data in real time and display the human body's motion posture?",
+      "pmid": "37420630",
+      "fragment_id": 0,
+      "id": "37420630_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What was the area under the receiver operating characteristic (ROC) curve for the high accuracy AI model in the study?",
+      "pmid": "37367443",
+      "fragment_id": 1,
+      "id": "37367443_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "Is the degradability of fabrics made from pla/phb blends in marine seawater confirmed in this study?",
+      "pmid": "36616431",
+      "fragment_id": 0,
+      "id": "36616431_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Does this study assess interprofessional participants' ability to respond to VR-simulated OR fire scenarios?",
+      "pmid": "34264400",
+      "fragment_id": 0,
+      "id": "34264400_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Can the model developed in this study be used as a supplementary diagnostic tool for radiologists in the screening and diagnosis of breast cancer?",
+      "pmid": "37238264",
+      "fragment_id": 1,
+      "id": "37238264_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What does this study suggest about the potential for rate enhancements in enzymes by identifying and re-engineering reactive regions within the conformational space of the enzyme-substrate complex?",
+      "pmid": "30761897",
+      "fragment_id": 1,
+      "id": "30761897_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are the top three prevalent diseases in the study population?",
+      "pmid": "35678074",
+      "fragment_id": 0,
+      "id": "35678074_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What method was used to assess attractiveness and perceived age in the study on the influence of dental alignment on facial attractiveness and perceived age?",
+      "pmid": "35532375",
+      "fragment_id": 0,
+      "id": "35532375_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What was the effect of maternal obesity on child IQ in the study?",
+      "pmid": "24569381",
+      "fragment_id": 0,
+      "id": "24569381_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What are some challenges to long-term medical follow-up in adolescents identified in this study?",
+      "pmid": "35969442",
+      "fragment_id": 2,
+      "id": "35969442_2",
+      "question_type": "factual"
+    },
+    {
+      "question": "What was the purpose of collecting crowd-generated labels for tweets and developing machine learning models in the study?",
+      "pmid": "35040794",
+      "fragment_id": 0,
+      "id": "35040794_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What were the three events that were predicted in the study and how many patients were included in the development cohort?",
+      "pmid": "34734837",
+      "fragment_id": 0,
+      "id": "34734837_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "What percentage of children in the study had a mild neurodevelopmental delay after amnioinfusion or no intervention?",
+      "pmid": "31984652",
+      "fragment_id": 1,
+      "id": "31984652_1",
+      "question_type": "factual"
+    },
+    {
+      "question": "What is the purpose of this study on coal mine sustainable development?",
+      "pmid": "35963970",
+      "fragment_id": 0,
+      "id": "35963970_0",
+      "question_type": "factual"
+    },
+    {
+      "question": "Does the assistance provided in the context help the advanced reader to identify open research topics?",
+      "pmid": "30174562",
+      "fragment_id": 1,
+      "id": "30174562_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is a fully-mapped FPGA accelerator proposed for AI-based analysis of electrocardiogram (ECG) in this paper?",
+      "pmid": "36814476",
+      "fragment_id": 0,
+      "id": "36814476_0",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "Is the experimental time-series dataset for impact detection and localization proposed in the context able to achieve higher than 90% accuracy?",
+      "pmid": "36679690",
+      "fragment_id": 1,
+      "id": "36679690_1",
+      "question_type": "yes/no"
+    },
+    {
+      "question": "What were the non-linguistic theories of dyslexia investigated in the study and how were the participants clustered based on their performance in these theories?",
+      "pmid": "32922276",
+      "fragment_id": 0,
+      "id": "32922276_0",
+      "question_type": "factual"
     }
   ]
 }
