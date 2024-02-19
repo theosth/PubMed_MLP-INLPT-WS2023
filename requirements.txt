@@ -1,6 +1,8 @@
 pandas==2.0.3 # requirement of opensearch-py-ml
 deprecated~=1.2.14  # requirement of opensearch-py-ml
 accelerate~=0.26.1  # requirement of opensearch-py-ml
+python-dotenv
+bitsandbytes
 
 Bio==1.6.2
 datasets==2.16.1
