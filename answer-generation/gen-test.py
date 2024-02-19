@@ -1,13 +1,11 @@
-import os
-from transformers import AutoTokenizer
-from dotenv import load_dotenv
+from langchain_community.llms import Ollama
+import subprocess
+import sys
 
-# load environment variables from .env file
-from dotenv import load_dotenv, find_dotenv
-_ = load_dotenv(find_dotenv(raise_error_if_not_found=True))
-#tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-2-13b-chat-hf", token=os.getenv("HF_AUTH"))
+subprocess.run("ollama pull llama2", shell=True, text=True,  stdout=sys.stdout, stderr=sys.stderr)
+model = Ollama(model="llama2")
 
-import ollama
-
-resp = ollama.generate(model='llama2', )
-print(resp)
+print(model.invoke("Tell me a math joke"))
+print(model.invoke("Tell me a pyhsics joke"))
+print(model.invoke("Tell me a computer science joke"))
+print(model.invoke("Tell me a biology joke"))

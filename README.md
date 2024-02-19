@@ -11,6 +11,12 @@
 
 ## Setup project environment
 
+### Ollama
+
+Install Ollama for your OS following the instructions at https://ollama.com/. 
+We STRONGLY recommend using some kind of acceleration. It is also best to run it WITHOUT docker. 
+Tested on MacOS and Ubunutu. 
+
 ### OpenSearch
 
 On Windows, one can install OpenSearch directly on the system. Keep in mind that this somewhat complicates the insertion of 
@@ -136,7 +142,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-4. Create a .env.loacl file in the root directory and add the following variables
+4. Create a .env.local file in the root directory and add the following variables
 ```env
 HF_TOKEN=YOUR_HUGGINGFACE_API_TOKEN
 ```
