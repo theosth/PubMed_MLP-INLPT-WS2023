@@ -3,6 +3,11 @@ import ijson
 import random
 from openai import OpenAI
 import time
+import os
+
+# load environment variables from .env file
+from dotenv import load_dotenv, find_dotenv
+_ = load_dotenv(find_dotenv(raise_error_if_not_found=True))
 
 
 def loadRandomDocuments(file_path, number_of_documents):
@@ -65,16 +70,16 @@ Remember to only use phrases that don't require context for the person reading t
 
 
 def validateQuestion(question):
-    criticalPhrases = ['in the study', 'in the context', 'in the sample', 'in the text', 'in this']
+    criticalPhrases = ['in the study', 'in the context', 'in the sample', 'in the text', 'in this', 'this study']
     for phrase in criticalPhrases:
         if phrase in question:
             return False
 
     return True
 
-client = OpenAI(api_key = <YOUR_API_KEY>)
+client = OpenAI(api_key = os.getenv("OPEN_API_KEY"))
 
-numberOfQuestionsToBeGenerated = 100
+numberOfQuestionsToBeGenerated = 500
 
 validCounter = 0
 needManualCheckCounter = 0
@@ -83,8 +88,7 @@ randomDocuments = loadRandomDocuments('../../fragment-dataset.json', numberOfQue
 
 for x in range(0,numberOfQuestionsToBeGenerated):
     # Randomly assign whether to ask yes/no or factual question
-    #isYesNoQuestion = random.randint(0, 1)
-    isYesNoQuestion = True
+    isYesNoQuestion = random.randint(0, 1)
     doc = randomDocuments[x-1]
     if isYesNoQuestion:
         question = askYesNoQuestion(doc['abstract_fragment'], client)
