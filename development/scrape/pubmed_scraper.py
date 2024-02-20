@@ -1,51 +1,94 @@
-from Bio import Entrez
-import math
-from tqdm import tqdm
-import pickle
 import datetime
+import math
 import os
+import pickle
 
-Entrez.email = 'benedikt.vidic@gmx.de'
+from Bio import Entrez
+from tqdm import tqdm
 
-allIds = []
+# ===== Constants =====
+DATABASE_NAME = "pubmed"
+ANSWER_FORMAT = "xml"
+SEARCH_TERM = "intelligence[Title/Abstract]"
+PERSISTENCE_DIR = "data"
+PERSISTENCE_FILE = "raw.pkl"
+ID_BATCH_SIZE_LIMIT = 10000
+DOC_BATCH_SIZE_LIMIT = 1000
+# ===== Constants =====
 
-for x in range(0,22):
-    year = 2013 + math.floor(x/2)
-    startMonth = '01' if x%2 == 0 else '07'
-    endMonth = '06' if x%2 == 0 else '12'
 
-    handle = Entrez.esearch(db='pubmed',
-    retstart=0,
-    retmax='10000', #10000 ids per fetch is an api limit
-    retmode='xml',
-    mindate=str(year)+'/'+startMonth,
-    maxdate=str(year)+'/'+endMonth,
-    term='intelligence[Title/Abstract]')
+def fetch_relevant_document_ids(start_year, end_year, checkpoints_per_year):
+    Entrez.email = 'benedikt.vidic@gmx.de'
+    relevant_ids = []
 
-    result = Entrez.read(handle)
+    for checkpoint in range(0, (end_year - start_year) * checkpoints_per_year):
+        # Define time span
+        year = start_year + math.floor(checkpoint / checkpoints_per_year)
+        start_month = '01' if checkpoint % 2 == 0 else '07'
+        end_month = '06' if checkpoint % 2 == 0 else '12'
 
-    batch_ids = result['IdList']
-    print('ids in batch:',len(batch_ids))
-    allIds += batch_ids
+        # Retrieve document handles for that time span
+        batch_result = Entrez.read(
+            Entrez.esearch(db=DATABASE_NAME,
+                           retstart=0,
+                           retmax=ID_BATCH_SIZE_LIMIT,  # 10000 ids per fetch is an api limit
+                           retmode=ANSWER_FORMAT,
+                           mindate=str(year) + '/' + start_month,
+                           maxdate=str(year) + '/' + end_month,
+                           term=SEARCH_TERM
+                           )
+        )
 
-print('total number of IDs fetched:')
-print(len(allIds))
-assert len(allIds) == len(set(allIds))  # assert unique IDs
+        # Extract document ids
+        batch_ids = batch_result["IdList"]
+        print(f"Batch ID Count: {len(batch_ids)}")
+        relevant_ids += batch_ids
 
-batch_size = 1000
-all_results = []
-for i in tqdm(range(0, len(allIds), batch_size)):
-    handle = Entrez.efetch(db='pubmed', id=allIds[i:i + batch_size])
-    # handle = Entrez.efetch(db='pubmed', id=allIds[i:i+step_size], rettype='docsum', retmode='xml')
-    batch = Entrez.read(handle)
-    all_results.append(batch)
-print('download to memory complete.')
+    print(f"Total ID Count: {len(relevant_ids)}")
+    return relevant_ids
 
-#abstracts = [article['MedlineCitation']['Article']['Abstract']['AbstractText'] for article in result['PubmedArticle']]
 
-print('saving results...')
-if not os.path.exists('data'):
-    os.mkdir('data')
-with open('data/raw.pkl', 'wb') as f:
-    pickle.dump({'batched_data': all_results, 'timestamp': datetime.datetime.now()}, f)
-print('results saved as pkl.')
+def fetch_relevant_documents(relevant_document_ids):
+    relevant_documents = []
+    for index in tqdm(range(0, len(relevant_document_ids), DOC_BATCH_SIZE_LIMIT)):
+        batch_documents = Entrez.read(
+            Entrez.efetch(
+                db=DATABASE_NAME,
+                id=relevant_document_ids[index:index + DOC_BATCH_SIZE_LIMIT],
+                retmode=ANSWER_FORMAT
+            )
+        )
+        relevant_documents.append(batch_documents)
+    return relevant_documents
+
+
+def save_relevant_documents(relevant_documents):
+    print("Saving Documents...")
+    if not os.path.exists(PERSISTENCE_DIR):
+        os.mkdir(PERSISTENCE_DIR)
+
+    with open(f"{PERSISTENCE_DIR}/{PERSISTENCE_FILE}", "wb") as output:
+        pickle.dump({
+            'batched_data': relevant_documents,
+            'timestamp': datetime.datetime.now()
+        }, output)
+
+    print("Documents successfully saved!")
+
+
+def main():
+    relevant_document_ids = fetch_relevant_document_ids(
+        start_year=2013,
+        end_year=2024,
+        checkpoints_per_year=2
+    )
+
+    # Assert ID uniqueness
+    assert len(relevant_document_ids) == len(set(relevant_document_ids))
+
+    relevant_documents = fetch_relevant_documents(relevant_document_ids)
+    save_relevant_documents(relevant_documents)
+
+
+if __name__ == '__main__':
+    main()
