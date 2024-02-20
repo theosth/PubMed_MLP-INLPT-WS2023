@@ -2,7 +2,8 @@ import sys
 from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 import requests
-from model import hf_misc
+from development.legacy.model import hf_misc
+
 
 # just an example for how we would later call the model through an API
 def get_answer_from_model_BiobertBase(question):

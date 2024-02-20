@@ -3,8 +3,8 @@ import sys
 from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 # How we would later import the model api call function from the api folder
-from model import pubMedModel
-from api.model_api_connector import Question, ask_question
+from development.legacy.model import pubMedModel
+from development.website.api.model_api_connector import Question, ask_question
 
 import streamlit as st
 # from streamlit_chat import messages

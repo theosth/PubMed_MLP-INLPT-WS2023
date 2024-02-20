@@ -1,7 +1,7 @@
 import sys
 from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
-import opensearch_connector as ops
+from development.retrieve import opensearch_connector as ops
 import streamlit as st
 
 

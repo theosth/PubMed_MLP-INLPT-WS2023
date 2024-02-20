@@ -11,7 +11,7 @@ import torch
 
 def get_hf_access_token():
     """Load the access token from the .env.local file."""
-    load_dotenv(dotenv_path=Path('.').absolute().parent / '.env.local')
+    load_dotenv(dotenv_path=Path('').absolute().parent / '.env.local')
     hf_token = os.getenv('HF_TOKEN')
     if hf_token:
         print("Hugging Face token loaded successfully.")

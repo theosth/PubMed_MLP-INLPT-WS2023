@@ -1,17 +1,17 @@
 import json
-from opensearchpy import OpenSearch, helpers
+from opensearchpy import helpers
 from opensearchpy.exceptions import NotFoundError
 from opensearch_py_ml.ml_commons import MLCommonClient
 from opensearch_py_ml.ml_models import SentenceTransformerModel
-from commons.utils import get_model_id, get_opensearch_client
+from development.commons import get_model_id, get_opensearch_client
 import sys
 from tqdm import tqdm
-import commons.env as env
+import development.commons.env as env
 
 
 content_name = 'abstract_fragment'
 content_emb_name = "abstract_fragment_embedding"
-embedding_model_download_path = "data/embedding_model"
+embedding_model_download_path = "../scrape/data/embedding_model"
 
 client = get_opensearch_client()
 

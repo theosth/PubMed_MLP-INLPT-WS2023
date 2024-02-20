@@ -1,9 +1,9 @@
 import sys
 from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
-from model import hf_misc
-from api.model_api_connector import Question
-from fastapi import FastAPI, HTTPException
+from development.legacy.model import hf_misc
+from development.website.api.model_api_connector import Question
+from fastapi import FastAPI
 import torch
 
 app = FastAPI()

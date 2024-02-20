@@ -105,10 +105,10 @@ for x in range(0,numberOfQuestionsToBeGenerated):
         "question_type": "yes/no" if isYesNoQuestion else "factual"
     }
     if isValid:
-        addQuestionToJson(questionObject, "./retrieval-testset.json")
+        addQuestionToJson(questionObject, "retrieval-testset.json")
         validCounter += 1
     else:
-        addQuestionToJson(questionObject, "./questions-to-be-checked.json")
+        addQuestionToJson(questionObject, "questions-to-be-checked.json")
         needManualCheckCounter += 1
 
     # pause for 21 seconds to avoid issues with the api rate limit of 3 Requests per Minute

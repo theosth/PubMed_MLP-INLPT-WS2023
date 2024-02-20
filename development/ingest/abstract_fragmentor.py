@@ -3,7 +3,7 @@ from tqdm import tqdm
 import sys
 from langchain.text_splitter import SentenceTransformersTokenTextSplitter
 import datetime
-import commons.env as env
+import development.commons.env as env
 
 embed_model_id = env.embedding_model_name
 chunk_overlap = 32

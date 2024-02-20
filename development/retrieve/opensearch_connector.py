@@ -1,5 +1,4 @@
-import json
-from commons.utils import get_model_id, get_opensearch_client
+from development.commons import get_model_id, get_opensearch_client
 
 CLIENT = get_opensearch_client()
 

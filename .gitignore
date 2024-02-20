@@ -7,7 +7,7 @@
 *.DS_Store
 
 # datasets
-data/
+development/scrape/data/
 
 
 
@@ -82,7 +82,7 @@ instance/
 .scrapy
 
 # Sphinx documentation
-docs/_build/
+management/docs/_build/
 
 # PyBuilder
 .pybuilder/
