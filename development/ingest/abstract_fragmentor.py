@@ -1,52 +1,69 @@
-import json
-from tqdm import tqdm
-import sys
-from langchain.text_splitter import SentenceTransformersTokenTextSplitter
 import datetime
+import json
+import sys
+
+from langchain.text_splitter import SentenceTransformersTokenTextSplitter
+from tqdm import tqdm
+
 import development.commons.env as env
 
-embed_model_id = env.embedding_model_name
-chunk_overlap = 32
-token_per_chunk = 256
 
-print("Loading text splitter using tokenizer of model:", embed_model_id)
-splitter = SentenceTransformersTokenTextSplitter(
-    model_name=embed_model_id,  
-    chunk_overlap=chunk_overlap,  
-    tokens_per_chunk=token_per_chunk
-)
+def load_document_splitter():
+    print(f"[{datetime.datetime.now()}] Loading Document Splitter ({env.EMBEDDING_MODEL_NAME})")
+    return SentenceTransformersTokenTextSplitter(
+        model_name=env.EMBEDDING_MODEL_NAME,
+        chunk_overlap=env.FRAGMENT_OVERLAP,
+        tokens_per_chunk=env.TOKENS_PER_FRAGMENT
+    )
 
-print("Loading dataset...")
-with open('data/dataset.json', 'r') as f:
-    dataset = json.load(f)
 
-documents = dataset['documents']
+def load_dataset():
+    print(f"[{datetime.datetime.now()}] Loading Documents")
+    with open(env.CLEANED_DATASET_PATH, 'r') as input:
+        dataset = json.load(input)
+    return dataset
 
-print("Splitting documents into fragments...")
-fragments = []
-for doc in tqdm(documents, total=len(documents), file=sys.stdout):
-    chunks = splitter.split_text(text=doc['abstract'])
-    
-    for i, c in enumerate(chunks):
-        doc_chunk = doc.copy()
 
-        del doc_chunk['abstract']
-        doc_chunk['fragment_id'] = i
-        doc_chunk['number_of_fragments'] = len(chunks) 
-        doc_chunk['abstract_fragment'] = c
-        doc_chunk['id'] = f"{doc['pmid']}_{i}"
+def split_documents(dataset, splitter):
+    print(f"[{datetime.datetime.now()}] Splitting Documents...")
+    documents = dataset["documents"]
+    fragments = []
 
-        fragments.append(doc_chunk)
+    for document in tqdm(documents, total=len(documents), file=sys.stdout):
+        abstract_fragments = splitter.split_text(text=document['abstract'])
+        for index, fragment in enumerate(abstract_fragments):
+            document_fragment = document.copy()
 
-print(f"Collected {len(fragments)} fragments from {len(documents)} documents")
+            del document_fragment['abstract']
+            document_fragment['fragment_id'] = index
+            document_fragment['number_of_fragments'] = len(abstract_fragments)
+            document_fragment['abstract_fragment'] = fragment
+            document_fragment['id'] = f"{document['pmid']}_{index}"
+            fragments.append(document_fragment)
 
-dataset = {'dataset_scraped_on': dataset['dataset_scraped_on'],
-           'dataset_cleaned_on': dataset['dataset_cleaned_on'],
-           'dataset_fragmented_on': datetime.datetime.now(),
-           'documents': fragments}
+    print(f"[{datetime.datetime.now()}] Collected {len(fragments)} fragments from {len(documents)} documents")
+    dataset = {
+        'dataset_scraped_on': dataset['dataset_scraped_on'],
+        'dataset_cleaned_on': dataset['dataset_cleaned_on'],
+        'dataset_fragmented_on': datetime.datetime.now(),
+        'documents': fragments
+    }
+    return dataset
 
-loc = env.fragment_dataset_location
-print("Saving fragmented dataset to", loc)
-with open(loc, 'w') as f:
-    json.dump(dataset, f, indent=2, default=str)
-print("Success!")
+
+def save_fragments(fragments):
+    print(f"[{datetime.datetime.now()}] Saving Fragments ({env.FRAGMENT_DATASET_PATH})")
+    with open(env.FRAGMENT_DATASET_PATH, 'w') as output:
+        json.dump(fragments, output, indent=2, default=str)
+    print(f"[{datetime.datetime.now()}] Fragments successfully saved!")
+
+
+def main():
+    splitter = load_document_splitter()
+    dataset = load_dataset()
+    fragments = split_documents(dataset, splitter)
+    save_fragments(fragments)
+
+
+if __name__ == '__main__':
+    main()
