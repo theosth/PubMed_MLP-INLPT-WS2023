@@ -1,11 +1,19 @@
-# Opensearch creds
-opensearch_host = 'localhost'  # Replace with your opensearch host
-opensearch_port = 9200  # Replace with your opensearch port
-opensearch_auth = ('admin', 'admin')  # Replace with your opensearch creds
+# OpenSearch
+OPENSEARCH_HOST = "localhost"
+OPENSEARCH_PORT = 9200
+OPENSEARCH_AUTH = ('admin', 'admin')
 
-opensearch_index_name = 'abstracts'
+# Data Indices
+OPENSEARCH_FRAGMENT_INDEX = "fragments"
+OPENSEARCH_ABSTRACT_INDEX = "abstracts"
 
-embedding_model_name = 'pritamdeka/S-PubMedBert-MS-MARCO'
-embedding_dim = 768  # must match output of embedding model
+# Embedding
+EMBEDDING_MODEL_NAME = "pritamdeka/S-PubMedBert-MS-MARCO"
+EMBEDDING_DIMENSION = 768
+FRAGMENT_OVERLAP = 32
+TOKENS_PER_FRAGMENT = 256
 
-fragment_dataset_location = 'data/fragment-dataset.json' # should be relative to root of project
+# Data Flow
+FRAGMENT_DATASET_PATH = "data/fragments2.json"
+RAW_DATASET_PATH = "development/scrape/data/raw.pkl"
+CLEANED_DATASET_PATH = "../scrape/data/dataset.json"

@@ -16,13 +16,13 @@ def get_model_id(client: Union[MLCommonClient, OpenSearch]):
 
     if response['hits']['total']['value'] == 0:
         raise NotFoundError("No models found in cluster")
-    
+
     return response['hits']['hits'][0]['_source']['model_id']
 
 def get_opensearch_client():
     return OpenSearch(
-        hosts=[{'host': env.opensearch_host, 'port': env.opensearch_port}],
-        http_auth=env.opensearch_auth,
+        hosts=[{'host': env.OPENSEARCH_HOST, 'port': env.OPENSEARCH_PORT}],
+        http_auth=env.OPENSEARCH_AUTH,
         use_ssl=True,
         verify_certs=False,
         ssl_assert_hostname=False,

@@ -5,17 +5,17 @@ import sys
 
 from tqdm import tqdm
 
+import development.commons.env as env
+
 # ===== Constants =====
-DOCUMENTS_INPUT_PATH = "data/raw.pkl"
-EXTRACTION_OUTPUT_PATH = "data/dataset.json"
 ABSTRACT_JOIN_SEPARATOR = "\n"
 AUTHOR_NAME_SEPARATOR = " "
 # ===== Constants =====
 
 
 def load_documents():
-    print(f"[{datetime.datetime.now()}] Loading 14GB of Documents ({DOCUMENTS_INPUT_PATH})...")
-    with open(DOCUMENTS_INPUT_PATH, "rb") as input:
+    print(f"[{datetime.datetime.now()}] Loading 14GB of Documents ({env.RAW_DATASET_PATH})...")
+    with open(env.RAW_DATASET_PATH, "rb") as input:
         documents = pickle.load(input)
     print(f"[{datetime.datetime.now()}] Documents successfully loaded!")
     return documents
@@ -166,9 +166,9 @@ def extract_relevant_information(data):
 
 def save_extraction(extraction):
     print(f"[{datetime.datetime.now()}] Saving extracted relevant information...")
-    with open(EXTRACTION_OUTPUT_PATH, "w") as output:
+    with open(env.CLEANED_DATASET_PATH, "w") as output:
         json.dump(extraction, output, indent=2, default=str)
-    print(f"[{datetime.datetime.now()}] Information successfully saved to {EXTRACTION_OUTPUT_PATH}!")
+    print(f"[{datetime.datetime.now()}] Information successfully saved to {env.CLEANED_DATASET_PATH}!")
 
 
 def main():

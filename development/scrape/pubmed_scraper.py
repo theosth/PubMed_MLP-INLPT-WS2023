@@ -1,17 +1,16 @@
 import datetime
 import math
-import os
 import pickle
 
 from Bio import Entrez
 from tqdm import tqdm
 
+import development.commons.env as env
+
 # ===== Constants =====
 DATABASE_NAME = "pubmed"
 ANSWER_FORMAT = "xml"
 SEARCH_TERM = "intelligence[Title/Abstract]"
-PERSISTENCE_DIR = "data"
-PERSISTENCE_FILE = "raw.pkl"
 ID_BATCH_SIZE_LIMIT = 10000
 DOC_BATCH_SIZE_LIMIT = 1000
 # ===== Constants =====
@@ -64,10 +63,7 @@ def fetch_relevant_documents(relevant_document_ids):
 
 def save_relevant_documents(relevant_documents):
     print("Saving Documents...")
-    if not os.path.exists(PERSISTENCE_DIR):
-        os.mkdir(PERSISTENCE_DIR)
-
-    with open(f"{PERSISTENCE_DIR}/{PERSISTENCE_FILE}", "wb") as output:
+    with open(env.RAW_DATASET_PATH, "wb") as output:
         pickle.dump({
             'batched_data': relevant_documents,
             'timestamp': datetime.datetime.now()
