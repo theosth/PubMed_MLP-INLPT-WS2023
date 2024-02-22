@@ -9,7 +9,7 @@ services:
       - discovery.seed_hosts=opensearch-node # Nodes to look for when discovering the cluster
       - cluster.initial_cluster_manager_nodes=opensearch-node # Nodes eligible to serve as cluster manager
       - bootstrap.memory_lock=true # Disable JVM heap memory swapping
-      - "OPENSEARCH_JAVA_OPTS=-Xms1024m -Xmx1024m" # Set min and max JVM heap sizes to at least 50% of system RAM
+      - "OPENSEARCH_JAVA_OPTS=-Xms8192m -Xmx8192m" # Set min and max JVM heap sizes to at least 50% of system RAM
     ulimits:
       memlock:
         soft: -1 # Set memlock to unlimited (no soft or hard limit)
@@ -36,7 +36,14 @@ services:
       OPENSEARCH_HOSTS: '["https://opensearch-node:9200"]' # Define the OpenSearch nodes that OpenSearch Dashboards will query
     networks:
       - opensearch-net
-
+ 
+ 
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    # ! TODO Add Ports
+    networks:
+      - opensearch-net
 
 networks:
   opensearch-net:
