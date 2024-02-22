@@ -9,6 +9,7 @@
 # datasets
 development/scrape/data/
 development/ingest/data/
+*data
 
 
 
