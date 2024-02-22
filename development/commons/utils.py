@@ -1,4 +1,8 @@
-import env
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).parent.parent))
+
+import development.commons.env as env
 
 from typing import Union
 
