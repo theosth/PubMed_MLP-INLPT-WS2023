@@ -8,16 +8,62 @@ from development.retrieve.opensearch_connector import (
     create_hybrid_query,
     extract_hits_from_response,
 )
-import development.commons.env as env
+import ijson
+from pydantic import BaseModel, FilePath
+from typing import Callable
+import pandas as pd
+from tqdm import tqdm
+import time
 
 # from 0.0 to 1.0 with 0.05 steps
-PIPELINE_WEIGHTS = [i / 20 for i in range(21)]
+
 # INDEX = env.OPENSEARCH_FRAGMENT_INDEX
 INDEX = "abstracts"  # TODO! change to the correct index when adjusted in opensearch
 
 
+class Query(BaseModel):
+    question: str
+    pmid: str
+    fragment_id: int
+    id: str
+    question_type: str
+
+
+def read_questions_from_json(
+    file_path: FilePath, num_lines: int, max_questions: int = None
+):
+    """
+    Read a specified number of questions at a time from a JSON file, with an optional limit on the total number of questions.
+    :param file_path: The path to the JSON file.
+    :param num_lines: The number of questions to read at a time.
+    :param max_questions: The maximum number of questions to process (optional).
+    :yield: A list of questions.
+    """
+    with open(file_path, "rb") as file:
+        objects = ijson.items(file, "questions.item")
+        buffer = []
+        questions_yielded = 0
+
+        for question in objects:
+            if max_questions is not None and questions_yielded >= max_questions:
+                break  # Stop reading if the maximum number of questions has been reached
+
+            buffer.append(question)
+            if len(buffer) == num_lines:
+                yield buffer
+                questions_yielded += len(buffer)
+                buffer = []
+
+        if buffer and (max_questions is None or questions_yielded < max_questions):
+            yield buffer  # Yield any remaining questions in the buffer
+
+
 # metrics for evaluation
-def binary_check(retrieved_document_ids: list, relevant_document_id: str, eval_metric_settings=None) -> int:
+def binary_check(
+    retrieved_document_ids: list[str],
+    relevant_document_id: str,
+    eval_metric_settings=None,
+) -> int:
     """
     Check if the relevant document is in the retrieved list.
     :param retrieved_document_ids: List of retrieved document IDs.
@@ -27,7 +73,11 @@ def binary_check(retrieved_document_ids: list, relevant_document_id: str, eval_m
     return int(relevant_document_id in retrieved_document_ids)
 
 
-def rank_score(retrieved_document_ids: list, relevant_document_id: str, eval_metric_settings=None) -> float:
+def rank_score(
+    retrieved_document_ids: list[str],
+    relevant_document_id: str,
+    eval_metric_settings=None,
+) -> float:
     """
     Compute the  rank of the relevant document in the retrieved list.
     :param retrieved_document_ids: List of retrieved document IDs.
@@ -42,157 +92,146 @@ def rank_score(retrieved_document_ids: list, relevant_document_id: str, eval_met
 
 
 def binary_at_k(
-    retrieved_document_ids: list, relevant_document_id: str, k: int
+    retrieved_document_ids: list[str],
+    relevant_document_id: str,
+    eval_metric_settings: dict[str, any],
 ) -> int:
     """
     Check if the relevant document is within the top-k retrieved documents.
     :param retrieved_document_ids: List of retrieved document IDs.
     :param relevant_document_id: The relevant document ID.
-    :param k: The cut-off rank (top-k).
+    :param eval_metric_settings: A dictionary containing settings for the evaluation metric.
+        The settings should include the value of k.
     :return: 1 if the relevant document is within the top-k, else 0.
     """
+    if eval_metric_settings is None or "k" not in eval_metric_settings:
+        raise ValueError("Settings for k must be provided.")
+    k = eval_metric_settings["k"]
     return int(relevant_document_id in retrieved_document_ids[:k])
 
 
 def evaluate_pipeline(
     pipeline_weight: float,
-    querys: list[dict],
+    queries: list[Query],
     index: str,
-    source_includes: list,
+    source_includes: list[str],
     size: int,
-    eval_metric,
-    eval_metric_settings=None,
-):  
+    eval_metrics: list[Callable[[list[str], str, dict[str, any]], float]],
+    eval_metric_settings: list[dict[str, any]] = None,
+) -> list[dict[str, float]]:
+    """
+    Evaluate a set of queries against a search pipeline using multiple evaluation metrics.
+
+    This function executes a search query for each query in the provided list using a hybrid search by neural-weight.
+    It then evaluates the search results against each of the specified evaluation metrics
+    to generate a score for each query, under each metric.
+
+    :param pipeline_weight: The weight to be applied to the pipeline's hybrid query mechanism.
+    :param queries: A list of Query objects, where each Query contains information for executing a search.
+    :param index: The name of the OpenSearch index to query against.
+    :param source_includes: A list of source fields to include in the response from OpenSearch.
+    :param size: The number of search results (documents) to retrieve.
+    :param eval_metrics: A list of callable evaluation metrics. Each metric function should accept a list of
+        document IDs (as strings), the relevant document ID (as a string), and a settings dictionary,
+        returning a float score.
+    :param eval_metric_settings: A list of dictionaries containing settings for each evaluation metric.
+        Each dictionary in this list corresponds to the respective metric in `eval_metrics`.
+        If None, an empty dictionary is used for each metric.
+
+    :return: A list of dictionaries, each representing the scores of a single query across all metrics.
+        The keys in each dictionary are the names of the evaluation metrics, and the values are the scores.
+
+    :raises ValueError: If the length of `eval_metrics` does not match the length of `eval_metric_settings`.
+    """
+
+    if eval_metric_settings is None:
+        # Set default to {} if not provided
+        eval_metric_settings = [{} for _ in eval_metrics]
+
+    # Ensure length of settings list matches length of eval_metrics
+    if len(eval_metrics) != len(eval_metric_settings):
+        raise ValueError("Length of eval_metrics and eval_metric_settings must match.")
+
     scores = []
-    for query in querys:
-        hybrid_query = create_hybrid_query(query["question"])
+    for query in queries:
+        hybrid_query = create_hybrid_query(query.question)
         response = execute_hybrid_query(
             hybrid_query, pipeline_weight, index, source_includes, size
         )
         hits = extract_hits_from_response(response)
         retrieved_document_ids = [hit["_id"] for hit in hits]
-        score = eval_metric(retrieved_document_ids, query["id"], eval_metric_settings)
-        scores.append(score)
+
+        # Apply each evaluation metric to the query results
+        query_scores = {
+            "pipeline_weight": pipeline_weight,
+            "query_id": query.id,
+            "retrieved_document_ids": retrieved_document_ids
+        }  # Include neural-weight in the results
+        for eval_metric, settings in zip(eval_metrics, eval_metric_settings):
+            score = eval_metric(retrieved_document_ids, query.id, settings)
+            metric_name = eval_metric.__name__  # get the name of the fun
+            query_scores[metric_name] = score
+        scores.append(query_scores)
     return scores
 
 
-def evaluate_pipelines(
-    pipeline_weights: list,
-    query: dict,
-    index: str,
-    source_includes: list,
-    size: int,
-    eval_metric,
-):
-    scores = []
-    for pipeline_weight in pipeline_weights:
-        score = evaluate_pipeline(
-            pipeline_weight, query, index, source_includes, size, binary_at_k, {"k": 3}
-        )
-        scores.append(score)
-    return scores
+def main():
+    num_lines = 10  # Number of questions to read and evaluate at a time
+    max_queries = 1000  # Maximum number of queries to process.
 
-# For testing
-question_doc = [
-    {
-        "question": "Was an artificial intelligence system developed to evaluate the reliability and consistency of sleep scoring among sleep centers?",
-        "pmid": "32964831",
-        "fragment_id": 0,
-        "id": "32964831_0",
-        "question_type": "yes/no",
-    },
-    {
-        "question": "Has the advent of artificial intelligence technology led to advancements in the diagnosis and treatment of ophthalmic diseases?",
-        "pmid": "37012586",
-        "fragment_id": 0,
-        "id": "37012586_0",
-        "question_type": "yes/no",
-    },
-    {
-        "question": "Is it trained for another system?",
-        "pmid": "37172147",
-        "fragment_id": 1,
-        "id": "37172147_1",
-        "question_type": "yes/no",
-    },
-    {
-        "question": "Did the share of research outputs related to the pandemic almost double from 2020 to 2021?",
-        "pmid": "37766916",
-        "fragment_id": 0,
-        "id": "37766916_0",
-        "question_type": "yes/no",
-    },
-    {
-        "question": "Is the article with the DOI 10. 1155 / 2022 / 5914561 retracted?",
-        "pmid": "37502085",
-        "fragment_id": 0,
-        "id": "37502085_0",
-        "question_type": "yes/no",
-    },
-    {
-        "question": "Did the authors suggest that aspects of general intelligence likely arose in tandem with mechanisms of adaptive motor control that rely on basal ganglia circuitry?",
-        "pmid": "29342668",
-        "fragment_id": 0,
-        "id": "29342668_0",
-        "question_type": "yes/no",
-    },
-    {
-        "question": "Do children treated for metopic synostosis show shortcomings in adaptive behavior skills?",
-        "pmid": "33565829",
-        "fragment_id": 1,
-        "id": "33565829_1",
-        "question_type": "yes/no",
-    },
-    {
-        "question": "Is nurses' emotional intelligence affected by the complexity of care and type of ward they work in?",
-        "pmid": "35094821",
-        "fragment_id": 0,
-        "id": "35094821_0",
-        "question_type": "yes/no",
-    },
-    {
-        "question": "Does the use of autonomous vehicles increase free-time or blur the boundaries between work and non-work time?",
-        "pmid": "35400853",
-        "fragment_id": 1,
-        "id": "35400853_1",
-        "question_type": "yes/no",
-    },
-    {
-        "question": "Does assessment of mpas help in diagnosing psychiatric disorders?",
-        "pmid": "24782925",
-        "fragment_id": 1,
-        "id": "24782925_1",
-        "question_type": "yes/no",
-    },
-    {
-        "question": "Is there a need to address the ethical and data governance challenges of using digital technology in the operating room?",
-        "pmid": "33616543",
-        "fragment_id": 0,
-        "id": "33616543_0",
-        "question_type": "yes/no",
-    },
-    {
-        "question": "Is the attitude of positive psychology considered to be a key factor in the success of workforce rehabilitation processes in Hungary?",
-        "pmid": "26294537",
-        "fragment_id": 0,
-        "id": "26294537_0",
-        "question_type": "yes/no",
-    },
-    {
-        "question": "Is thalamus volume significantly correlated with intellectual functioning and influenced by a common genetic factor?",
-        "pmid": "24038793",
-        "fragment_id": 0,
-        "id": "24038793_0",
-        "question_type": "yes/no",
-    },
-]
-query_text = "covid-19"
-source_includes = ["_id", "fragment_id"]
-size = 3
+    # Setup for evaluation
+    pipeline_weights = [i / 20 for i in range(21)]  # from 0.0 to 1.0 with 0.05 steps
+    index = "abstracts"
+    source_includes = ["_id", "fragment_id"]
+    size = 10   # Number of search results to retrieve for each query from OpenSearch
+    eval_metrics = [binary_at_k, rank_score]  # specify the metrics to use
+    k = 3 # specify the value of k for the binary_at_k metric
+    eval_metric_settings = [{"k": k}, {}]
 
-# first test 1
-pipeline_weight = 0.5
-evaluated_pipeline = evaluate_pipeline(
-    pipeline_weight, question_doc, INDEX, source_includes, size, binary_at_k, 3
-)
-print(evaluated_pipeline)
+    file_path = "retrieval-testset.json"
+    output_path = f"results/retrieval_result_scores_s{size}_k{k}.csv"
+
+    first_write = True  # Flag to indicate if header should be written
+
+    # Calculate total number of queries to do for tqdm (assuming each batch is num_lines)
+    total_queries_to_process = min(
+        max_queries // num_lines, (max_queries + num_lines - 1) // num_lines
+    )
+
+    # Process questions in batches with tqdm for progress tracking
+    for questions_batch in tqdm(
+        read_questions_from_json(file_path, num_lines, max_queries),
+        total=total_queries_to_process,
+    ):
+        queries = [Query(**question) for question in questions_batch]
+        for pipeline_weight in pipeline_weights:
+            # if an error occours the program will wait 5 seconds and try again
+            # -> this helps to avoid connection errors
+            # -> also if OpenSearch draws max HEAP memory, 
+            # this will help to avoid the error because it will wait for GC
+            while True:
+                try:
+                    results = evaluate_pipeline(
+                        pipeline_weight,
+                        queries,
+                        index,
+                        source_includes,
+                        size,
+                        eval_metrics,
+                        eval_metric_settings,
+                    )
+                    break
+                except Exception as e:
+                    print(e)
+                    time.sleep(2)
+
+            # Convert batch results to DataFrame and write to CSV
+            results_df = pd.DataFrame(results)
+            results_df.to_csv(output_path, mode="a", index=False, header=first_write)
+
+            if first_write:
+                first_write = False
+
+
+if __name__ == "__main__":
+    main()
