@@ -3,48 +3,81 @@ import sys
 from pathlib import Path
 
 sys.path.append(str(Path(__file__).parent.parent))
-
-from commons.utils import get_model_id, get_opensearch_client
+from development.commons.utils import get_model_id, get_opensearch_client
 
 CLIENT = get_opensearch_client()
 
 
-def execute_hybrid_query(
+def execute_query(
     query,
-    pipeline_weight: float = 0.0,
-    index="abstracts",
-    source_includes=["_id", "fragment_id"],
-    size=5,
+    index: str = "abstracts",
+    source_includes: list[str] = ["_id", "fragment_id"],
+    size: int = 5,
+    extra_params: dict[str, any] = None,
 ):
     """
-    Execute a query on the OpenSearch index.
+    Execute a generic query on the OpenSearch index.
     :param query: The query to execute.
-    :param pipeline_weight: The weight of the neural-part of the hybrid query. Must be between 0 and 1.
-    !IMPORTANT: The pipeline must be registered on the cluster. If you use a hybrid query, the pipeline_id should be specified.
     :param index: The index to execute the query on.
     :param source_includes: The fields to include in the response.
     :param size: The number of results to return.
+    :param extra_params: Additional parameters for OpenSearch query execution.
     :return: The response from OpenSearch.
     """
-
-    PIPELINE_ID_PREFIX = "hybrid_search_pipeline_weight_"
-    if pipeline_weight < 0.0 or pipeline_weight > 1.0:
-        raise ValueError("Pipeline weight must be between 0 and 1.")
-
-    # convert float to string with 2 decimal places after the dot
-    pipeline_id = f"{PIPELINE_ID_PREFIX}{pipeline_weight:.2f}"
-
     query_body = {"size": size, "query": query}
+
+    # Parse additional parameters for the request
+    request_params = {}
+    if extra_params:
+        request_params.update(extra_params)
 
     return CLIENT.search(
         body=query_body,
         index=index,
         _source_includes=source_includes,
-        params={"search_pipeline": pipeline_id},
+        params=request_params,
     )
 
 
-def extract_hits_from_response(response):
+def execute_hybrid_query(
+    query,
+    pipeline_weight: float = 0.0,
+    index: str = "abstracts",
+    source_includes: list[str] = ["_id", "fragment_id"],
+    size: int = 5,
+    query_name_prefix: str = "hybrid_search_pipeline_weight_",
+):
+    """
+    Execute a hybrid query on the OpenSearch index. The hybrid query combines BM25 and neural search.
+    It uses the specified pipeline weight to determine the balance between the two.
+    The query is executed with a search pipeline whose name is parsed from the `query_name_prefix` and `pipeline_weight` parameters.
+    **IMPORTANT: This pipeline must already exist in OpenSearch**
+    :param query: The query to execute.
+    :param pipeline_weight: The weight of the neural part of the hybrid query. Must be between 0 and 1.
+    :param index: The index to execute the query on.
+    :param source_includes: The fields to include in the response.
+    :param size: The number of results to return.
+    :param query_name_prefix: The prefix to use for the query name.
+    :return: The response from OpenSearch.
+    """
+    if pipeline_weight < 0.0 or pipeline_weight > 1.0:
+        raise ValueError("Pipeline weight must be between 0 and 1.")
+
+    # Define the pipeline ID based on the weight
+    pipeline_id = f"{query_name_prefix}{pipeline_weight:.2f}"
+    extra_params = {"search_pipeline": pipeline_id}
+
+    # Use the generic execute_query function
+    return execute_query(
+        query=query,
+        index=index,
+        source_includes=source_includes,
+        size=size,
+        extra_params=extra_params,
+    )
+
+
+def extract_hits_from_response(response: dict[str, any]):
     """
     Post-process the response from OpenSearch.
     If no hits are found, an empty list is returned.
@@ -54,23 +87,38 @@ def extract_hits_from_response(response):
     try:
         hits = response["hits"]["hits"]
     except KeyError:
-        print("No hits found.")
         return []
 
     return hits
 
 
-def create_single_match_BM25_query(query_text, match_on="abstract_fragment"):
+def extract_source_from_hits(hits: list[dict[str, any]]):
+    """
+    Extract the source fields from a list of hits.
+    :param hits: The list of hits from OpenSearch.
+    :return: A list of source fields.
+    """
+    return [hit["_source"] for hit in hits]
+
+
+def create_term_query(match_value: str, match_key: str = "pmid"):
+    return {"term": {match_key: {"value": match_value}}}
+
+
+def create_single_match_BM25_query(
+    query_text: str, match_on: str = "abstract_fragment"
+):
     return {"match": {match_on: {"query": query_text}}}
 
 
 def create_multi_match_BM25_query(
-    query_text, match_on_fields=["abstract_fragment", "title", "keyword_list"]
+    query_text: str,
+    match_on_fields: list[str] = ["abstract_fragment", "title", "keyword_list"],
 ):
     return {"multi_match": {"query": query_text, "fields": match_on_fields}}
 
 
-def create_neural_query(query_text):
+def create_neural_query(query_text: str):
     return {
         "neural": {
             "abstract_fragment_embedding": {
@@ -82,7 +130,8 @@ def create_neural_query(query_text):
 
 
 def create_hybrid_query(
-    query_text, match_on_fields=["abstract_fragment", "title", "keyword_list"]
+    query_text: str,
+    match_on_fields: list[str] = ["abstract_fragment", "title", "keyword_list"],
 ):
     """
     Create a hybrid query that combines BM25 and neural search.
@@ -99,17 +148,33 @@ def create_hybrid_query(
 
 # How to Use:
 if __name__ == "__main__":
+    print("Hybrid Query:")
+    # How to use Hybrid Query
     hybrid_query = create_hybrid_query(
         query_text="artificial intelligence",
         match_on_fields=["abstract_fragment", "title", "keyword_list"],
     )
 
-    response = execute_hybrid_query(
+    response_hybrid = execute_hybrid_query(
         query=hybrid_query,
-        pipeline_weight=0.5,
+        pipeline_weight=1.0,
         size=3,
         source_includes=["_id", "fragment_id", "title"],
     )
     # print(json.dumps(response, indent=2))
-    hits = extract_hits_from_response(response)
-    print(json.dumps(hits, indent=2))
+    hits_hybrid = extract_hits_from_response(response_hybrid)
+    print(json.dumps(hits_hybrid, indent=2))
+
+    print("\n\nTerms Query:")
+
+    # How to use term query
+    term_query = create_term_query(match_key="pmid", match_value="32083959")
+    response_term = execute_query(
+        query=term_query,
+        index="abstracts",
+        source_includes=["_id", "fragment_id", "title", "pmid"],
+        size=10,
+    )
+    # its possible to only get the source fields (title, pmid, etc.) from the hits
+    hits_term = extract_source_from_hits(extract_hits_from_response(response_term))
+    print(json.dumps(hits_term, indent=2))
