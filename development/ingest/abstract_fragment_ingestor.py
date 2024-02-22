@@ -73,7 +73,7 @@ def initialize_model():
 
 
 def insert_ingest_pipeline(model_id):
-    pipeline_id = "abstract_fragments_ingest_pipeline"
+    ingest_pipeline_id = "abstract_fragments_ingest_pipeline"
     pipeline_body = {
         "description": "Ingest pipeline for abstract fragments",
         "processors": [
@@ -100,7 +100,7 @@ def insert_ingest_pipeline(model_id):
         body=pipeline_body
     )
     print(f"[{datetime.datetime.now()}] Insertion result: {insert_result}")
-    return pipeline_id
+    return ingest_pipeline_id
 
 
 def insert_index(ingest_pipeline_id):

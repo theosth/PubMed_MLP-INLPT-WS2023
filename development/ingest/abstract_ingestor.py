@@ -1,6 +1,6 @@
 import json
 import sys
-from datetime import datetime
+import datetime
 
 from opensearchpy import helpers
 from opensearchpy.exceptions import NotFoundError
@@ -15,7 +15,7 @@ OPENSEARCH_CLIENT = utils.get_opensearch_client()
 
 
 def insert_ingest_pipeline():
-    pipeline_id = "abstracts_ingest_pipeline"
+    ingest_pipeline_id = "abstracts_ingest_pipeline"
     pipeline_body = {
         "description": "Ingest pipeline for abstracts",
         "processors": [
@@ -34,7 +34,7 @@ def insert_ingest_pipeline():
         body=pipeline_body
     )
     print(f"[{datetime.datetime.now()}] Insertion result: {insert_result}")
-    return pipeline_id
+    return ingest_pipeline_id
 
 
 def insert_index(ingest_pipeline_id):
