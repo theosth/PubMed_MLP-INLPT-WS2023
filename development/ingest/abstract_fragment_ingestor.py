@@ -12,8 +12,8 @@ import development.commons.env as env
 import development.commons.utils as utils
 
 # ===== Constants =====
-INDEX_CONTENT_NAME = "abstract_fragments"
-INDEX_CONTENT_EMBEDDING_NAME = "abstract_fragment_embeddings"
+INDEX_CONTENT_NAME = "abstract_fragment"
+INDEX_CONTENT_EMBEDDING_NAME = "abstract_fragment_embedding"
 OPENSEARCH_CLIENT = utils.get_opensearch_client()
 # ===== Constants =====
 
