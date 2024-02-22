@@ -1,6 +1,6 @@
 import json
 import sys
-from datetime import datetime
+import datetime
 
 from opensearch_py_ml.ml_commons import MLCommonClient
 from opensearch_py_ml.ml_models import SentenceTransformerModel
