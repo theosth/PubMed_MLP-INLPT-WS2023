@@ -65,6 +65,7 @@ def insert_index(ingest_pipeline_id):
         "mappings": {
             "dynamic": "strict",
             "properties": {
+                "abstract": {"type": "text"},
                 "title": {"type": "text"},  # or keyword?
                 "doi": {"type": "keyword"},
                 "pmid": {"type": "integer"},  # or keyword?
@@ -74,8 +75,7 @@ def insert_index(ingest_pipeline_id):
                     "type": "date",
                     "format": "yyyy-MM-dd HH:mm:ss"
                 },
-                "ingested_at": {"type": "date"},
-                "id": {"type": "keyword"}
+                "ingested_at": {"type": "date"}
             }
         }
     }
@@ -87,7 +87,7 @@ def insert_index(ingest_pipeline_id):
 
 def _bulk_data(documents, index_name):
     for doc in tqdm(documents, file=sys.stdout, total=len(documents)):
-        _id: str = doc['id']
+        _id: str = doc['pmid']
 
         yield {
             "_op_type": "create",
