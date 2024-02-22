@@ -1,8 +1,11 @@
-from opensearch_py_ml.ml_commons import MLCommonClient
-from opensearchpy.exceptions import NotFoundError
-from opensearchpy import OpenSearch
+import env
+
 from typing import Union
-import development.commons.env as env
+
+from opensearch_py_ml.ml_commons import MLCommonClient
+from opensearchpy import OpenSearch
+from opensearchpy.exceptions import NotFoundError
+
 
 def get_model_id(client: Union[MLCommonClient, OpenSearch]):
     if isinstance(client, OpenSearch):
@@ -18,6 +21,7 @@ def get_model_id(client: Union[MLCommonClient, OpenSearch]):
         raise NotFoundError("No models found in cluster")
 
     return response['hits']['hits'][0]['_source']['model_id']
+
 
 def get_opensearch_client():
     return OpenSearch(
