@@ -52,8 +52,8 @@ def split_documents(dataset, splitter):
 
 
 def save_fragments(fragments):
-    print(f"[{datetime.datetime.now()}] Saving Fragments ({env.FRAGMENT_DATASET_PATH})")
-    with open(env.FRAGMENT_DATASET_PATH, 'w') as output:
+    print(f"[{datetime.datetime.now()}] Saving Fragments ({env.ABSTRACT_FRAGMENT_DATASET_PATH})")
+    with open(env.ABSTRACT_FRAGMENT_DATASET_PATH, 'w') as output:
         json.dump(fragments, output, indent=2, default=str)
     print(f"[{datetime.datetime.now()}] Fragments successfully saved!")
 
