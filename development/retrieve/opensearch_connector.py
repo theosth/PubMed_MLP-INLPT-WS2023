@@ -2,7 +2,7 @@ import json
 import sys
 from pathlib import Path
 
-sys.path.append(str(Path(__file__).parent.parent))
+sys.path.append(str(Path(__file__).parent.parent.parent))
 from development.commons.utils import get_model_id, get_opensearch_client
 
 CLIENT = get_opensearch_client()
@@ -43,7 +43,7 @@ def execute_hybrid_query(
     query,
     pipeline_weight: float = 0.0,
     index: str = "abstracts",
-    source_includes: list[str] = ["_id", "fragment_id"],
+    source_includes: list[str] = ["_id", "fragment_id", "pmid"],
     size: int = 5,
     query_name_prefix: str = "hybrid_search_pipeline_weight_",
 ):
@@ -99,6 +99,25 @@ def extract_source_from_hits(hits: list[dict[str, any]]):
     :return: A list of source fields.
     """
     return [hit["_source"] for hit in hits]
+
+
+def extract_top_k_unique_pmids_from_response(response: dict[str, any], k: int = None):
+    """
+    Extract the top k unique pmids from the response in the order they appear.
+    :param response: The response from OpenSearch.
+    :param k: The number of pmids to return. If None, all pmids are returned.
+    :return: A list of pmids.
+    """
+    seen_pmids = set() # Keep track of seen pmids
+    unique_pmids = [] # Store the unique pmids in order
+    for hit in response["hits"]["hits"]:
+        pmid = hit["_source"]["pmid"]
+        if pmid not in seen_pmids:
+            unique_pmids.append(pmid)
+            seen_pmids.add(pmid)
+            if k and len(unique_pmids) == k:
+                break
+    return unique_pmids
 
 
 def create_term_query(match_value: str, match_key: str = "pmid"):
@@ -158,13 +177,18 @@ if __name__ == "__main__":
     response_hybrid = execute_hybrid_query(
         query=hybrid_query,
         pipeline_weight=1.0,
-        size=3,
-        source_includes=["_id", "fragment_id", "title"],
+        size=10,
+        source_includes=["_id", "fragment_id", "title", "pmid"],
     )
     # print(json.dumps(response, indent=2))
     hits_hybrid = extract_hits_from_response(response_hybrid)
     print(json.dumps(hits_hybrid, indent=2))
-
+    
+    print("\n Top 3 unique PMIDs:")
+    # extract the top 3 unique pmids from the response
+    unique_pmids = extract_top_k_unique_pmids_from_response(response_hybrid, k=3)
+    print(unique_pmids)
+    
     print("\n\nTerms Query:")
 
     # How to use term query
@@ -178,3 +202,5 @@ if __name__ == "__main__":
     # its possible to only get the source fields (title, pmid, etc.) from the hits
     hits_term = extract_source_from_hits(extract_hits_from_response(response_term))
     print(json.dumps(hits_term, indent=2))
+    
+
