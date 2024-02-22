@@ -20,7 +20,7 @@ def restructure(dataset):
     abstracts = []
 
     for document in tqdm(documents, total=len(documents), file=sys.stdout):
-        abstracts.append(document['abstract'])
+        abstracts.append(document)
 
     print(f"[{datetime.datetime.now()}] Collected {len(abstracts)} abstracts from {len(documents)} documents")
     dataset = {
