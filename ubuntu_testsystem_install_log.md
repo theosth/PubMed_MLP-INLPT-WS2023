@@ -59,6 +59,15 @@ sudo ubuntu-drivers install --gpgpu
 <!-- for me i chose: -->
 sudo ubuntu-drivers install --gpgpu nvidia:535-server
 sudo apt install nvidia-utils-535-server
+<!-- java -->
+sudo apt install default-jre
+<!-- nvtop for gpu monitioring -->
+sudo apt  install nvtop
+<!-- nvidia-cuda-toolkit -->
+sudo apt install nvidia-cuda-toolkit
+
+
+
 
 
 <!-- just temporary for docker testing: -->
@@ -67,13 +76,17 @@ sudo apt install nvidia-utils-535-server
 sudo systemctl stop opensearch.service
 sudo systemctl stop opensearch-dashboards.service
 sudo systemctl stop ollama.service
+sudo systemctl disable opensearch.service
+sudo systemctl disable opensearch-dashboards.service
+sudo systemctl disable ollama.service
 
 <!-- start opensearch and ollama services -->
 sudo systemctl start opensearch.service
 sudo systemctl start opensearch-dashboards.service
 sudo systemctl start ollama.service
+sudo systemctl enable opensearch.service
+sudo systemctl enable opensearch-dashboards.service
+sudo systemctl enable ollama.service
 
-
-
-
-
+<!-- remember -->
+sudo nano /etc/default/opensearch
