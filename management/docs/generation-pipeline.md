@@ -50,7 +50,9 @@ Answer:
     - Theo's favorite color is... (checking the provided context) ...orange. (Hallucination and weird answer.)
     - Yes, penguins are birds. (Correct, but did not mention that it knows this without context.)
 
-For these reasons, we decided against further investigating llama2
+Because of the bad performance for simple prompts, we did not test LLama2 on PubMed data.
+
+For the reasons mentioned above, we decided against further investigating llama2.
 
 ### Mistral
 
@@ -64,12 +66,19 @@ Answers:
     - Theo's favorite color is not mentioned in the provided context.
     - Yes, penguins are birds. The context provided does not affect the answer to this question.
 
+We also tested question answering on more complex questions and PubMed abstracts as context and found that the same observations hold true for those longer and more scientific contexts. Mistral adheres nicely to the prompts, answers the questions correctly, without hallucination and mostly to the point. For some yes/no questions it gave more context in the answer than necessary. However, we can address this by enhancing the prompt or creating more elaborate answering chains. Mistral extracted numbers correctly from the texts.
+
 ### Gemma
 
-At the time of writing this, Google's Gemini-based open-source Gemma model has been released for 13 hours. There are two versions, a 7 billion and 2 billion parameter model. We tested the 4 bit quantized 7 billion parameter model. Again, without changing the prompt, context or questions, the answering performance appeared worse than with Mistral. The paper for Google Gemma stresses the model's performance being especially strong on coding and mathematical tasks compared to models of a similar size. In free recall question answering tasks (MMLU) it is comparable to Llama2 or Mistral. However, there is no benchmark on RAG and question answering with provided context. In our tests, it blatantly ignored the instruction to answer to the best of its ability if the answer is not contained within the context. Fiddling with the temperature only made answers worse. Here are the examples:
+At the time of writing this, Google's Gemini-based open-source Gemma model has been released for 13 hours. There are two versions, a 7 billion and 2 billion parameter model. We tested the 4 bit quantized 7 billion parameter model requiring 5.2 GB of disk space. Again, without changing the prompt, context or questions, the answering performance appeared worse than with Mistral. The paper for Google Gemma stresses the model's performance being especially strong on coding and mathematical tasks compared to models of a similar size. In free recall question answering tasks (MMLU) it is comparable to Llama2 or Mistral. However, there is no benchmark on RAG and question answering with provided context. In our tests, it blatantly ignored the instruction to answer to the best of its ability if the answer is not contained within the context. Fiddling with the temperature only made answers worse. Here are the examples:
 
 Prompt, context, questions same as for llama2  
 Answers: 
     - The provided text does not specify whether Jesse's favorite color is orange or not, therefore I cannot answer the query. (Worse than Mistral. It should have extracted red as favorite color.)
     - The text does not provide information about Theo's favorite color, therefore I cannot answer this query. (Good)
     - I do not have any relevant context to answer the question of whether penguins are birds or not, therefore I cannot provide an answer. (It should answer similar to Mistral)
+
+Same as with Mistral, we tested Gemma with PubMed questions and contexts. 
+The answers were mostly correct, however, it did not adhere to answer format and sometimes answered that there was no context when there was. 
+
+Additionally, Gemma is generally larger (5.2 vs 4.1 GB) than Mistral and has slower inference times on lower-end hardware. Furthermore, it is highly cutting edge being only released for a few days, which is generally unfavorable as we want to build a stable and safe product. This is why we decided to proceed with Mistral as text generation model. 
