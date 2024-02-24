@@ -1,0 +1,339 @@
+{
+    "questions": [
+        {
+        "question": "Are AI systems utilizing deep neural networks and machine learning algorithms widely used for solving critical problems in bioinformatics, biomedical informatics, and precision medicine?",
+        "pmid": "37478371",
+        "fragment_id": 0,
+        "id": "37478371_0",
+        "abstract_fragment": "artificial intelligence ( ai ) systems utilizing deep neural networks and machine learning ( ml ) algorithms are widely used for solving critical problems in bioinformatics, biomedical informatics and precision medicine. however, complex ml models that are often perceived as opaque and black - box methods make it difficult to understand the reasoning behind their decisions. this lack of transparency can be a challenge for both end - users and decision - makers, as well as ai developers. in sensitive areas such as healthcare, explainability and accountability are not only desirable properties but also legally required for ai systems that can have a significant impact on human lives. fairness is another growing concern, as algorithmic decisions should not show bias or discrimination towards certain groups or individuals based on sensitive attributes. explainable ai ( xai ) aims to overcome the opaqueness of black - box models and to provide transparency in how ai systems make decisions. interpretable ml models can explain how they make predictions and identify factors that influence their outcomes. however, the majority of the state - of - the - art interpretable ml methods are domain - agnostic and have evolved from fields such as computer vision, automated reasoning or statistics, making direct application to bioinformatics problems challenging without customization and domain adaptation. in this paper, we discuss the importance of explainability and algorithm",
+        "question_type": "yes/no"
+  },
+  {
+    "question": "What are the four categories of facial image manipulation techniques?",
+    "pmid": "36949178",
+    "fragment_id": 0,
+    "id": "36949178_0",
+    "abstract_fragment": "recent advances in artificial intelligence technology have significantly improved facial image manipulation, which is known as deepfake. facial image manipulation synthesizes or replaces a region of the face in an image with that of another face. the techniques for facial image manipulation are classified into four categories : ( 1 ) entire face synthesis, ( 2 ) identity swap, ( 3 ) attribute manipulation, and ( 4 ) expression swap. out of them, we focus on expression swap because it effectively manipulates only the expression of the face in the images or videos without creating or replacing the entire face, having advantages for the real - time application. in this study, we propose an evaluation framework of the expression swap models targeting the real - time online class environments. for this, we define three kinds of scenarios according to the portion of the face in the entire image considering actual online class situations : ( 1 ) attendance check ( scenario 1 ), ( 2 ) presentation ( scenario 2 ), and ( 3 ) examination ( scenario 3 ). considering the manipulation on the online class environments, the framework receives a single source image and a target video and generates the video that manipulates a face of the target video to that in the source image. to this end, we select two models that satisfy the",
+    "question_type": "factual"
+  },
+  {
+    "question": "What is the accuracy of algorithm i in five-fold cross-validation?",
+    "pmid": "34722502",
+    "fragment_id": 1,
+    "id": "34722502_1",
+    "abstract_fragment": "performance of all the algorithms was compared with the experts'performance. to better understand the algorithms and clarify the direction of optimization, misclassification and visualization heatmap analyses were performed. < b > results : < / b > in five - fold cross - validation, algorithm i achieved robust performance, with accuracy = 97. 36 % ( 95 % ci : 0. 9697, 0. 9775 ), auc = 0. 995 ( 95 % ci : 0. 9933, 0. 9967 ), sensitivity = 93. 92 % ( 95 % ci : 0. 9333, 0. 9451 ), and specificity = 98. 19 % ( 95 % ci : 0. 9787, 0. 9852 ). the macro - auc, accuracy, and quadratic - weighted kappa were 0. 979, 96. 74 % ( 95 % ci : 0. 963, 0. 9718 ), and 0. 988 ( 95 % ci : 0. 986, 0. 990 ) for algorithm ii. algorithm iii achieved an accuracy of 0. 9703 to 0. 9941 for classifying the \" plus \" lesions and an f1 - score of 0. 6855 to 0. 8890 for detecting and localizing lesions. the performance metrics in external",
+    "question_type": "factual"
+  },
+  {
+    "question": "What are the main drivers of change in the healthcare sector that necessitate the use of e-health and digitization?",
+    "pmid": "29372263",
+    "fragment_id": 0,
+    "id": "29372263_0",
+    "abstract_fragment": "the terms e \u2011 health and digitization are core elements of a change in our time. the main drivers of this change - in addition to a dynamic market - are the serious advantages for the healthcare sector in the processing of tasks and requirements. the large amounts of data, the intensively growing medical knowledge, the rapidly advancing technological developments and the goal of a personalized, customized therapy for the patient, make the application absolutely necessary. while e \u2011 health describes the use of information and communication technologies in healthcare, the concept of digitization is associated with the underlying processes of change and innovation. digital technologies include software and hardware based developments. the term clinical data intelligence describes the property of workability and also characterizes the collaboration of clinically relevant systems with which the medical user works. the hierarchy in digital processing maps the levels from pure data management through clinical decision support to automated process flows and autonomously operating units. the combination of patient data management and clinical decision support proves its value in terms of error reduction, prevention, quality and safety, especially in drug therapy. the aim of this overview is the presentation of the existing reality in medical centers with perspectives derived from the point of view of the medical user.",
+    "question_type": "factual"
+  },
+  {
+    "question": "What technology can be used to detect a driver's internal states in a panic situation while driving?",
+    "pmid": "35333671",
+    "fragment_id": 1,
+    "id": "35333671_1",
+    "abstract_fragment": "a driver's internal states in a panic situation while driving can be detected using near - infrared spectroscopy and artificial intelligence.",
+    "question_type": "factual"
+  },
+  {
+    "question": "What is the objective of the pilot study using the Healthy Moms perinatal depression intervention in Kenya?",
+    "pmid": "31033448",
+    "fragment_id": 0,
+    "id": "31033448_0",
+    "abstract_fragment": "depression during pregnancy and in the postpartum period is associated with a number of poor outcomes for women and their children. although effective interventions exist for common mental disorders that occur during pregnancy and the postpartum period, most cases in low - and middle - income countries go untreated because of a lack of trained professionals. task - sharing models such as the thinking healthy program have shown great potential in feasibility and efficacy trials as a strategy for expanding access to treatment in low - resource settings, but there are significant barriers to scale - up. we are addressing this gap by adapting thinking healthy for automated delivery via a mobile phone. this new intervention, healthy moms, uses an existing artificial intelligence system called tess ( zuri in kenya ) to drive conversations with users. the objective of this pilot study is to test the healthy moms perinatal depression intervention using a single - case experimental design with pregnant women and new mothers recruited from public hospitals outside of nairobi, kenya. we will invite patients to complete a brief, automated screening delivered via text messages to determine their eligibility. enrolled participants will be randomized to a 1 - or 2 - week baseline period and then invited to begin using zuri. participants will be prompted to rate their mood via short message service every 3 days during the baseline and intervention periods.",
+    "question_type": "factual"
+  },
+  {
+    "question": "Is the eus - cnn model accurate for the discrimination of gastric subepithelial tumors?",
+    "pmid": "34369001",
+    "fragment_id": 0,
+    "id": "34369001_0",
+    "abstract_fragment": "we aimed to develop a convolutional neural network ( cnn ) - based object detection model for the discrimination of gastric subepithelial tumors, such as gastrointestinal stromal tumors ( gists ), and leiomyomas, in endoscopic ultrasound ( eus ) images. we used 376 images from 114 patients with histologically confirmed gastric gist or leiomyoma to train the eus - cnn. we constructed the eus - cnn using an efficientnet cnn model for feature extraction and a weighted bi - directional feature pyramid network for object detection. we assessed the performance of our eus - cnn by calculating its accuracy, sensitivity, specificity, and area under receiver operating characteristic curve ( auc ) using a validation set of 170 images from 54 patients. four eus experts and 15 eus trainees were asked to judge the same validation dataset, and the diagnostic yields were compared between the eus - cnn and human assessments. in the per - image analysis, the sensitivity, specificity, accuracy, and auc of our eus - cnn were 95. 6 %, 82. 1 %, 91. 2 %, and 0. 9234, respectively. in the per - patient analysis, the sensitivity, specificity, accuracy, and auc for our object detection model were 100. 0 %, 85. 7 %, 96. 3 %, and 0. 9929",
+    "question_type": "yes/no"
+  },
+  {
+    "question": "What are three open-access platforms that were transformative for global public health surveillance during the COVID-19 pandemic?",
+    "pmid": "37318761",
+    "fragment_id": 0,
+    "id": "37318761_0",
+    "abstract_fragment": "during the covid - 19 pandemic, open - access platforms that aggregate, link and analyse data were transformative for global public health surveillance. this perspective explores the work of three of these platforms : our world in data ( owid ), johns hopkins university ( jhu ) covid - 19 dashboard ( later complemented by the coronavirus resource center ), and global. health, which were presented in the second world health organization ( who ) pandemic and epidemic intelligence innovation forum. these platforms, operating mostly within academic institutions, added value to public health data that are collected by government agencies by providing additional real - time public health intelligence about the spread of the virus and the evolution of the public health emergency. information from these platforms was used by health professionals, political decision - makers and members of the public alike. further engagement between government and non - governmental surveillance efforts can accelerate the improvements needed in public health surveillance overall. increasing the diversity of public health surveillance initiatives beyond the government sector comes with several benefits : technology innovation in data science, engagement of additional highly skilled professionals, greater transparency and accountability for government agencies, and new opportunities to engage with members of society.",
+    "question_type": "factual"
+  },
+  {
+    "question": "Is there currently a framework for generating hyperbolic based single neuronal spiking patterns in real-time?",
+    "pmid": "36086228",
+    "fragment_id": 0,
+    "id": "36086228_0",
+    "abstract_fragment": "neuronal spikes are referred to as the electric activity of neurons ( in terms of voltage ) in response to various biological events such as the sodium and calcium ionic current channels in the brain. currently, both biological models as well as mathematical models of neuronal spiking patterns have been introduced in the literature. however, very little attempt has been made to run these models in real - time. with applications ranging from hardware neuromorphic circuit designs, artificial intelligence ( ai ) architectures, to deep brain stimulation, real - time generation of these models is of particular interest in the brain - inspired computing / architecture and neuro - modulation / stimulation research communities. this paper proposes the development of a framework for generating the hyperbolic based single neuronal spiking patterns in real - time. simulation results confirm that the generated spikes resemble the existing models of neuronal spiking patterns, with additional real - time run capability as well as the ability to change the parameters on the fly. clinical relevance - real - time models of neuronal spiking patterns have significant clinical relevance with respect to applications of neuromorphic / ai chips for medical image processing / computer vision, as well as clinical neuroscience, neuromodulation and neurostimulation such as deep brain stimulation for modulating the abnormal effects of neurological diseases.",
+    "question_type": "yes/no"
+  },
+  {
+    "question": "What is the name of the working group that proposed an updated response criteria for the evaluation of glial tumors?",
+    "pmid": "37470973",
+    "fragment_id": 0,
+    "id": "37470973_0",
+    "abstract_fragment": "the neuro - oncology team faces a unique challenge when assessing treatment response in patients diagnosed with glioblastoma. magnetic resonance imaging ( mri ) remains the standard imaging modality for measuring therapeutic response in both clinical practice and clinical trials. however, even for the neuroradiologist, mri interpretations are not straightforward because of tumor heterogeneity, as evidenced by varying degrees of enhancement, infiltrating tumor patterns, cellular densities, and vasogenic edema. the situation is even more perplexing following therapy since treatment - related changes can mimic viable tumor. additionally, antiangiogenic therapies can dramatically decrease contrast enhancement giving the false impression of decreasing tumor burden. over the past few decades, several approaches have emerged to augment and improve visual interpretation of glioblastoma response to therapeutics. herein, we summarize the state of the art for evaluating the response of glioblastoma to standard therapies and investigational agents as well as challenges and future directions for assessing treatment response in neuro - oncology. monitoring glioblastoma responses to standard therapy and novel agents has been fraught with many challenges and limitations over the past decade. excitingly, new promising methods are emerging to help address these challenges. recently, the response assessment in neuro - oncology ( rano ) working group proposed an updated response criteria ( rano 2. 0 ) for the evaluation of all grades of glial tumors regardless of idh",
+    "question_type": "factual"
+  },
+  {
+    "question": "Did the gang truce in El Salvador in 2012 significantly lower the homicide rate?",
+    "pmid": "27708471",
+    "fragment_id": 0,
+    "id": "27708471_0",
+    "abstract_fragment": "to estimate the effects on homicide rates of the gang truce that was brokered in el salvador in 2012. mathematical models based on municipal - level census, crime and gang - intelligence data were used to estimate the effect of the truce on homicide rates. one model estimated the overall effect after accounting for the linear trend and seasonality in the homicide rate. in a moderated - effect model, we investigated the relationship between the truce effect and the numbers of ms13 ( mara salvatrucha 13 ) and eighteenth - street gang members imprisoned per 100 000 population. we then ran each of these two models with additional control variables. we compared values before the truce - 1 january 2010 to 29 february 2012 - with those after the truce - 1 march 2012 to 31 december 2013. the overall - effect models with and without additional control variables indicated a homicide rate after the truce that was significantly lower than the value before the truce, giving rate ratios of 0. 55 ( 95 % confidence interval, ci : 0. 49 - 0. 63 ) and 0. 61 ( 95 % ci : 0. 54 - 0. 69 ), respectively. for any given municipality, the effectiveness of the",
+    "question_type": "yes/no"
+  },
+  {
+    "question": "What is the prevalence of suspected mild intellectual disability (MID) or borderline intellectual functioning (BIF) across different mental healthcare settings?",
+    "pmid": "33883055",
+    "fragment_id": 0,
+    "id": "33883055_0",
+    "abstract_fragment": "it has been suggested that people with intellectual disabilities have a higher likelihood to develop psychiatric disorders, and that their treatment prognosis is relatively poor. we aimed to establish the prevalence of intellectual disability in different mental healthcare settings, and estimate percentage of cognitive decline. we hypothesised that the prevalence of intellectual disabilities increases with intensity of care. a cross - sectional study was conducted in different settings in a mental healthcare trust in the netherlands. we used the screener for intelligence and learning disabilities ( scil ) to identify suspected mild intellectual disability ( mid ) or borderline intellectual functioning ( bif ). we identified patients with a high level of education and low scil score to estimate which patients may have had cognitive decline. we included 1213 consecutive patients. over all settings, 41. 4 % of participating patients were positive for mid / bif and 20. 2 % were positive for mid only. prevalence of suspected mid / bif increased by setting, from 27. 1 % in out - patient settings to 41. 9 % in flexible assertive community treatment teams and admission wards, to 66. 9 % in long - stay wards. only 85 ( 7. 1 % ) of all patients were identified as possibly having cognitive decline. of these, 25. 9 % were in long - stay wards and had a diagnosis of",
+    "question_type": "factual"
+  },
+  {
+    "question": "What supports associative learning by providing reinforcement for behavior conditioning?",
+    "pmid": "31868538",
+    "fragment_id": 1,
+    "id": "31868538_1",
+    "abstract_fragment": "periods within an organism's lifetime foster the evolution of learning behavior. both types of environmental patterns are necessary, since the prior evolution of simple reflexive behaviors provides the building blocks for learning to arise. finally, we observe that an intrinsic value system evolves alongside behavior and supports associative learning by providing reinforcement for behavior conditioning.",
+    "question_type": "factual"
+  },
+  {
+    "question": "What is the most common problem identified in students with Specific Learning Disabilities (SLD) and Squamous Cell Carcinoma (SQ)?",
+    "pmid": "31865523",
+    "fragment_id": 1,
+    "id": "31865523_1",
+    "abstract_fragment": ". 1 % ) than private schools ( 2. 2 % ). ignoring punctuation and capitals was the commonest problem in sld - sq whereas, dysgraphia was most common in nimhans index. the present study shows though sld is highly prevalent and remains undiagnosed due to lack of awareness among teachers and parents. since early intervention leads to better outcomes, universal screening should be made mandatory and remedial teaching centres made available, accessible and economical.",
+    "question_type": "factual"
+  },
+  {
+    "question": "Can novel magnetic resonance imaging techniques reveal altered neurovascular status in idiopathic Parkinson's disease?",
+    "pmid": "25379411",
+    "fragment_id": 0,
+    "id": "25379411_0",
+    "abstract_fragment": "idiopathic parkinson's disease ( ipd ) is the second most common neurodegenerative disease, yet effective disease modifying treatments are still lacking. neurodegeneration involves multiple interacting pathological pathways. the extent to which neurovascular mechanisms are involved is not well defined in ipd. we aimed to determine whether novel magnetic resonance imaging ( mri ) techniques, including arterial spin labelling ( asl ) quantification of cerebral perfusion, can reveal altered neurovascular status ( nvs ) in ipd. fourteen participants with ipd ( mean \u00b1 sd age 65. 1 \u00b1 5. 9 years ) and 14 age and cardiovascular risk factor matched control participants ( mean \u00b1 sd age 64. 6 \u00b1 4. 2 years ) underwent a 3t mri scan protocol. asl images were collected before, during and after a 6 minute hypercapnic challenge. flair images were used to determine white matter lesion score. quantitative images of cerebral blood flow ( cbf ) and arterial arrival time ( aat ) were calculated from the asl data both at rest and during hypercapnia. cerebrovascular reactivity ( cvr ) images were calculated, depicting the change in cbf and aat relative to the change in end - tidal co2. a significant ( p = 0. 005 ) increase in whole brain averaged baseline aat was observed in ipd participants ( mean \u00b1 sd age 1532 \u00b1 138 ms ) compared to controls ( mean \u00b1",
+    "question_type": "yes/no"
+  },
+  {
+    "question": "Is artificial intelligence being used in dermatology research?",
+    "pmid": "33165383",
+    "fragment_id": 0,
+    "id": "33165383_0",
+    "abstract_fragment": "artificial intelligence ( ai ) has emerged as a major frontier in computer science research. although ai has been available for some time and found its application in many fields of medicine, its use in dermatology is comparatively new and limited. a sound understanding of the concepts of ai is essential for dermatologists as skin conditions with their abundant clinical and dermatoscopic data and images can potentially be the next big thing in the application of ai in medicine. there are already a number of artificial intelligence studies focusing on skin disorders, such as skin cancer, psoriasis, atopic dermatitis and onychomycosis. this article presents an overview of ai and new developments relevant to dermatology, examining both its current applications and future potential.",
+    "question_type": "yes/no"
+  },
+  {
+    "question": "What were the findings regarding the effects of using a smartphone application on achievement motivation and social intelligence in female students at Taif University?",
+    "pmid": "32677032",
+    "fragment_id": 0,
+    "id": "32677032_0",
+    "abstract_fragment": "this study investigates the effects of using a smartphone application ( whatsapp ) on achievement motivation and social intelligence in female students at taif university. the sample comprised 60 undergraduate female students from a college of education. the design was a quasi - experimental nonequivalent ( pretest and posttest ) control group. achievement motivation was significantly higher in the experimental group than the control group at posttest. however, no significant difference was found between the experimental and control groups in social intelligence at posttest. smartphones can increase student learning by fostering high - level skills and concepts.",
+    "question_type": "factual"
+  },
+  {
+    "question": "Does the development of a user-friendly metadata annotation system for neuroscience data improve the pace of data release?",
+    "pmid": "32219575",
+    "fragment_id": 0,
+    "id": "32219575_0",
+    "abstract_fragment": "research advancements in neuroscience entail the production of a substantial amount of data requiring interpretation, analysis, and integration. the complexity and diversity of neuroscience data necessitate the development of specialized databases and associated standards and protocols. neuromorpho. org is an online repository of over one hundred thousand digitally reconstructed neurons and glia shared by hundreds of laboratories worldwide. every entry of this public resource is associated with essential metadata describing animal species, anatomical region, cell type, experimental condition, and additional information relevant to contextualize the morphological content. until recently, the lack of a user - friendly, structured metadata annotation system relying on standardized terminologies constituted a major hindrance in this effort, limiting the data release pace. over the past 2 years, we have transitioned the original spreadsheet - based metadata annotation system of neuromorpho. org to a custom - developed, robust, web - based framework for extracting, structuring, and managing neuroscience information. here we release the metadata portal publicly and explain its functionality to enable usage by data contributors. this framework facilitates metadata annotation, improves terminology management, and accelerates data sharing. moreover, its open - source development provides the opportunity of adapting and extending the code base to other related research projects with similar requirements. this metadata portal is a beneficial web companion to neuromorpho.",
+    "question_type": "yes/no"
+  },
+  {
+    "question": "What is the breaking strain of the polyacrylamide / carboxymethyl chitosan composite hydrogels obtained through the proposed one-step strategy?",
+    "pmid": "37778581",
+    "fragment_id": 0,
+    "id": "37778581_0",
+    "abstract_fragment": "there is a great demand for the fabrication of soft electronics using hydrogels due to their biomimetic structures and good flexibility. however, conventional hydrogels have poor mechanical properties, which restricts their applications as stretchable sensors. herein, a facile one - step strategy is proposed to fabricate tough and conductive hydrogels by making use of the graftability of carboxymethyl chitosan without extra conductive matter and crosslinking agent. the obtained polyacrylamide / carboxymethyl chitosan composite hydrogels possess outstanding transmittance and excellent mechanical performances, with tensile breaking stress of 630 kpa, breaking strain of 4560 %, toughness of 8490 kj / m < sup > 3 < / sup >. these hydrogels have low modulus of 5 - 20 kpa, fast recoverability after unloading, high conductivity of \u223c0. 85 s / m without the addition of other conductive substances and good biocompatibility. the ionic conductivity of the gels originates from the counterions of carboxymethyl chitosan, affording the hydrogels as resistive - type sensors. the resultant hydrogel sensors demonstrate a broad strain window ( 0. 12 - 1500 % ), excellent linear response, high sensitivity with the gauge factor reaching 11. 72, and great durability, capable of monitoring diverse human motions. this work provides a new strategy to develop stretchable conductive hydrogels with promising applications in the fields of artificial",
+    "question_type": "factual"
+  },
+  {
+    "question": "What was the sensitivity, specificity, positive predictive value, negative predictive value, false omission rate, and f1 score for alexnet with the sgd optimizer in comparison to other state-of-the-art CNN architectures?",
+    "pmid": "35746208",
+    "fragment_id": 1,
+    "id": "35746208_1",
+    "abstract_fragment": "%, 97. 58 % sensitivity, 97. 25 % specificity, 97. 58 % positive predictive value, 97. 25 % negative predictive value, false omission rate of 2. 75 %, and f1 score of 97. 58 %. alexnet with the sgd optimizer was the best and outperformed compared to the other state - of - the - art cnn architectures.",
+    "question_type": "factual"
+  },
+  {
+    "question": "What ocular abnormalities are typically observed in patients with Alstrom syndrome?",
+    "pmid": "30578508",
+    "fragment_id": 0,
+    "id": "30578508_0",
+    "abstract_fragment": "alstrom syndrome is an autosomal recessive disease with multisystem involvement, including cone - rod dystrophy, hearing loss, type 2 diabetes, insulin resistance with hyperinsulinemia, dilated cardiomyopathy, and progressive hepatic and renal failure. patients present in childhood with photophobia and nystagmus, and mimic leber congenital amaurosis ( lca ). the fundus shows pigmentary retinopathy with peau d'orange appearance and some fine white dots like drusen around the macula ; the disc is pale, with attenuated retinal vessels ( fig. 35. 1 ). patients have short stature ; boys have hypogonadotropic hypogonadism and girls have polycystic ovary syndrome ( pcos ). obesity is always present, with markedly increased triglyceride and vldl - c levels ; arterial hypertension is diagnosed as early as 2 years of age. there is no polydactyly or syndactyly. about half have developmental delay, but intelligence is usually normal.",
+    "question_type": "factual"
+  },
+  {
+    "question": "Can children with autism spectrum disorder apply analogical reasoning to social information?",
+    "pmid": "27178998",
+    "fragment_id": 0,
+    "id": "27178998_0",
+    "abstract_fragment": "analogical reasoning is an important mechanism for social cognition in typically developing children, and recent evidence suggests that some forms of analogical reasoning may be preserved in autism spectrum disorder. an unanswered question is whether children with autism spectrum disorder can apply analogical reasoning to social information. in all, 92 children with autism spectrum disorder completed a social content analogical reasoning task presented via photographs of real - world social interactions. autism spectrum disorder participants exhibited performance that was well above chance and was not significantly worse than age - and intelligence quotient - matched typically developing children. investigating the relationship of social content analogical reasoning performance to age in this cross - sectional dataset indicated similar developmental trajectories in the autism spectrum disorder and typically developing children groups. these findings provide new support for intact analogical reasoning in autism spectrum disorder and have theoretical implications for analogy as a metacognitive skill that may be at least partially dissociable from general deficits in processing social content. as an initial study of social analogical reasoning in children with autism spectrum disorder, this study focused on a basic research question with limited ecological validity. evidence that children with autism spectrum disorder can apply analogical reasoning ability to social content may have long - range applied implications for exploring how this capacity might be channeled to improve social cognition in daily life.",
+    "question_type": "yes/no"
+  },
+  {
+    "question": "Is machine learning effective in diagnosing COVID-19 from medical images?",
+    "pmid": "34175533",
+    "fragment_id": 0,
+    "id": "34175533_0",
+    "abstract_fragment": "coronavirus disease ( covid - 19 ) is an infectious disease caused by a newly discovered coronavirus. the disease presents with symptoms such as shortness of breath, fever, dry cough, and chronic fatigue, amongst others. the disease may be asymptomatic in some patients in the early stages, which can lead to increased transmission of the disease to others. this study attempts to review papers on the role of imaging and medical image computing in covid - 19 diagnosis. for this purpose, pubmed, scopus and google scholar were searched to find related studies until the middle of 2021. the contribution of this study is four - fold : 1 ) to use as a tutorial of the field for both clinicians and technologists, 2 ) to comprehensively review the characteristics of covid - 19 as presented in medical images, 3 ) to examine automated artificial intelligence - based approaches for covid - 19 diagnosis, 4 ) to express the research limitations in this field and the methods used to overcome them. using machine learning - based methods can diagnose the disease with high accuracy from medical images and reduce time, cost and error of diagnostic procedure. it is recommended to collect bulk imaging data from patients in the shortest possible time to improve the performance of covid - 19 automated diagnostic methods.",
+    "question_type": "yes/no"
+  },
+  {
+    "question": "What were the odds of positive behavior in high intelligence quotient children compared to low intelligence quotient children in relation to the parental active presence technique?",
+    "pmid": "34454468",
+    "fragment_id": 1,
+    "id": "34454468_1",
+    "abstract_fragment": "using chi - square test and logistic regression analysis. the parental active presence technique had significant effect on children with high and low intelligence quotients. there were significantly higher odds of positive behavior in high than low intelligence quotient children, ( or 4. 08, 95 % ci 1. 43, 11. 67, p = 0. 01 ). the parental active presence technique had significantly higher odds of positive behavior than the parental passive presence technique, ( or 4. 08, 95 % ci 1. 71, 9. 76, p = 0. 002 ). the parental active presence technique had positively influenced the children's overall behavior irrespective of their intelligence levels. this trial was retrospectively registered, trial identifier number : nct04580316, 8 / 11 / 2020.",
+    "question_type": "factual"
+  },
+  {
+    "question": "What are the three stages of the knowledge service model in the field of risk management?",
+    "pmid": "34456516",
+    "fragment_id": 0,
+    "id": "34456516_0",      
+    "abstract_fragment": "in the era of big data, the field of enterprise risk is facing considerable challenges brought by massive multisource heterogeneous information sources. in view of the proliferation of multisource and heterogeneous enterprise risk information, insufficient knowledge fusion capabilities, and the low level of intelligence in risk management, this article explores the application process of enterprise knowledge service models for rapid responses to risk incidents from the perspective of semantic reasoning and data fusion and clarifies the elements of the knowledge service model in the field of risk management. based on risk data, risk decision making as the standard, risk events as the driving force, and knowledge graph analysis methods as the power, the risk domain knowledge service process is decomposed into three stages : prewarning, in - event response, and postevent summary. these stages are combined with the empirical knowledge of risk event handling to construct a three - level knowledge service model of risk domain knowledge acquisition - organization - application. this model introduces the semantic reasoning and data fusion method to express, organize, and integrate the knowledge needs of different stages of risk events ; provide enterprise managers with risk management knowledge service solutions ; and provide new growth points for the innovation of interdisciplinary knowledge service theory.",
+    "question_type": "factual"
+  },
+  {
+    "question": "What is the most effective parameter in determining frost thermal conductivity according to the present work?",
+    "pmid": "33785779",
+    "fragment_id": 1,
+    "id": "33785779_1",
+    "abstract_fragment": "including matern kernel function with r < sup > 2 < / sup > values of 0. 997 and 0. 994 in training and testing phases, respectively. in addition, the effectiveness of discussing variables on frost thermal conductivity has been investigated by sensitivity analysis and showed that air temperature is the most effective parameter. the present work gives engineers an insight into frost thermal conductivity and the effective parameters in its determination. the significant advantage of present work is the accurate prediction of thermal conductivity by a brief knownledge in artificial intelligence.",
+    "question_type": "factual"
+  },
+  {
+    "question": "What are the three methods that demonstrated high prognostic accuracy in predicting outcomes using artificial intelligence in cardiac magnetic resonance imaging (CMR) for patients with cardiovascular disease?",
+    "pmid": "36013554",
+    "fragment_id": 0,
+    "id": "36013554_0",
+    "abstract_fragment": "background and objectives : interest in artificial intelligence ( ai ) for outcome prediction has grown substantially in recent years. however, the prognostic role of ai using advanced cardiac magnetic resonance imaging ( cmr ) remains unclear. this systematic review assesses the existing literature on ai in cmr to predict outcomes in patients with cardiovascular disease. materials and methods : medline and embase were searched for studies published up to november 2021. any study assessing outcome prediction using ai in cmr in patients with cardiovascular disease was eligible for inclusion. all studies were assessed for compliance with the checklist for artificial intelligence in medical imaging ( claim ). results : a total of 5 studies were included, with a total of 3679 patients, with 225 deaths and 265 major adverse cardiovascular events. three methods demonstrated high prognostic accuracy : ( 1 ) three - dimensional motion assessment model in pulmonary hypertension ( hazard ratio ( hr ) 2. 74, 95 % ci 1. 73\u22124. 34, p < 0. 001 ), ( 2 ) automated perfusion quantification in patients with coronary artery disease ( hr 2. 14, 95 % ci 1. 58\u22122. 90, p < 0. 001 ), and ( 3 ) automated volumetric, functional, and area assessment in patients with myocardial infarction ( hr 0. 94, 95 % ci 0. 92\u2212",
+    "question_type": "factual"
+  },
+  {
+    "question": "What is the association between germline pathogenic variants in foxc1 and anterior segment dysgenesis and axenfeld-rieger syndrome?",
+    "pmid": "37424725",
+    "fragment_id": 0,
+    "id": "37424725_0",
+    "abstract_fragment": "< i > foxc1 < / i > is a ubiquitously expressed forkhead transcription factor that plays a critical role during early development. germline pathogenic variants in < i > foxc1 < / i > are associated with anterior segment dysgenesis and axenfeld - rieger syndrome ( ars, # 602482 ), an autosomal dominant condition with ophthalmologic anterior segment abnormalities, high risk for glaucoma and extraocular findings including distinctive facial features, as well as dental, skeletal, audiologic, and cardiac anomalies. de hauwere syndrome is an ultrarare condition previously associated with 6p microdeletions and characterized by anterior segment dysgenesis, joint instability, short stature, hydrocephalus, and skeletal abnormalities. here, we report clinical findings of two unrelated adult females with < i > foxc1 < / i > haploinsufficiency who have ars and skeletal abnormalities. final molecular diagnoses of both patients were achieved using genome sequencing. patient 1 had a complex rearrangement involving a 4. 9 kb deletion including < i > foxc1 < / i > coding region ( hg19 ; chr6 : 1, 609, 721 - 1, 614, 709 ), as well as a 7 mb inversion ( hg19 ; chr6 : 1, 614, 710 - 8, 67",
+    "question_type": "factual"
+  },
+  {
+    "question": "What are some potential delivery systems in breast cancer therapy?",
+    "pmid": "35574366",
+    "fragment_id": 1,
+    "id": "35574366_1",
+    "abstract_fragment": "##s for bc therapy, mainly including exosomes and their cargoes, genetically engineered exosomes, and exosome - based carriers. this field would shed light on the promising exosome - based delivery system in bc therapy.",
+    "question_type": "factual"
+  },
+  {
+    "question": "What were the main challenges faced by patients and health services in achieving optimal lung cancer management according to public health sector stakeholders?",
+    "pmid": "33571312",
+    "fragment_id": 1,
+    "id": "33571312_1",
+    "abstract_fragment": "organisation ( ngo ) representatives. the study compromised two components : consensus and engagement. for the consensus component, the delphi technique was employed with open - ended questions and item ranking from five rounds of consensus - seeking, to achieve collective agreement on the most important challenges faced by patients and the health services in achieving optimal lung cancer management. for the engagement component, the nominal group technique was used to articulate ideas and reach an agreement on the group's recommendations for solution strategies and approaches. public health sector stakeholders suggested that a lack of knowledge and awareness of lung cancer, and the apparent stigma associated with the disease and its risk factors, as well as symptoms and signs, are critical to treatment delay. furthermore, delays in up - referral of patients with suspected lung cancer from district health care level were attributed to inadequate knowledge arising from a lack of in - service training of nurses and doctors regarding oncologic symptoms, risk factors, need for further investigation, interpretation of x - rays and available treatments. at a tertiary level, participants suggested that insufficient availability of specialised diagnostic resources ( imaging, cytological and pathological services including biomolecular assessment of lung cancer ), theatres, cardiothoracic surgeons, and appropriate therapeutic modalities ( chemotherapeutic agents and radiation oncology ) are the main barriers to the provision of optimal",
+    "question_type": "factual"
+  },
+  {
+    "question": "What branch of the MSCEIT test showed deficits in patients with first-episode schizophrenia, even after controlling for neurocognition?",
+    "pmid": "35407652",
+    "fragment_id": 0,
+    "id": "35407652_0",
+    "abstract_fragment": "this study sought to investigate the influence of neurocognition on the emotional processing profiles of patients with first - episode schizophrenia, using the 4 - branch mayer - salovey - caruso emotional intelligence test ( msceit ) ( perceiving emotions ; facilitating emotions ; understanding emotions and managing emotions ). a sample of 78 patients with first - episode schizophrenia and a group of 90 non - psychiatric control subjects were included in this work. the initial results showed that patients had lower scores than controls for the \" understanding emotions \" and \" managing emotions \" msceit branches. however, after controlling for neurocognition, the only deficits were found on the \" managing emotions \" branch of the msceit. this branch can be considered as measuring a more sophisticated level of emotional processing, which may constitute a deficit in itself. in conclusion, patients with first - episode schizophrenia present deficits in social cognition at the highest level that seem to be independent from neurocognition. these findings support the inclusion of the \" managing emotions \" branch of the msceit as part of the mccb.",
+    "question_type": "factual"
+  },
+  {
+    "question": "Are personality tests currently utilized in the medical school admissions process?",
+    "pmid": "36564835",
+    "fragment_id": 0,
+    "id": "36564835_0",
+    "abstract_fragment": "allopathic medicine faces a daunting challenge of selecting the best applicants because of the very high applicant / matriculant ratio. the quality of graduates ultimately reflects the quality of medical practice. alarming recent trends in physician burnout, misconduct and suicide raise questions of whether we are selecting the right candidates. the united states ( us ) lags far behind the united kingdom ( uk ) and europe in the study of non - cognitive tests in medical school admissions. although more recently, medical schools in both the uk, europe and the us have begun to use situational judgement tests such as the computer - based assessment for sampling personal characteristics ( casper ) and the situational judgement test ( sjt ), recently developed by the association of american medical colleges ( aamc ) and that these tests are, in a sense non - cognitive in nature, direct personality tests per se have not been utilized. we have historically used, in the admissions process within the us, knowledge, reasoning and exam performance, all of which are largely influenced by intelligence and also improved with practice. personality, though also undoubtedly influenced by intelligence, is fundamentally different and subject to different kinds of measurements. a popular personality measurement used over the past two decades within the us in business and industry,",
+    "question_type": "yes/no"
+  },
+  {
+    "question": "Is stroke one of the leading causes of disability and death worldwide?",
+    "pmid": "37372920",
+    "fragment_id": 0,
+    "id": "37372920_0",
+    "abstract_fragment": "stroke is one of the leading causes of disability and death worldwide, a severe medical condition for which new solutions for prevention, monitoring, and adequate treatment are needed. this paper proposes a sdm framework for the development of innovative and effective solutions based on artificial intelligence in the rehabilitation of stroke patients by empowering patients to make decisions about the use of devices and applications developed in the european project alameda. to develop a predictive tool for improving disability in stroke patients, key aspects of stroke patient data collection journeys, monitored health parameters, and specific variables covering motor, physical, emotional, cognitive, and sleep status are presented. the proposed sdm model involved the training and consultation of patients, medical staff, carers, and representatives under the name of the local community group. consultation with lcg members, consists of 11 representative people, physicians, nurses, patients and caregivers, which led to the definition of a methodological framework to investigate the key aspects of monitoring the patient data collection journey for the stroke pilot, and a specific questionnaire to collect stroke patient requirements and preferences. a set of general and specific guidelines specifying the principles by which patients decide to use wearable sensing devices and specific applications resulted from the analysis of the data collected using the questionnaire. the preferences and recommendations collected from lcg members have already been",
+    "question_type": "yes/no"
+  },
+  {
+    "question": "Do academic mindsets play a critical role in educational achievement?",
+    "pmid": "26581725",
+    "fragment_id": 0,
+    "id": "26581725_0",
+    "abstract_fragment": "the united states must improve its students'educational achievement. race, gender, and social class gaps persist, and, overall, u. s. students rank poorly among peers globally. scientific research shows that students'psychology - their \" academic mindsets \" - have a critical role in educational achievement. yet policymakers have not taken full advantage of cost - effective and well - validated mindset interventions. in this article, we present two key academic mindsets. the first, a growth mindset, refers to the belief that intelligence can be developed over time. the second, a belonging mindset, refers to the belief that people like you belong in your school or in a given academic field. extensive research shows that fostering these mindsets can improve students'motivation ; raise grades ; and reduce racial, gender, and social class gaps. of course, mindsets are not a panacea, but with proper implementation they can be an excellent point of entry. we show how policy at all levels ( federal, state, and local ) can leverage mindsets to lift the nation's educational outcomes.",
+    "question_type": "yes/no"
+  },
+  {
+    "question": "Which model achieves the highest accuracy for classifying CT scan images into the categories of normal or COVID-19 positive?",
+    "pmid": "36173078",
+    "fragment_id": 1,
+    "id": "36173078_1",
+    "abstract_fragment": "false detection. in this work, various models like resnet50v2 and resnet101v2, an adjusted rendition of resnet101v2 with feature pyramid network, have been applied for classifying the ct scan images into the categories : normal or covid - 19 positive. a detailed analysis of all three models'performances have been done on the sars - cov - 2 dataset with various metrics like precision, recall, f1 - score, roc curve, etc. it was found that resnet50v2 achieves an accuracy of 96. 79 %, whereas resnet101v2 achieves an accuracy of 97. 79 %. an accuracy of 98. 19 % has been obtained by resnet101v2 with feature pyramid network. as res - net101v2 with feature pyramid network is showing better results, thus, it is further incorporated into a working application that takes ct images as input from the user and feeds into the trained model and detects the presence of covid - 19 infection. a mobile application integrated with the deeper variant of resnet, i. e., resnet101v2 with fpn checks the presence of covid - 19 in a faster and accurate manner. people can use this application on their smart mobile devices. this automated system would assist healthcare workers as well",
+    "question_type": "factual"
+  },
+  {
+    "question": "Is x-linked ichthyosis an uncommon dermatological condition resulting from a deficiency of steroid sulfatase?",
+    "pmid": "32139392",
+    "fragment_id": 0,
+    "id": "32139392_0",
+    "abstract_fragment": "x - linked ichthyosis ( xli ) is an uncommon dermatological condition resulting from a deficiency of the enzyme steroid sulfatase ( sts ), often caused by x - linked deletions spanning < i > sts < / i >. some medical comorbidities have been identified in xli cases, but small samples of relatively young patients has limited this. < i > sts < / i > is highly expressed in subcortical brain structures, and males with xli and female deletion carriers appear at increased risk of developmental / mood disorders and associated traits ; the neurocognitive basis of these findings has not been examined. using the uk biobank resource, comprising participants aged 40 - 69 years recruited from the general uk population, we compared multiple medical / neurobehavioural phenotypes in males ( n = 86 ) and females ( n = 312 ) carrying genetic deletions spanning < i > sts < / i > ( 0. 8 - 2. 5 mb ) ( cases ) to male ( n = 190 577 ) and female ( n = 227 862 ) non - carrier controls. we identified an elevated rate of atrial fibrillation / flutter in male deletion carriers ( 10. 5 % vs 2. 7 % in male controls, benjamini - hochberg corrected p = 0. 009 ), and increased rates of mental",
+    "question_type": "yes/no"
+  },
+  {
+    "question": "What was the sensitivity rate for detecting cancer with AI support compared to unaided reading?",
+    "pmid": "30457482",
+    "fragment_id": 1,
+    "id": "30457482_1",
+    "abstract_fragment": "auc was higher with ai support than with unaided reading ( 0. 89 vs 0. 87, respectively ; p =. 002 ). sensitivity increased with ai support ( 86 % [ 86 of 100 ] vs 83 % [ 83 of 100 ] ; p =. 046 ), whereas specificity trended toward improvement ( 79 % [ 111 of 140 ] ) vs 77 % [ 108 of 140 ] ; p =. 06 ). reading time per case was similar ( unaided, 146 seconds ; supported by ai, 149 seconds ; p =. 15 ). the auc with the ai system alone was similar to the average auc of the radiologists ( 0. 89 vs 0. 87 ). conclusion radiologists improved their cancer detection at mammography when using an artificial intelligence system for support, without requiring additional reading time. published under a cc by 4. 0 license. see also the editorial by bahl in this issue.",
+    "question_type": "factual"
+  },
+  {
+    "question": "What is a commonly prescribed mood stabilizer for individuals with bipolar disorder that is known to affect treatment outcomes based on genetic background?",
+    "pmid": "36307327",
+    "fragment_id": 0,
+    "id": "36307327_0",
+    "abstract_fragment": "bipolar disorder is a highly heritable neuropsychiatric condition affecting more than 1 % of the human population. lithium salts are commonly prescribed as a mood stabilizer for individuals with bipolar disorder. lithium is clinically effective in approximately half of treated individuals, and their genetic backgrounds are known to influence treatment outcomes. while the mechanism of lithium's therapeutic action is unclear, it stimulates adult neural progenitor cell proliferation, similar to some antidepressant drugs. to identify common genetic variants that modulate lithium - induced proliferation, we conducted an edu incorporation assay in a library of 80 genotyped human neural progenitor cells treated with lithium. these data were used to perform a genome - wide association study to identify common genetic variants that influence lithium - induced neural progenitor cell proliferation. we manipulated the expression of a putatively causal gene using crispri / a ( clustered regularly interspaced short palindromic repeats interference / activation ) constructs to experimentally verify lithium - induced proliferation effects. we identified a locus on chr3p21. 1 associated with lithium - induced proliferation. this locus is also associated with bipolar disorder risk, schizophrenia risk, and interindividual differences in intelligence. we identified a single gene, gnl3, whose expression temporally increased in an allele - specific fashion following lithium treatment. experimentally increasing the expression of gnl3 led to increased proliferation under baseline conditions, while experimentally",
+    "question_type": "factual"
+  },
+  {
+    "question": "What potential do AI technologies have in transplant pathology?",
+    "pmid": "37760142",
+    "fragment_id": 1,
+    "id": "37760142_1",
+    "abstract_fragment": "ai in transplant pathology. we believe that these ai technologies have the potential to significantly improve transplant outcomes and pave the way for future advancements in this field.",
+    "question_type": "factual"
+  },
+  {
+    "question": "What factors are associated with lower quality of life among adults with autism spectrum disorder compared to neuro-typical adults?",
+    "pmid": "29228834",
+    "fragment_id": 0,
+    "id": "29228834_0",
+    "abstract_fragment": "improved quality of life is an important outcome for adults with autism spectrum disorder. however, little research has examined factors associated with quality of life among adults with autism spectrum disorder. this study comparing 66 adults with autism spectrum disorder ( intelligence quotient > 70 ) aged 20 - 38 years with neuro - typical adults investigated their quality of life and related factors. all the participants were interviewed with questionnaires by a registered occupational therapist. participants with autism spectrum disorder scored significantly lower in all domains of quality of life than did the controls. adults with autism spectrum disorder reported higher anxiety level, more loneliness, and higher scores on four sensory quadrants than neuro - typical adults. the predictors of the physical health domain were anxiety and sensation - sensitivity behaviors. loneliness and sensation - sensitivity behaviors were predictive of the psychological health domain. comorbid psychiatric disorders and loneliness were predictive of the social relationship domain. adults with autism spectrum disorder need more supportive social contexts and interventions to improve their quality of life. social relationships, psychological health, and sensory processing difficulty must be considered when designing treatment programs for adults with autism spectrum disorder. implications for rehabilitation adults with autism spectrum disorder scored significantly lower in all domains of quality of life than did the neuro - typical adults. occupational therapy can provide more supportive social contexts and interventions on social relationship and sensory processing difficulty to",
+    "question_type": "factual"
+  },
+  {
+    "question": "Can machine learning deliver better algorithmic rules than traditional simple legal rules, as defended by Epstein in \"Simple Rules for a Complex World\"?",
+    "pmid": "35923160",
+    "fragment_id": 0,
+    "id": "35923160_0",
+    "abstract_fragment": "epstein ( simple rules for a complex world, harvard university press, cambridge, 1995 ) defended the superiority of simple legal rules over complex, human - designed regulations. has epstein's case for simple rules become obsolete with the arrival of artificial intelligence, and in particular machine learning ( ml )? can ml deliver better algorithmic rules than traditional simple legal rules? this paper argues that the answer to these question is \" no \" by building an argument based on three increasingly more serious barriers that ml faces to develop legal ( or quasi - legal ) algorithmic rules : data availability, the lucas'critique, and incentive compatibility in eliciting information. thus, the case for simple legal rules is still sound even in a world with ml.",
+    "question_type": "yes/no"
+  },
+  {
+    "question": "What percentage of Taiwanese pediatric leukemia survivors were found to have problems in executive function?",
+    "pmid": "30913362",
+    "fragment_id": 1,
+    "id": "30913362_1",
+    "abstract_fragment": ", the average full scale intelligence quotient was 91. 7 \u00b1 13. 8. ten percent of the subjects had problem in test of attention, 20 % had problem in test of impulsivity and 42. 8 % of the subject had problems in executive function. when judged from real life contexts, 19 subjects ( 42 % ) were with obvious attention problems. group comparison between standard risk vs high / very high risk patients revealed no difference in neurocognitive outcomes. we hope that this information may benefit the implementation of follow - up program for taiwanese pediatric leukemia survivors.",
+    "question_type": "factual"
+  }
+  ]}
