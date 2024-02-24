@@ -87,9 +87,12 @@ how relevant the answer is to the query.
 
 With our default prompt (see below) and Mistral we already achieve quite high numbers in the answer generation part. For our test dataset of 42 questions with relevant context, 
 we achieve a faithfulness score of 1.0 (highest score) and answer relevancy score of 0.943 (1 is the highest). Both are quite high already. This is why we complement 
-the automatic testing with human testing to see what strategies are better. 
+the automatic testing with human testing to see what strategies are better. Here are the scores for the LLMs we tested:
+- llama2 `{'faithfulness': 0.9098, 'answer_relevancy': 0.8799}`
+- mistral `{'faithfulness': 1.0000, 'answer_relevancy': 0.943}`
+- gemma `{'faithfulness': 1.0000, 'answer_relevancy': 0.4619}`
 
-default prompt:
+As we can see, Mistral performs by far the best with the ragas framework and the default prompt shown below:
 ```
 Give just the answer to the following user query `{query}` using the information given in
 context `{context}`.
