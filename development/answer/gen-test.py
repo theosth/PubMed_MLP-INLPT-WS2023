@@ -23,11 +23,11 @@ test_docs = [
     Document(page_content = "Jesse's favorite color is red"),
 ]
 
-if 'llama' not in [model['details']['family'] for model in ollama.list()['models']]:
+if len([model['name'] for model in ollama.list()['models'] if 'mistral' in model['name']]) == 0:
     print("Pulling the model")
     subprocess.run("ollama pull llama2", shell=True, text=True,  stdout=sys.stdout, stderr=sys.stderr)
 llm = Ollama(
-    model="llama2",
+    model="mistral",
     temperature = 0.01,
     repeat_penalty = 1.1,
 )
@@ -36,3 +36,5 @@ prompt = ChatPromptTemplate.from_template(prompt_template)
 chain = create_stuff_documents_chain(llm, prompt)
 
 print(chain.invoke({"context": test_docs, "query": "Is Jesse's favorite color orange?"}))
+print(chain.invoke({"context": test_docs, "query": "What is Theo's favorite color?"}))
+print(chain.invoke({"context": test_docs, "query": "Are penguins birds?"}))
