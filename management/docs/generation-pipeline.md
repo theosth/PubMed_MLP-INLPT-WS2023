@@ -2,10 +2,6 @@
 
 ## Choice of Generation Backend
 
-### Model
-We chose Llama2 because 
-
-### Framework
 Unfortunately, with our setup, we can not use Google Colab. This is because Google Colab can only access publicly hosted databases, which our OpenSearch instance is not because we have no server for it. This is why we need to ensure hardware acceleration with local devices.
 
 We chose Ollama as backend for Llama2 because hardware acceleration is essential in order to receive answers in real time. 
@@ -82,3 +78,22 @@ Same as with Mistral, we tested Gemma with PubMed questions and contexts.
 The answers were mostly correct, however, it did not adhere to answer format and sometimes answered that there was no context when there was. 
 
 Additionally, Gemma is generally larger (5.2 vs 4.1 GB) than Mistral and has slower inference times on lower-end hardware. Furthermore, it is highly cutting edge being only released for a few days, which is generally unfavorable as we want to build a stable and safe product. This is why we decided to proceed with Mistral as text generation model. 
+
+## Evaluation
+
+For the evaluation of our generation pipeline we employ a mixture of human and automated testing. For the automated testing we use RAGAS, 
+especially its `faithfulness` and `answer_relevancy`. Faithfulness indicates how true the answer is to the context and answer relevancy indicates 
+how relevant the answer is to the query. 
+
+With our default prompt (see below) and Mistral we already achieve quite high numbers in the answer generation part. For our test dataset of 42 questions with relevant context, 
+we achieve a faithfulness score of 1.0 (highest score) and answer relevancy score of 0.943 (1 is the highest). Both are quite high already. This is why we complement 
+the automatic testing with human testing to see what strategies are better. 
+
+default prompt:
+```
+Give just the answer to the following user query `{query}` using the information given in
+context `{context}`.
+In the case there is no relevant information in the provided context,
+try to answer yourself, but tell the user that you did not have any
+relevant context to base your answer on. Be concise and factual.
+```
