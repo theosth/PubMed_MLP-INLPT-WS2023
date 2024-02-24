@@ -13,8 +13,7 @@ Give just the answer to the following user query ```{query}``` using the informa
 context ```{context}```.
 In the case there is no relevant information in the provided context,
 try to answer yourself, but tell the user that you did not have any
-relevant context to base your answer on. Be concise and factual. 
-Answer just the question, do not provide any additional information.
+relevant context to base your answer on. Be concise and factual.
 """
 
 test_docs = [
@@ -23,13 +22,13 @@ test_docs = [
     Document(page_content = "Jesse's favorite color is red"),
 ]
 
-if len([model['name'] for model in ollama.list()['models'] if 'mistral' in model['name']]) == 0:
+if len([model['name'] for model in ollama.list()['models'] if 'gemma' in model['name']]) == 0:
     print("Pulling the model")
     subprocess.run("ollama pull llama2", shell=True, text=True,  stdout=sys.stdout, stderr=sys.stderr)
 llm = Ollama(
-    model="mistral",
-    temperature = 0.01,
-    repeat_penalty = 1.1,
+    model="gemma",
+    # temperature = 0.01,
+    # repeat_penalty = 1.1,
 )
 
 prompt = ChatPromptTemplate.from_template(prompt_template)

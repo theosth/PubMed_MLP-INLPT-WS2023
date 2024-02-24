@@ -34,7 +34,6 @@ context ```{context}```.
 In the case there is no relevant information in the provided context,
 try to answer yourself, but tell the user that you did not have any
 relevant context to base your answer on. Be concise and factual. 
-Answer just the question, do not provide any additional information.
 
 Context: 
     - "Jesse loves red but not yellow"
@@ -57,13 +56,20 @@ For these reasons, we decided against further investigating llama2
 
 Next we tested Mistral 7 billion with 4 bit quantization requiring 4.1 GB disk storage. 
 Right off the bat it performed much better without having to change the prompt in the slightest.
-It correctly mentions it if the answer does not appear in the context but tries its best do answer the question still. With the very simple questions and contexts, we did not observe any hallucination. When a question can not be answered, but it is general knowledge, it answers correctly and specifies that it was not in the context. Also, Mistral did not add any weird formatting or hallucinated structure. All in all, it is very impressive for the small size and performs much better than llama2. It is also newer, which might be the reason.
+It correctly mentions it if the answer does not appear in the context but tries its best do answer the question still. With the very simple questions and contexts, we did not observe any hallucination. When a question can not be answered, but it is general knowledge, it answers correctly and specifies that it was not in the context. Also, Mistral did not add any weird formatting or hallucinated structure. All in all, it is very impressive for the small size and performs much better than llama2. It is also newer, which might be the reason. See the following examples:
 
-Prompt, context, questions same as for llama2
-
+Prompt, context, questions same as for llama2  
 Answers: 
     - Based on the given context, Jesse's favorite color is red. The context does not provide any information about Jesse's preference for orange.
     - Theo's favorite color is not mentioned in the provided context.
     - Yes, penguins are birds. The context provided does not affect the answer to this question.
 
+### Gemma
 
+At the time of writing this, Google's Gemini-based open-source Gemma model has been released for 13 hours. There are two versions, a 7 billion and 2 billion parameter model. We tested the 4 bit quantized 7 billion parameter model. Again, without changing the prompt, context or questions, the answering performance appeared worse than with Mistral. The paper for Google Gemma stresses the model's performance being especially strong on coding and mathematical tasks compared to models of a similar size. In free recall question answering tasks (MMLU) it is comparable to Llama2 or Mistral. However, there is no benchmark on RAG and question answering with provided context. In our tests, it blatantly ignored the instruction to answer to the best of its ability if the answer is not contained within the context. Fiddling with the temperature only made answers worse. Here are the examples:
+
+Prompt, context, questions same as for llama2  
+Answers: 
+    - The provided text does not specify whether Jesse's favorite color is orange or not, therefore I cannot answer the query. (Worse than Mistral. It should have extracted red as favorite color.)
+    - The text does not provide information about Theo's favorite color, therefore I cannot answer this query. (Good)
+    - I do not have any relevant context to answer the question of whether penguins are birds or not, therefore I cannot provide an answer. (It should answer similar to Mistral)
