@@ -25,7 +25,7 @@ NEURAL_WEIGHT = 0.5
 MATCH_ON_FIELDS = ["abstract_fragment", "title", "keyword_list"]
 ABSTRACT_INDEX = env.OPENSEARCH_ABSTRACT_INDEX
 ABSTRACT_FRAGMENT_INDEX = env.OPENSEARCH_ABSTRACT_FRAGMENT_INDEX
-MAX_FRAGMENTS_PER_ABSTRACT = 5  # ! TODO: Check if this is the right value
+MAX_FRAGMENTS_PER_ABSTRACT = 20
 
 
 class Document(BaseModel):
@@ -90,4 +90,4 @@ if __name__ == "__main__":
     documents = retrieve_abstracts(question, amount)
     print(f"Retrieved {len(documents)} documents for the question: {question}")
     for doc in documents:
-        print(doc)
+        print(doc, "\n\n")
