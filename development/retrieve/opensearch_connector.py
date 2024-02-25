@@ -4,7 +4,11 @@ from pathlib import Path
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
 from development.commons.utils import get_model_id, get_opensearch_client
+from development.commons import env
 
+from sentence_transformers import SentenceTransformer
+
+MODEL = SentenceTransformer(env.EMBEDDING_MODEL_NAME)
 CLIENT = get_opensearch_client()
 
 
@@ -108,8 +112,8 @@ def extract_top_k_unique_pmids_from_response(response: dict[str, any], k: int = 
     :param k: The number of pmids to return. If None, all pmids are returned.
     :return: A list of pmids.
     """
-    seen_pmids = set() # Keep track of seen pmids
-    unique_pmids = [] # Store the unique pmids in order
+    seen_pmids = set()  # Keep track of seen pmids
+    unique_pmids = []  # Store the unique pmids in order
     for hit in response["hits"]["hits"]:
         pmid = hit["_source"]["pmid"]
         if pmid not in seen_pmids:
@@ -137,12 +141,12 @@ def create_multi_match_BM25_query(
     return {"multi_match": {"query": query_text, "fields": match_on_fields}}
 
 
-def create_neural_query(query_text: str):
+def create_knn_query(query_text: str, k: int = 10):
     return {
-        "neural": {
+        "knn": {
             "abstract_fragment_embedding": {
-                "query_text": query_text,
-                "model_id": get_model_id(CLIENT),
+                "vector": MODEL.encode(query_text).tolist(),
+                "k": k,
             }
         }
     }
@@ -151,14 +155,12 @@ def create_neural_query(query_text: str):
 def create_hybrid_query(
     query_text: str,
     match_on_fields: list[str] = ["abstract_fragment", "title", "keyword_list"],
+    knn_k: int = 10,
 ):
-    """
-    Create a hybrid query that combines BM25 and neural search.
-    """
     return {
         "hybrid": {
             "queries": [
-                create_neural_query(query_text),
+                create_knn_query(query_text, k=knn_k),
                 create_multi_match_BM25_query(query_text, match_on_fields),
             ],
         }
@@ -168,27 +170,29 @@ def create_hybrid_query(
 # How to Use:
 if __name__ == "__main__":
     print("Hybrid Query:")
+    size = 10
     # How to use Hybrid Query
     hybrid_query = create_hybrid_query(
         query_text="artificial intelligence",
         match_on_fields=["abstract_fragment", "title", "keyword_list"],
+        knn_k=size,
     )
 
     response_hybrid = execute_hybrid_query(
         query=hybrid_query,
-        pipeline_weight=1.0,
-        size=10,
+        pipeline_weight=0.5,
+        size=size,
         source_includes=["_id", "fragment_id", "title", "pmid"],
     )
     # print(json.dumps(response, indent=2))
     hits_hybrid = extract_hits_from_response(response_hybrid)
     print(json.dumps(hits_hybrid, indent=2))
-    
+
     print("\n Top 3 unique PMIDs:")
     # extract the top 3 unique pmids from the response
     unique_pmids = extract_top_k_unique_pmids_from_response(response_hybrid, k=3)
     print(unique_pmids)
-    
+
     print("\n\nTerms Query:")
 
     # How to use term query
@@ -202,5 +206,3 @@ if __name__ == "__main__":
     # its possible to only get the source fields (title, pmid, etc.) from the hits
     hits_term = extract_source_from_hits(extract_hits_from_response(response_term))
     print(json.dumps(hits_term, indent=2))
-    
-

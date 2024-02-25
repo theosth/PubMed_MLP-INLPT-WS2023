@@ -46,12 +46,13 @@ def retrieve_abstracts(question: str, amount: int = 3) -> list[Document]:
     """
 
     # Retrieve relevant abstract_fragment pmids
-    query = create_hybrid_query(query_text=question, match_on_fields=MATCH_ON_FIELDS)
+    size = amount * MAX_FRAGMENTS_PER_ABSTRACT
+    query = create_hybrid_query(query_text=question, match_on_fields=MATCH_ON_FIELDS, knn_k=size)
     fragment_response = execute_hybrid_query(
         query=query,
         pipeline_weight=NEURAL_WEIGHT,
         index=ABSTRACT_FRAGMENT_INDEX,
-        size=amount * MAX_FRAGMENTS_PER_ABSTRACT,
+        size=size,
         source_includes=["pmid"],
     )
     pmids = extract_top_k_unique_pmids_from_response(fragment_response, amount)
