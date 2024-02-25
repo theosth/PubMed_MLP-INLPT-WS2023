@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from development.commons.utils import get_model_id, get_opensearch_client
+from development.commons.utils import get_opensearch_client
 from development.commons import env
 
 from sentence_transformers import SentenceTransformer

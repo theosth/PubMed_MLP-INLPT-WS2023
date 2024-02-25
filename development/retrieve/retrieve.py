@@ -14,7 +14,7 @@ from development.retrieve.opensearch_connector import (
     extract_source_from_hits,
     extract_top_k_unique_pmids_from_response,
 )
-from development.commons.utils import get_model_id, get_opensearch_client
+from development.commons.utils import get_opensearch_client
 import development.commons.env as env
 
 
