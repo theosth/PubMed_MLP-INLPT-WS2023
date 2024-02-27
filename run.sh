@@ -10,7 +10,7 @@ cleanup() {
 trap cleanup SIGINT SIGTERM
 
 echo "Starting API..."
-python api/model_api.py & # run in background
+python answering-model/model_api.py & # run in background
 
 echo "Starting Streamlit App..."
 streamlit run ui/app.py & # run in background
