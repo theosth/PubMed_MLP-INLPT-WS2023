@@ -38,12 +38,11 @@ services:
       - opensearch-net
  
  
-  ollama:
-    image: ollama/ollama:latest
-    container_name: ollama
-    # ! TODO Add Ports
-    networks:
-      - opensearch-net
+  # ollama:
+  #   image: ollama/ollama:latest
+  #   container_name: ollama
+  #   ports:
+  #     - 11443:11443 # Map host port 11443 to container port 11443
 
 networks:
   opensearch-net:
