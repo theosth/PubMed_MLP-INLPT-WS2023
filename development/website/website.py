@@ -9,6 +9,7 @@ import development.retrieve.retrieval_wrapper as retrieve
 # from streamlit_tags import st_tags, st_tags_sidebar
 
 
+PUBMED_ARTICLE_URL = "https://pubmed.ncbi.nlm.nih.gov"
 WEBSITE_TITLE = "Fluorite Q&A System"
 OPTIONS_TITLE = "Options"
 OPTION_PUBLICATION_YEAR_TITLE = "Publication Year"
@@ -73,14 +74,21 @@ def build_upper_sidebar():
     )
 
     # Author Selection
-    #keyword = st_tags_sidebar(
+    # keyword = st_tags_sidebar(
     #    label=OPTION_AUTHORS_TITLE,
     #    text='Enter Author Names...',
-    #)
+    # )
 
 
 def truncate_for_expander(message, length):
     return f"{message[:length]}..."
+
+
+def write_expander_url(keyword, content):
+    st.write(
+        f'<p><span style="font-weight:bold;">{keyword}:</span> <a href="{content}">{content}</a></p>',
+        unsafe_allow_html=True
+    )
 
 
 def write_expander_entry(keyword, content):
@@ -91,7 +99,9 @@ def write_expander_entry(keyword, content):
 
 
 def write_expander(source):
+    write_expander_url("URL", f"{PUBMED_ARTICLE_URL}/{source.pmid}/")
     write_expander_entry("Title", source.title)
+    write_expander_entry("PMID", source.pmid)
     write_expander_entry("Authors", ", ".join(source.author_list))
 
     date = source.publication_date
