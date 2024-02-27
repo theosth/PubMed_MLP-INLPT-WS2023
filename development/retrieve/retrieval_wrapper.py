@@ -1,9 +1,10 @@
 import sys
+import development.commons.env as env
 from pathlib import Path
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
 
-from pydantic import BaseModel, validator
+from pydantic import BaseModel
 from typing import Optional
 from development.retrieve.opensearch_connector import (
     create_hybrid_query,
@@ -15,7 +16,6 @@ from development.retrieve.opensearch_connector import (
     extract_top_k_unique_pmids_from_response,
 )
 from development.commons.utils import get_opensearch_client
-import development.commons.env as env
 
 
 CLIENT = get_opensearch_client()
@@ -31,6 +31,7 @@ MAX_FRAGMENTS_PER_ABSTRACT = 20
 class Document(BaseModel):
     pmid: str
     title: str
+    publication_date: str
     abstract: str
     author_list: list[str]
     doi: str
@@ -62,13 +63,14 @@ def retrieve_abstracts(question: str, amount: int = 3) -> list[Document]:
         create_term_query(match_key="pmid", match_value=pmid) for pmid in pmids
     ]
     documents: list[Document] = []
-    for term_query in term_queries:
+    for index, term_query in enumerate(term_queries):
         response = execute_query(
             query=term_query,
             index=ABSTRACT_INDEX,
             source_includes=[
                 "pmid",
                 "title",
+                "publication_date",
                 "abstract",
                 "author_list",
                 "doi",
@@ -79,11 +81,14 @@ def retrieve_abstracts(question: str, amount: int = 3) -> list[Document]:
         hit = extract_hits_from_response(response)
         data = extract_source_from_hits(hit)[0]
         if len(data) < 0:
-            TypeError(f"Could not retrieve document for pmid: {pmid}")
+            TypeError(f"Could not retrieve document for pmid: {pmids[index]}")
         documents.append(Document(**data))
     return documents
 
 
+#############################
+#       Example Usage       #
+#############################
 if __name__ == "__main__":
     question = "What is the impact of COVID-19 on mental health?"
     amount = 3
