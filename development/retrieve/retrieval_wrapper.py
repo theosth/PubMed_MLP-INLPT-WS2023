@@ -30,10 +30,10 @@ MAX_FRAGMENTS_PER_ABSTRACT = 20
 
 class Document(BaseModel):
     pmid: str
-    title: str
-    publication_date: str
+    title: Optional[str] = None
+    publication_date: Optional[str] = None
     abstract: str
-    author_list: list[str]
+    author_list: Optional[list[str]] = None
     doi: str
     keyword_list: Optional[list[str]] = None
 
@@ -82,6 +82,7 @@ def retrieve_abstracts(question: str, amount: int = 3) -> list[Document]:
         data = extract_source_from_hits(hit)[0]
         if len(data) < 0:
             TypeError(f"Could not retrieve document for pmid: {pmids[index]}")
+        print(f"Test: {data}")
         documents.append(Document(**data))
     return documents
 

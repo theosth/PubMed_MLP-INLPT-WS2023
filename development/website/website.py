@@ -83,6 +83,25 @@ def truncate_for_expander(message, length):
     return f"{message[:length]}..."
 
 
+def write_expander_entry(keyword, content):
+    st.write(
+        f'<p><span style="font-weight:bold;">{keyword}:</span> {content if content is not None else "-"}</p>',
+        unsafe_allow_html=True
+    )
+
+
+def write_expander(source):
+    write_expander_entry("Title", source.title)
+    write_expander_entry("Authors", ", ".join(source.author_list))
+
+    date = source.publication_date
+    if date is not None:
+        date = to_american_date_format(date)
+
+    write_expander_entry("Date", date)
+    write_expander_entry("Confidence", "?")
+
+
 def build_lower_sidebar():
     st.sidebar.title(SOURCES_TITLE)
 
@@ -96,10 +115,7 @@ def build_lower_sidebar():
             expander_title = expander_titles[index]
             content = f"({index + 1}) {expander_title}"
             with st.sidebar.expander(truncate_for_expander(content, 35)):
-                st.write(f'<p><span style="font-weight:bold;">Title:</span> {source.title}</p>', unsafe_allow_html=True)
-                st.write(f'<p><span style="font-weight:bold;">Authors:</span> {", ".join(source.author_list)}</p>', unsafe_allow_html=True)
-                st.write(f'<p><span style="font-weight:bold;">Date:</span> {to_american_date_format(source.publication_date)}</p>', unsafe_allow_html=True)
-                st.write(f'<p><span style="font-weight:bold;">Confidence:</span> ?</p>', unsafe_allow_html=True)
+                write_expander(source)
 
 
 def build_sidebar():
