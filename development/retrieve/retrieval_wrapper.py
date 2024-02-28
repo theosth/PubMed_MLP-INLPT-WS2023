@@ -1,8 +1,8 @@
 import sys
-import development.commons.env as env
 from pathlib import Path
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
+import development.commons.env as env
 
 from pydantic import BaseModel
 from typing import Optional
@@ -16,6 +16,7 @@ from development.retrieve.opensearch_connector import (
     extract_top_k_unique_pmids_from_response,
 )
 from development.commons.utils import get_opensearch_client
+from development.retrieve.self_query import get_filters
 
 
 CLIENT = get_opensearch_client()
@@ -46,6 +47,8 @@ def retrieve_abstracts(question: str, amount: int = 3) -> list[Document]:
     :return: A list of Documents.
     """
 
+    filters = get_filters(question, remove_dot_metadata_from_keys=True)
+
     # Retrieve relevant abstract_fragment pmids
     size = amount * MAX_FRAGMENTS_PER_ABSTRACT
     query = create_hybrid_query(query_text=question, match_on_fields=MATCH_ON_FIELDS, knn_k=size)
@@ -55,6 +58,7 @@ def retrieve_abstracts(question: str, amount: int = 3) -> list[Document]:
         index=ABSTRACT_FRAGMENT_INDEX,
         size=size,
         source_includes=["pmid"],
+        filter=filters,
     )
     pmids = extract_top_k_unique_pmids_from_response(fragment_response, amount)
 
@@ -77,12 +81,12 @@ def retrieve_abstracts(question: str, amount: int = 3) -> list[Document]:
                 "keyword_list",
             ],
             size=1,
+            filter=filters,
         )
         hit = extract_hits_from_response(response)
         data = extract_source_from_hits(hit)[0]
         if len(data) < 0:
             TypeError(f"Could not retrieve document for pmid: {pmids[index]}")
-        print(f"Test: {data}")
         documents.append(Document(**data))
     return documents
 
@@ -91,9 +95,9 @@ def retrieve_abstracts(question: str, amount: int = 3) -> list[Document]:
 #       Example Usage       #
 #############################
 if __name__ == "__main__":
-    question = "What is the impact of COVID-19 on mental health?"
-    amount = 3
+    question = "cancer research published after 2015"
+    amount = 10
     documents = retrieve_abstracts(question, amount)
     print(f"Retrieved {len(documents)} documents for the question: {question}")
     for doc in documents:
-        print(doc, "\n\n")
+        print(doc.publication_date, "\n\n")

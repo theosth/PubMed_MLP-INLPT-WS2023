@@ -176,7 +176,7 @@ def create_hybrid_query(
 
 
 def add_bool_filter_to_query(query, filter: dict[str, any]):
-    return {"bool": {"must": query, "filter": filter}}
+    return {"bool": {"must": query, **filter}}
 
 
 #############################
