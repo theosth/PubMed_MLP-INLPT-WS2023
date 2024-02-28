@@ -79,6 +79,13 @@ The answers were mostly correct, however, it did not adhere to answer format and
 
 Additionally, Gemma is generally larger (5.2 vs 4.1 GB) than Mistral and has slower inference times on lower-end hardware. Furthermore, it is highly cutting edge being only released for a few days, which is generally unfavorable as we want to build a stable and safe product. This is why we decided to proceed with Mistral as text generation model. 
 
+## Question-type dependent answer generation
+
+Our system should be able to answer different types of questions. In our first naive approach, we just defined one chain with a very general prompt that should answer all types of questions. The obvious problem with that is that different questions can have different requirements for either the answer format or the answering process. When we e.g. want factual questions to be answered with a concise statement and causal questions to be answered with a longer explanation, it is difficult to handle this with just a single answering chain and prompt.
+Therefore we implemented a routing system. Questions get first prompted to an llm which classifies them by their type. Depending on this type they can now get handeled differently. In our first version this only translates to using different prompts that specify the answer format more precisely. Also possible but not yet implemented would be using different retrieving behaviour for the different question types. For example it might be beneficial to use more context documents for complex questions than for confirmation questions.
+For our implementation we did not use langchains RouterChain or the MultiPromptChain. This is due to issues with forwarding the inputs from the routing chain to the destination chains (the chains that answer the question) as they don't allow additional external inputs and the input of the destination chain is just one field. Workarounds like prompting the routing chain to return the output in a special format by encapsulating everything in one nested json-like string would be possible but more prone for errors. Therefore we built our own routing chain.
+In total routing the question depending on its type gives us more flexibility and possibilities to support different questions. The main drawback is that this doubles inference time, as we are now prompting llms twice, once for the routing, once for the generation of the actual answer.
+
 ## Evaluation
 
 For the evaluation of our generation pipeline we employ a mixture of human and automated testing. For the automated testing we use RAGAS, 
