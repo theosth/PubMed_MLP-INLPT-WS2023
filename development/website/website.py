@@ -5,26 +5,27 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent.parent))
 
 import development.retrieve.retrieval_wrapper as retrieve
-
-from streamlit_tags import st_tags, st_tags_sidebar
 import streamlit as st
 
-
 PUBMED_ARTICLE_URL = "https://pubmed.ncbi.nlm.nih.gov"
-WEBSITE_TITLE = "Fluorite Q&A System"
-OPTIONS_TITLE = "Options"
-OPTION_PUBLICATION_YEAR_TITLE = "Publication Year"
-OPTION_AUTHORS_TITLE = "Authors"
-TIME_SPAN_MIN_YEAR = 2013
-TIME_SPAN_MAX_YEAR = 2023
-SOURCES_TITLE = "Sources"
+WEBSITE_TITLE = "G2 Q&A System"
+
+SELF_QUERYING_PARAMETERS_TITLE = "Self-Querying Parameters"
+SELF_QUERYING_TOGGLE_NOTE = (":gray[Note: By enabling this option, the filtering parameters are automatically "
+                             "extracted from the latest query. You cannot change them!]")
+SELF_QUERYING_EXPANDER_TITLE = "Automatically Filtered Parameters"
+
+LATEST_SOURCES_TITLE = "Sources"
+LATEST_SOURCES_KEY = "latest_sources"
+EMPTY_SOURCES_NOTE = (":gray[Since there is no recent question, there are no sources so far... Don't be shy, "
+                      "ask our system!]")
 
 
 def ask_opensearch(question: str):
     return retrieve.retrieve_abstracts(question)
 
 
-def build_center():
+def build_chat():
     # Website Title
     st.title(WEBSITE_TITLE)
 
@@ -41,55 +42,20 @@ def build_center():
     if prompt := st.chat_input():
         st.session_state.messages.append({"role": "user", "content": prompt})
         message = ask_opensearch(prompt)
-        st.session_state.last_sources = message
+        st.session_state[LATEST_SOURCES_KEY] = message
         st.session_state.messages.append(
             {"role": "assistant", "content": "< missing answer >"}
         )
-        st.experimental_rerun()
-
-
-def to_american_date_format(publication_date):
-    parsed_date = datetime.strptime(publication_date, "%Y-%m-%d %H:%M:%S")
-    return parsed_date.date()
-
-
-def to_expander_titles(sources):
-    return [f"{source.title}" for source in sources]
 
 
 def build_upper_sidebar():
-    # Options Sidebar Title
-    st.sidebar.title(OPTIONS_TITLE)
+    # Self-Querying Parameters Sidebar Title
+    st.sidebar.title(SELF_QUERYING_PARAMETERS_TITLE)
 
-    st.markdown(
-        """
-        <style>
-        .stSlider [data-baseweb=slider]{
-            width: 85%;
-            margin-left: 7.5%;
-            margin-top: 15px;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    # Time Span Selection
-    time_span_start, time_span_end = st.sidebar.select_slider(
-        OPTION_PUBLICATION_YEAR_TITLE,
-        options=list(range(TIME_SPAN_MIN_YEAR, TIME_SPAN_MAX_YEAR + 1)),
-        value=(TIME_SPAN_MIN_YEAR, TIME_SPAN_MAX_YEAR),
-    )
-
-    # Author Selection
-    keyword = st_tags_sidebar(
-        label=OPTION_AUTHORS_TITLE,
-        text='Enter Author Names...',
-    )
-
-
-def truncate_for_expander(message, length):
-    return f"{message[:length]}..."
+    # Self-Querying Toggle
+    if st.sidebar.toggle(SELF_QUERYING_TOGGLE_NOTE):
+        with st.sidebar.expander(SELF_QUERYING_EXPANDER_TITLE):
+            write_self_querying_expander()
 
 
 def write_expander_url(keyword, content):
@@ -99,43 +65,65 @@ def write_expander_url(keyword, content):
     )
 
 
-def write_expander_entry(keyword, content):
+def write_expander_normal_entry(keyword, content):
     st.write(
         f'<p><span style="font-weight:bold;">{keyword}:</span> {content if content is not None else "-"}</p>',
         unsafe_allow_html=True,
     )
 
 
-def write_expander(source):
+def write_self_querying_expander():
+    time_span_min = st.session_state.get("self_querying_time_span_min", "?")
+    time_span_max = st.session_state.get("self_querying_time_span_max", "?")
+    title = st.session_state.get("self_querying_title", "-")
+
+    write_expander_normal_entry("Timespan", f"{time_span_min} - {time_span_max}")
+    write_expander_normal_entry("Title", title)
+
+
+def to_american_date_format(publication_date):
+    parsed_date = datetime.strptime(publication_date, "%Y-%m-%d %H:%M:%S")
+    return parsed_date.date()
+
+
+def write_source_expander(source):
     write_expander_url("URL", f"{PUBMED_ARTICLE_URL}/{source.pmid}/")
-    write_expander_entry("Title", source.title)
-    write_expander_entry("PMID", source.pmid)
-    write_expander_entry("Authors", ", ".join(source.author_list))
+    write_expander_normal_entry("Title", source.title)
+    write_expander_normal_entry("PMID", source.pmid)
+    write_expander_normal_entry("Authors", ", ".join(source.author_list))
 
-    date = source.publication_date
-    if date is not None:
-        date = to_american_date_format(date)
+    publication_date = source.publication_date
+    if publication_date is not None:
+        publication_date = to_american_date_format(publication_date)
 
-    write_expander_entry("Date", date)
-    write_expander_entry("Confidence", "?")
+    write_expander_normal_entry("Publication Date", publication_date)
+    write_expander_normal_entry("Confidence", "?")
+
+
+def truncate_to_short_expander_title(message, length):
+    return f"{message[:length]}..."
+
+
+def to_source_expander_titles(sources):
+    return [f"{source.title}" for source in sources]
 
 
 def build_lower_sidebar():
-    st.sidebar.title(SOURCES_TITLE)
+    st.sidebar.title(LATEST_SOURCES_TITLE)
 
     # Show Sources
-    last_sources = st.session_state.get("last_sources")
+    last_sources = st.session_state.get(LATEST_SOURCES_KEY)
     if last_sources is None:
-        st.sidebar.write(
-            ":gray[Since there is no recent question, there are no sources so far! Don't be shy, ask our system!]"
-        )
+        st.sidebar.write(EMPTY_SOURCES_NOTE)
     else:
-        expander_titles = to_expander_titles(last_sources)
+        expander_titles = to_source_expander_titles(last_sources)
         for index, source in enumerate(last_sources):
             expander_title = expander_titles[index]
             content = f"({index + 1}) {expander_title}"
-            with st.sidebar.expander(truncate_for_expander(content, 35)):
-                write_expander(source)
+
+            # Create Source Expander
+            with st.sidebar.expander(truncate_to_short_expander_title(content, 35)):
+                write_source_expander(source)
 
 
 def build_sidebar():
@@ -145,5 +133,5 @@ def build_sidebar():
 
 
 if __name__ == "__main__":
-    build_center()
+    build_chat()
     build_sidebar()
