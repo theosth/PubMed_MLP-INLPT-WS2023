@@ -2,7 +2,6 @@ import sys
 from pathlib import Path
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
-import development.commons.env as env
 
 from pydantic import BaseModel
 from typing import Optional, List
@@ -20,9 +19,11 @@ from development.retrieve.opensearch_connector import (
     extract_source_from_hits,
     extract_top_k_unique_pmids_from_response,
 )
+
 import development.commons.env as env
 from development.commons.utils import get_opensearch_client
 from development.retrieve.self_query import get_filters
+import development.retrieve.confidence_score as confidence
 
 
 CLIENT = get_opensearch_client()
@@ -43,6 +44,7 @@ class DocumentOpenSearch(BaseModel):
     author_list: Optional[list[str]] = None
     doi: str
     keyword_list: Optional[list[str]] = None
+    confidence: Optional[str] = None
 
 
 def retrieve_abstracts(question: str, amount: int = 3) -> list[DocumentOpenSearch]:
@@ -97,10 +99,16 @@ def retrieve_abstracts(question: str, amount: int = 3) -> list[DocumentOpenSearc
             TypeError(f"Could not retrieve document for pmid: {pmids[index]}")
         # print(f"Test: {data}")
         documents.append(DocumentOpenSearch(**data))
+
+    # Compute Confidence
+    confidence_ratings = confidence.compute_confidence_ratings(query=question, documents=documents)
+    for index, document in enumerate(documents):
+        document.confidence = confidence_ratings[index]
+
     return documents
 
 
-def convertToDocument(documents: list[DocumentOpenSearch]) -> list[Document]:
+def convert_to_document(documents: list[DocumentOpenSearch]) -> list[Document]:
     """
     Convert a list of DocumentOpenSearch objects to a list of Document objects.
     :param documents: A list of DocumentOpenSearch objects.
@@ -126,7 +134,7 @@ class CustomOpensearchRetriever(BaseRetriever):
         run_manager: CallbackManagerForRetrieverRun,
         amount: int = 3,
     ) -> List[Document]:
-        return convertToDocument(retrieve_abstracts(query, amount))
+        return convert_to_document(retrieve_abstracts(query, amount))
 
 
 #############################

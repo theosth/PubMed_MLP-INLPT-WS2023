@@ -86,6 +86,16 @@ def to_american_date_format(publication_date):
     return parsed_date.date()
 
 
+def to_colored_confidence_rating(confidence_score):
+    # Thresholds have been chosen empirically
+    if confidence_score > 85:
+        return f"<span style='color: #ACD8AA;'>High ({int(confidence_score)}%)</span>"
+    elif confidence_score > 60:
+        return f"<span style='color: #EDAE49;'>Medium ({int(confidence_score)}%)</span>"
+    else:
+        return f"<span style='color: #D1495B;'>Low ({int(confidence_score)}%)</span>"
+
+
 def write_source_expander(source):
     write_expander_url("URL", f"{PUBMED_ARTICLE_URL}/{source.pmid}/")
     write_expander_normal_entry("Title", source.title)
@@ -97,7 +107,7 @@ def write_source_expander(source):
         publication_date = to_american_date_format(publication_date)
 
     write_expander_normal_entry("Publication Date", publication_date)
-    write_expander_normal_entry("Confidence", "?")
+    write_expander_normal_entry("Confidence", to_colored_confidence_rating(source.confidence))
 
 
 def truncate_to_short_expander_title(message, length):
