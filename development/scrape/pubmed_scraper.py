@@ -1,3 +1,4 @@
+import os
 import datetime
 import math
 import pickle
@@ -63,6 +64,10 @@ def fetch_relevant_documents(relevant_document_ids):
 
 def save_relevant_documents(relevant_documents):
     print("Saving Documents...")
+    folder_path = os.path.dirname(env.RAW_DATASET_PATH)
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+
     with open(env.RAW_DATASET_PATH, "wb") as output:
         pickle.dump({
             'batched_data': relevant_documents,
