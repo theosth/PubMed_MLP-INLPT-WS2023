@@ -1,6 +1,13 @@
+import sys
+from pathlib import Path
+
+sys.path.append(str(Path(__file__).parent.parent.parent))
+
+
 from langchain.retrievers import SelfQueryRetriever
 from langchain_community.llms import Ollama
-from langchain_community.vectorstores import OpenSearchVectorSearch
+# from langchain_community.vectorstores import OpenSearchVectorSearch
+from langchain_community.vectorstores.opensearch_vector_search import OpenSearchVectorSearch
 from langchain_core.vectorstores import VectorStore
 from langchain.retrievers.self_query.opensearch import OpenSearchTranslator
 from langchain.chains.query_constructor.base import (
@@ -11,30 +18,32 @@ from langchain.chains.query_constructor.base import (
 
 metadata_field_info = [
     AttributeInfo(
-        name="genre",
-        description="The genre of the movie. One of ['science fiction', 'comedy', 'drama', 'thriller', 'romance', 'action', 'animated']",
+        name="pmid",
+        description="The PubMed ID of the article",
         type="string",
     ),
     AttributeInfo(
-        name="year",
-        description="The year the movie was released",
-        type="integer",
-    ),
-    AttributeInfo(
-        name="director",
-        description="The name of the movie director",
+        name="doi",
+        description="The Digital Object Identifier of the article",
         type="string",
     ),
     AttributeInfo(
-        name="rating", description="A 1-10 rating for the movie", type="float"
+        name="title",
+        description="The title of the article",
+        type="string",
     ),
+    # AttributeInfo(
+    #     name="author_list",
+    #     description="List of authors of the article",
+    #     type="list[string]",
+    # ),
 ]
-document_content_description = "Brief summary of a movie"
+document_content_description = "Summary of a scientific article"
 
-underlying_llm = "mistral"
+underlying_llm = "llama2"
 llm = Ollama(
     model=underlying_llm,
-    # temperature = 0.01,
+    # temperature = 0,
     # repeat_penalty = 1.1,
 )
 
@@ -63,7 +72,15 @@ class CustomOpensearchVectorstore(OpenSearchVectorSearch):
 retriever = SelfQueryRetriever(
     query_constructor=query_constructor,
     vectorstore=CustomOpensearchVectorstore(),
+    verbose=True,
     structured_query_translator=OpenSearchTranslator(),
 )
 
-retriever.get_relevant_documents("movies from the year after 2000")
+
+# SelfQueryRetriever.from_llm(
+#     llm=llm,
+#     vectorstore=,
+    
+# )
+
+retriever.get_relevant_documents("articles with 'schizophrenia' in the title published after 2010")
