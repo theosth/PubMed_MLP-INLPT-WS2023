@@ -4,9 +4,10 @@ from pathlib import Path
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
 
-import streamlit as st
 import development.retrieve.retrieval_wrapper as retrieve
-# from streamlit_tags import st_tags, st_tags_sidebar
+
+from streamlit_tags import st_tags, st_tags_sidebar
+import streamlit as st
 
 
 PUBMED_ARTICLE_URL = "https://pubmed.ncbi.nlm.nih.gov"
@@ -29,7 +30,9 @@ def build_center():
 
     # Initialize Conversation
     if "messages" not in st.session_state:
-        st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
+        st.session_state["messages"] = [
+            {"role": "assistant", "content": "How can I help you?"}
+        ]
 
     # Reprint Conversation
     for msg in st.session_state.messages:
@@ -39,12 +42,14 @@ def build_center():
         st.session_state.messages.append({"role": "user", "content": prompt})
         message = ask_opensearch(prompt)
         st.session_state.last_sources = message
-        st.session_state.messages.append({"role": "assistant", "content": "< missing answer >"})
+        st.session_state.messages.append(
+            {"role": "assistant", "content": "< missing answer >"}
+        )
         st.experimental_rerun()
 
 
 def to_american_date_format(publication_date):
-    parsed_date = datetime.strptime(publication_date, '%Y-%m-%d %H:%M:%S')
+    parsed_date = datetime.strptime(publication_date, "%Y-%m-%d %H:%M:%S")
     return parsed_date.date()
 
 
@@ -56,7 +61,8 @@ def build_upper_sidebar():
     # Options Sidebar Title
     st.sidebar.title(OPTIONS_TITLE)
 
-    st.markdown("""
+    st.markdown(
+        """
         <style>
         .stSlider [data-baseweb=slider]{
             width: 85%;
@@ -64,20 +70,22 @@ def build_upper_sidebar():
             margin-top: 15px;
         }
         </style>
-        """, unsafe_allow_html=True)
+        """,
+        unsafe_allow_html=True,
+    )
 
     # Time Span Selection
     time_span_start, time_span_end = st.sidebar.select_slider(
         OPTION_PUBLICATION_YEAR_TITLE,
         options=list(range(TIME_SPAN_MIN_YEAR, TIME_SPAN_MAX_YEAR + 1)),
-        value=(TIME_SPAN_MIN_YEAR, TIME_SPAN_MAX_YEAR)
+        value=(TIME_SPAN_MIN_YEAR, TIME_SPAN_MAX_YEAR),
     )
 
     # Author Selection
-    # keyword = st_tags_sidebar(
-    #    label=OPTION_AUTHORS_TITLE,
-    #    text='Enter Author Names...',
-    # )
+    keyword = st_tags_sidebar(
+        label=OPTION_AUTHORS_TITLE,
+        text='Enter Author Names...',
+    )
 
 
 def truncate_for_expander(message, length):
@@ -87,14 +95,14 @@ def truncate_for_expander(message, length):
 def write_expander_url(keyword, content):
     st.write(
         f'<p><span style="font-weight:bold;">{keyword}:</span> <a href="{content}">{content}</a></p>',
-        unsafe_allow_html=True
+        unsafe_allow_html=True,
     )
 
 
 def write_expander_entry(keyword, content):
     st.write(
         f'<p><span style="font-weight:bold;">{keyword}:</span> {content if content is not None else "-"}</p>',
-        unsafe_allow_html=True
+        unsafe_allow_html=True,
     )
 
 
@@ -118,7 +126,9 @@ def build_lower_sidebar():
     # Show Sources
     last_sources = st.session_state.get("last_sources")
     if last_sources is None:
-        st.sidebar.write(":gray[Since there is no recent question, there are no sources so far! Don't be shy, ask our system!]")
+        st.sidebar.write(
+            ":gray[Since there is no recent question, there are no sources so far! Don't be shy, ask our system!]"
+        )
     else:
         expander_titles = to_expander_titles(last_sources)
         for index, source in enumerate(last_sources):
