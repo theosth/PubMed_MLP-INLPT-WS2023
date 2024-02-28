@@ -1,0 +1,47 @@
+[
+    {
+        "question": "How does \u03b2-thal minor affect the performance of individuals in tasks related to verbal fluency, reasoning and conceptualization, and sequencing?",
+        "contexts": [
+            "The present study aimed at investigating and comparing patients suffering from \u03b2-thalassemia (\u03b2-thal) minor with normal individuals in regard to their performances in the short version of the Wechsler Adult Intelligence Scale (WAIS) test. Patients with \u03b2-thal minor are carriers of \u03b2-thal genes. They have mild microcytic and hypochromic anemia and are usually asymptomatic. In this cross-sectional study, a total of 60 individuals were divided into two equal groups of \u03b2-thal minor and normal subjects; they were then studied by the WAIS subscales. The mean performance scores of the normal group in the subtests of arithmetic and vocabulary (p <0.01) and picture completion (p <0.05) were higher than those of the thalassemia group. The mean performance score and ability of the normal group on the verbal scale was higher in comparison to the thalassemia group (p <0.05), while on the non verbal scale, there was no significant difference between the two groups. It can be concluded that \u03b2-thal minor negatively influences verbal fluency, reasoning and conceptualization, and sequencing tasks, perceptual skill, prediction of social situations and abstract thinking."
+        ],
+        "ground_truth": "\u03b2-thal minor negatively influences the performance of individuals in tasks related to verbal fluency, reasoning and conceptualization, and sequencing.",
+        "evolution_type": "simple",
+        "episode_done": true
+    },
+    {
+        "question": "What is the prevalence of attention deficit hyperactivity disorder (ADHD) in adults with autism spectrum disorders (ASDs) compared to the general adult population?",
+        "contexts": [
+            "Features of attention deficit hyperactivity disorder (ADHD) and impairments on neuropsychological, tests of attention have been documented in children with autism spectrum disorders (ASDs). To date, there has been a lack of research comparing attention in adults with ASD and adults with ADHD. In study 1, 31 adults with ASD and average intellectual function completed self-report measures of ADHD symptoms. These were compared with self-report measures of ADHD symptoms in 38 adults with ADHD and 29 general population controls. In study 2, 28 adults with a diagnosis of ASD were compared with an age- and intelligence quotient-matched sample of 28 adults with ADHD across a range of measures of attention. Study 1 showed that 36.7% of adults with ASD met Diagnostic and Statistical Manual-IV criteria for current ADHD \"caseness\" (Barkley Current self-report scores questionnaire). Those with a diagnosis of pervasive developmental disorder-not otherwise specified were most likely to describe ADHD symptoms. The ASD group differed significantly from both the ADHD and control groups on total and individual symptom self-report scores. On neuropsychological testing, adults with ASD and ADHD showed comparable performance on tests of selective attention. Significant group differences were seen on measures of attentional switching; adults with ADHD were significantly faster and more inaccurate, and individuals with Asperger's syndrome showed a significantly slower and more accurate response style. Self-reported rates of ADHD among adults with ASD are significantly higher than in the general adult population and may be underdiagnosed. Adults with ASD have attentional difficulties on some neuropsychological measures."
+        ],
+        "ground_truth": "The prevalence of attention deficit hyperactivity disorder (ADHD) in adults with autism spectrum disorders (ASDs) is significantly higher than in the general adult population.",
+        "evolution_type": "simple",
+        "episode_done": true
+    },
+    {
+        "question": "\"What is the impact of \u03b2-thal minor on cognitive abilities in individuals with phenylketonuria?\"",
+        "contexts": [
+            "The present study aimed at investigating and comparing patients suffering from \u03b2-thalassemia (\u03b2-thal) minor with normal individuals in regard to their performances in the short version of the Wechsler Adult Intelligence Scale (WAIS) test. Patients with \u03b2-thal minor are carriers of \u03b2-thal genes. They have mild microcytic and hypochromic anemia and are usually asymptomatic. In this cross-sectional study, a total of 60 individuals were divided into two equal groups of \u03b2-thal minor and normal subjects; they were then studied by the WAIS subscales. The mean performance scores of the normal group in the subtests of arithmetic and vocabulary (p <0.01) and picture completion (p <0.05) were higher than those of the thalassemia group. The mean performance score and ability of the normal group on the verbal scale was higher in comparison to the thalassemia group (p <0.05), while on the non verbal scale, there was no significant difference between the two groups. It can be concluded that \u03b2-thal minor negatively influences verbal fluency, reasoning and conceptualization, and sequencing tasks, perceptual skill, prediction of social situations and abstract thinking."
+        ],
+        "ground_truth": "",
+        "evolution_type": "multi_context",
+        "episode_done": true
+    },
+    {
+        "question": "According to the study, how does \u03b2-thalassemia minor impact verbal fluency in individuals as assessed by the Wechsler Adult Intelligence Scale?",
+        "contexts": [
+            "The present study aimed at investigating and comparing patients suffering from \u03b2-thalassemia (\u03b2-thal) minor with normal individuals in regard to their performances in the short version of the Wechsler Adult Intelligence Scale (WAIS) test. Patients with \u03b2-thal minor are carriers of \u03b2-thal genes. They have mild microcytic and hypochromic anemia and are usually asymptomatic. In this cross-sectional study, a total of 60 individuals were divided into two equal groups of \u03b2-thal minor and normal subjects; they were then studied by the WAIS subscales. The mean performance scores of the normal group in the subtests of arithmetic and vocabulary (p <0.01) and picture completion (p <0.05) were higher than those of the thalassemia group. The mean performance score and ability of the normal group on the verbal scale was higher in comparison to the thalassemia group (p <0.05), while on the non verbal scale, there was no significant difference between the two groups. It can be concluded that \u03b2-thal minor negatively influences verbal fluency, reasoning and conceptualization, and sequencing tasks, perceptual skill, prediction of social situations and abstract thinking."
+        ],
+        "ground_truth": "According to the study, \u03b2-thalassemia minor negatively influences verbal fluency in individuals as assessed by the Wechsler Adult Intelligence Scale.",
+        "evolution_type": "reasoning",
+        "episode_done": true
+    },
+    {
+        "question": "What were the findings of the study regarding the executive functioning of children with high function autism compared to normal children?",
+        "contexts": [
+            "The aim of this study was investigating and comparing two components of executive functioning in children with high function autism with normal children.\nThis study was correlation descriptive (causal-comparative). There were two groups, one consisted of 15 participants of children with high function autism disorder (Intelligence quotient [IQ]>80) and the other consisted of 15 normal children, all age and education matched. They were compared with two neuro-cognitive tests, Color Word Stroop and Wisconsin Card Sorting, and one IQ test called Ravens Progressive Matrices test.\nAnalysis of data showed significant difference in both executive functionings, response inhibition (Stroop) and flexibility (Wisconsin Card Sorting) between normal children and children with autism disorder, but there was no significant relation between age and IQ and executive functioning in children with autism.\nThe results showed that children with autism disorder have deficits in executive functions regardless of their IQ level and it can be attributed to the symptoms of autism spectrum disorders."
+        ],
+        "ground_truth": "The findings of the study showed that children with high function autism have deficits in executive functions, specifically in response inhibition and flexibility, compared to normal children.",
+        "evolution_type": "simple",
+        "episode_done": true
+    }
+]
