@@ -3,21 +3,23 @@ import sys
 from pathlib import Path
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
+
 from development.commons.utils import get_opensearch_client
 from development.commons import env
-
 from sentence_transformers import SentenceTransformer
+
 
 MODEL = SentenceTransformer(env.EMBEDDING_MODEL_NAME)
 CLIENT = get_opensearch_client()
 
 
 def execute_query(
-    query,
-    index: str = "abstracts",
-    source_includes: list[str] = ["_id", "fragment_id"],
-    size: int = 5,
-    extra_params: dict[str, any] = None,
+        query,
+        index: str = "abstracts",
+        source_includes: list[str] = ["_id", "fragment_id"],
+        size: int = 5,
+        filter: dict[str, any] = None,
+        extra_params: dict[str, any] = None,
 ):
     """
     Execute a generic query on the OpenSearch index.
@@ -28,6 +30,10 @@ def execute_query(
     :param extra_params: Additional parameters for OpenSearch query execution.
     :return: The response from OpenSearch.
     """
+
+    if filter:
+        query = add_bool_filter_to_query(query, filter)
+
     query_body = {"size": size, "query": query}
 
     # Parse additional parameters for the request
@@ -44,12 +50,13 @@ def execute_query(
 
 
 def execute_hybrid_query(
-    query,
-    pipeline_weight: float = 0.0,
-    index: str = "abstracts",
-    source_includes: list[str] = ["_id", "fragment_id", "pmid"],
-    size: int = 5,
-    query_name_prefix: str = "hybrid_search_pipeline_weight_",
+        query,
+        pipeline_weight: float = 0.0,
+        index: str = "abstracts",
+        source_includes: list[str] = ["_id", "fragment_id", "pmid"],
+        size: int = 5,
+        query_name_prefix: str = "hybrid_search_pipeline_weight_",
+        filter: dict[str, any] = None,
 ):
     """
     Execute a hybrid query on the OpenSearch index. The hybrid query combines BM25 and neural search.
@@ -77,6 +84,7 @@ def execute_hybrid_query(
         index=index,
         source_includes=source_includes,
         size=size,
+        filter=filter,
         extra_params=extra_params,
     )
 
@@ -129,14 +137,14 @@ def create_term_query(match_value: str, match_key: str = "pmid"):
 
 
 def create_single_match_BM25_query(
-    query_text: str, match_on: str = "abstract_fragment"
+        query_text: str, match_on: str = "abstract_fragment"
 ):
     return {"match": {match_on: {"query": query_text}}}
 
 
 def create_multi_match_BM25_query(
-    query_text: str,
-    match_on_fields: list[str] = ["abstract_fragment", "title", "keyword_list"],
+        query_text: str,
+        match_on_fields: list[str] = ["abstract_fragment", "title", "keyword_list"],
 ):
     return {"multi_match": {"query": query_text, "fields": match_on_fields}}
 
@@ -153,9 +161,9 @@ def create_knn_query(query_text: str, k: int = 10):
 
 
 def create_hybrid_query(
-    query_text: str,
-    match_on_fields: list[str] = ["abstract_fragment", "title", "keyword_list"],
-    knn_k: int = 10,
+        query_text: str,
+        match_on_fields: list[str] = ["abstract_fragment", "title", "keyword_list"],
+        knn_k: int = 10,
 ):
     return {
         "hybrid": {
@@ -167,7 +175,13 @@ def create_hybrid_query(
     }
 
 
-# How to Use:
+def add_bool_filter_to_query(query, filter: dict[str, any]):
+    return {"bool": {"must": query, "filter": filter}}
+
+
+#############################
+#       Example Usage       #
+#############################
 if __name__ == "__main__":
     print("Hybrid Query:")
     size = 10
@@ -181,6 +195,7 @@ if __name__ == "__main__":
     response_hybrid = execute_hybrid_query(
         query=hybrid_query,
         pipeline_weight=0.5,
+        index=env.OPENSEARCH_ABSTRACT_FRAGMENT_INDEX,
         size=size,
         source_includes=["_id", "fragment_id", "title", "pmid"],
     )
@@ -199,10 +214,10 @@ if __name__ == "__main__":
     term_query = create_term_query(match_key="pmid", match_value="32083959")
     response_term = execute_query(
         query=term_query,
-        index="abstracts",
+        index=env.OPENSEARCH_ABSTRACT_FRAGMENT_INDEX,
         source_includes=["_id", "fragment_id", "title", "pmid"],
         size=10,
     )
-    # its possible to only get the source fields (title, pmid, etc.) from the hits
+    # It is possible to only get the source fields (title, pmid, etc.) from the hits
     hits_term = extract_source_from_hits(extract_hits_from_response(response_term))
     print(json.dumps(hits_term, indent=2))
