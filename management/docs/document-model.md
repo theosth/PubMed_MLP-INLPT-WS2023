@@ -29,3 +29,9 @@ result paragraph of the abstract is in its own fragment, but reading these parag
 
 Lastly, we decided against including any of the metadata in the fragment text to be embedded for semantic search. Instead, we tackle this by evaluating a hybrid search. 
 We hope to enrich our search with this hybrid search in a meaningful, more interpretable, easier and more structured way, as opposed to including the information in the text data.
+
+## Document Splitting Bug
+
+While developing and experimenting with our retriever we sometimes encountered unusually short document fragments, even shorter than our overlap window for the document splitting. This kind of fragment should not exist. This is an issue because these fragments do not provide useful information for generating answers but potentially achieve exceptionally high scores by our retrieving system because they are so short.
+After looking further into it we discovered that this weren't just a few exceptions. We found 8109 fragments that only included text that is already fully present in their preceding fragment (The code to find and count these documents can be found in development/ingest/analyse_fragment_split.py).
+We could track it down to a bug in the langchain Text Splitter that was not accounting for the overlap when checking whether to add a new fragment. At the point we discovered this, the bug was already fixed in december in a new langchain version ([Github commit that fixed this](https://github.com/langchain-ai/langchain/commit/ea331f31364266f7a6414dc76265553a52279b0a)). Therefore the solution for us to clean up the fragments simply consisted of updating the langchain version and redoing the document splitting and opensearch ingestion.
