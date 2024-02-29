@@ -159,7 +159,7 @@ if __name__ == "__main__":
     abstract_fragments = get_abstract_fragments(amount=10)
 
     # choose a testset generator:
-    # local one (currently not functional)
+    # ! local one (currently not functional)
     generator = get_local_TestsetGenerator()
 
     # openai - generator:
