@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-data_filepath = "results/retrieval_result_scores_s10_k3.csv"
+data_filepath = "development/evaluate/retrieval/results/retrieval_result_scores_s10_k3.csv"
 
 data = pd.read_csv(data_filepath)
 
@@ -26,5 +26,5 @@ plt.tight_layout()
 
 
 # save to file
-plt.savefig("results/retrieval_result_scores_s10_k3.png")
+plt.savefig("development/evaluate/retrieval/results/retrieval_result_scores_s10_k3.png")
  

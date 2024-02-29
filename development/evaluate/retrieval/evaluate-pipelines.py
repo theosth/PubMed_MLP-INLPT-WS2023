@@ -17,10 +17,6 @@ import time
 
 # from 0.0 to 1.0 with 0.05 steps
 
-# INDEX = env.OPENSEARCH_FRAGMENT_INDEX
-INDEX = "abstracts"  # TODO! change to the correct index when adjusted in opensearch
-
-
 class Query(BaseModel):
     question: str
     pmid: str
@@ -181,15 +177,15 @@ def main():
 
     # Setup for evaluation
     pipeline_weights = [i / 20 for i in range(21)]  # from 0.0 to 1.0 with 0.05 steps
-    index = "abstracts"
+    index = "abstract_fragments"
     source_includes = ["_id", "fragment_id"]
     size = 10   # Number of search results to retrieve for each query from OpenSearch
     eval_metrics = [binary_at_k, rank_score]  # specify the metrics to use
     k = 3 # specify the value of k for the binary_at_k metric
     eval_metric_settings = [{"k": k}, {}]
 
-    file_path = "retrieval-testset.json"
-    output_path = f"results/retrieval_result_scores_s{size}_k{k}.csv"
+    file_path = "development/evaluate/retrieval/retrieval-testset.json"
+    output_path = f"development/evaluate/retrieval/results/retrieval_result_scores_s{size}_k{k}.csv"
 
     first_write = True  # Flag to indicate if header should be written
 
