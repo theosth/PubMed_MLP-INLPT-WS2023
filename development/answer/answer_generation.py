@@ -96,15 +96,17 @@ class GenAI:
         return chain.invoke({"context": context, "query": query})
 
 
-test = GenAI()
-test_docs = [
-    Document(page_content="Jesse loves red but not yellow"),
-    Document(page_content="Jamal loves green but not as much as he loves orange"),
-    Document(page_content="Jesse's favorite color is red"),
-]
+if __name__ == "__main__":
+
+    test = GenAI()
+    test_docs = [
+        Document(page_content="Jesse loves red but not yellow"),
+        Document(page_content="Jamal loves green but not as much as he loves orange"),
+        Document(page_content="Jesse's favorite color is red"),
+    ]
 
 
-langchain.debug = False
+    langchain.debug = False
 
-print("Invoke: \n")
-print(test.invoke(test_docs, "Are penguins birds?", withRouting=True))
+    print("Invoke: \n")
+    print(test.invoke(test_docs, "Are penguins birds?", withRouting=True))

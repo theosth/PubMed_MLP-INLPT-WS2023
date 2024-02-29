@@ -1,0 +1,182 @@
+[
+  {
+    "question": "\"What are the common characteristics of oro-facial-digital syndrome type II and Alstr\u00f6m syndrome?\"",
+    "contexts": [
+      "oro - facial - digital syndrome type ii ( ofd - ii ) is characterized by frenulated tongue, midline cleft lip, high arched or cleft palate, micrognathia, syndactyly and polydactyly, bilateral reduplicated hallux, conductive hearing loss, choroidal coloboma and normal intelligence. there are nine forms of oro - facial - digital syndromes with different modes of inheritance. a young female with features of oro - facio - digital syndrome type - ii is being reported."
+    ],
+    "ground_truth": "",
+    "evolution_type": "multi_context",
+    "episode_done": true,
+    "pmids": [
+      "23777026"
+    ],
+    "fragment_ids": [
+      0
+    ],
+    "ids": [
+      "23777026_0"
+    ]
+  },
+  {
+    "question": "\"What are the risk factors for lower processing speed scores in pediatric cancer survivors based on surgery and cognitive outcomes?\"",
+    "contexts": [
+      "as the surgical results for fontan candidates improve, much attention has been given to the long - term cognitive outcomes. this study aimed to assess the neurocognitive outcomes after fontan completion, and to determine the factors associated with an extremely low intelligence quotient ( iq < 70 ). a total of 70 local eligible school - aged patients were enrolled in the study ( hypoplastic left heart syndrome, 17 ; right atrial isomerism, 15 and others, 38 ). fontan operations were performed at a median age of 1. 8 ( range, 0. 5 - 8. 9 ) years ( primary fontan, 4 of 70 [ 6 % ] ). the wechsler intelligence test was taken at a median age of 9 ( range, 5. 1 - 14. 4 ) years for the purpose of neurocognitive evaluation. patients'data were collected from medical records, and a retrospective analysis of potential predictors for an iq < 70 was performed. the median full - scale iq ( fsiq ) for the entire cohort was 85 ( range, 43 - 118 ). of the lower order composites, the perceptual reasoning index and the working memory index were significantly lower in low - fsiq patients ( p < 0. 05 ). overall, 15 of 70 ( 21 % ) of the cohort had an iq"
+    ],
+    "ground_truth": "",
+    "evolution_type": "multi_context",
+    "episode_done": true,
+    "pmids": [
+      "23423918"
+    ],
+    "fragment_ids": [
+      0
+    ],
+    "ids": [
+      "23423918_0"
+    ]
+  },
+  {
+    "question": "\"What is the relationship between IQ, emotional intelligence, challenging behavior, and offspring sex ratio across nations?\"",
+    "contexts": [
+      "training in intrapersonal emotional intelligence, when confronted with challenging behaviour. future research should focus more on the bidirectional dynamics of staff and client interactions."
+    ],
+    "ground_truth": "",
+    "evolution_type": "multi_context",
+    "episode_done": true,
+    "pmids": [
+      "23480642"
+    ],
+    "fragment_ids": [
+      1
+    ],
+    "ids": [
+      "23480642_1"
+    ]
+  },
+  {
+    "question": "\"What were the study findings on MMR exposure and cognitive development in children, and how does it relate to white matter abnormalities?\"",
+    "contexts": [
+      "r = 0. 536, p < 0. 001 ) and language ( r = 0. 529, p < 0. 001 ) in patients. left parietal md was significantly correlated with language ( r = - 0. 545, p < 0. 001 ) in patients. fa of right temporal wm was significantly associated with age at seizure onset ( t = 4. 97, p < 0. 001 ). there was widespread regional wm abnormality in children with nonlesional localization - related epilepsy, which was associated with impaired neuropsychological function. the impairment in wm may reflect disruption in the connectivity for cortical processing networks, which is necessary for the development of cognition."
+    ],
+    "ground_truth": "",
+    "evolution_type": "multi_context",
+    "episode_done": true,
+    "pmids": [
+      "23650911"
+    ],
+    "fragment_ids": [
+      2
+    ],
+    "ids": [
+      "23650911_2"
+    ]
+  },
+  {
+    "question": "\"How does memory retrieval affect decision-making in situations with probabilities, and how does task experience impact study decisions?\"",
+    "contexts": [
+      "some decisions, such as predicting the winner of a baseball game, are challenging in part because outcomes are probabilistic. when making such decisions, one view is that humans stochastically and selectively retrieve a small set of relevant memories that provides evidence for competing options. we show that optimal performance at test is impossible when retrieving information in this fashion, no matter how extensive training is, because limited retrieval introduces noise into the decision process that cannot be overcome. one implication is that people should be more accurate in predicting future events when trained on idealized rather than on the actual distributions of items. in other words, we predict the best way to convey information to people is to present it in a distorted, idealized form. idealization of training distributions is predicted to reduce the harmful noise induced by immutable bottlenecks in people's memory retrieval processes. in contrast, machine learning systems that selectively weight ( i. e., retrieve ) all training examples at test should not benefit from idealization. these conjectures are strongly supported by several studies and supporting analyses. unlike machine systems, people's test performance on a target distribution is higher when they are trained on an idealized version of the distribution rather than on the actual target distribution. optimal machine classifiers modified to selectively and stochastically"
+    ],
+    "ground_truth": "Memory retrieval introduces noise into the decision-making process in situations with probabilities. This noise cannot be overcome, making optimal performance impossible. Task experience impacts study decisions by suggesting that presenting information in a distorted, idealized form can reduce the noise induced by memory retrieval processes.",
+    "evolution_type": "multi_context",
+    "episode_done": true,
+    "pmids": [
+      "23610402"
+    ],
+    "fragment_ids": [
+      0
+    ],
+    "ids": [
+      "23610402_0"
+    ]
+  },
+  {
+    "question": "\"What is the impact of age, sex, and IQ on brain networks in relation to frontal and parietal cortices?\"",
+    "contexts": [
+      "recent studies have demonstrated developmental changes of functional brain networks derived from functional connectivity using graph theoretical analysis, which has been rapidly translated to studies of brain network organization. however, little is known about sex - and iq - related differences in the topological organization of functional brain networks during development. in this study, resting - state fmri ( rs - fmri ) was used to map the functional brain networks in 51 healthy children. we then investigated the effects of age, sex, and iq on economic small - world properties and regional nodal properties of the functional brain networks. at a global level of whole networks, we found significant age - related increases in the small - worldness and local efficiency, significant higher values of the global efficiency in boys compared with girls, and no significant iq - related difference. age - related increases in the regional nodal properties were found predominately in the frontal brain regions, whereas the parietal, temporal, and occipital brain regions showed age - related decreases. significant sex - related differences in the regional nodal properties were found in various brain regions, primarily related to the default mode, language, and vision systems. positive correlations between iq and the regional nodal properties were found in several brain regions related to the attention system, whereas negative correlations were found in various brain regions primarily involved in the default mode,"
+    ],
+    "ground_truth": "The impact of age, sex, and IQ on brain networks in relation to frontal and parietal cortices is not mentioned in the context. Therefore, the answer is -1.",
+    "evolution_type": "multi_context",
+    "episode_done": true,
+    "pmids": [
+      "23390528"
+    ],
+    "fragment_ids": [
+      0
+    ],
+    "ids": [
+      "23390528_0"
+    ]
+  },
+  {
+    "question": "\"What is the impact of pre-school children's computer use on their letter knowledge, considering the Early Language in Victoria study and phonological awareness instruction on English reading and spelling among Hong Kong Chinese ESL children?\"",
+    "contexts": [
+      "to explore the link between pre - school children's general home computer use and their letter knowledge. as part of the early language in victoria study, a community cohort of 1539 four - year - old children was tested on letter knowledge as well as on non - verbal intelligence, oral language, articulation and phonological awareness. performance on these measures was examined in relation to parent - questionnaire responses exploring home literacy environment and the amount of time children spent using the computer. a positive correlation between computer use and letter knowledge was found, and this association was still evident after controlling for other cognitive and environmental factors known to predict the development of letter knowledge in young children. greater computer use in pre - school children appears to have a positive association with emerging literacy development. future research needs to examine the nature of that association."
+    ],
+    "ground_truth": "",
+    "evolution_type": "multi_context",
+    "episode_done": true,
+    "pmids": [
+      "23437778"
+    ],
+    "fragment_ids": [
+      0
+    ],
+    "ids": [
+      "23437778_0"
+    ]
+  },
+  {
+    "question": "\"What is the correlation between seizures and abnormal behavior in Japanese children with epilepsy, and how does it relate to the WAIS-IV?\"",
+    "contexts": [
+      "iii test manual. however, picture arrangement, arithmetic, and picture completion showed only moderate loadings on the proposed factors. implications for clinical practice are discussed."
+    ],
+    "ground_truth": "",
+    "evolution_type": "multi_context",
+    "episode_done": true,
+    "pmids": [
+      "23373683"
+    ],
+    "fragment_ids": [
+      1
+    ],
+    "ids": [
+      "23373683_1"
+    ]
+  },
+  {
+    "question": "\"How was the functional remission threshold for the frogs scale developed and tested in this study, and what were the outcomes?\"",
+    "contexts": [
+      "the aim of this study was to develop a functional remission threshold for the functional remission of general schizophrenia ( frogs ) scale, and test its validity regarding clinical and quality of life outcomes. cross - sectional study. schizophrenia according to dsm - iv - tr criteria. functioning was assessed using the frogs and the global assessment of functioning ( gaf ) scales ; psychotic symptoms using the positive and negative syndrome scale ; memory, attention, and executive functions were assessed using the california verbal learning test, the d2 attention task, the stroop color - word test, the verbal fluency test, the trail making test a and b and the wechsler adult intelligence scale ; and quality of life using the schizophrenia quality of life ( s - qol 18 ) scale. a logistic regression analysis including the different dimensions of the frogs was used to create a composite score to classify patients into remitted and non - remitted according a gold standard ( cut - off : gaf > = 61 ). receiver operating characteristics analyses were then performed to determine the area under the curve ( auc ). of 137 patients enrolled, 26 were functionally remitted and 111 were not remitted according to gaf score. the auc for the combination of the frogs's dimensions to detect functional remission was 0. 903 ( p <"
+    ],
+    "ground_truth": "The functional remission threshold for the frogs scale was developed and tested in this study. The study used a logistic regression analysis including the different dimensions of the frogs scale to create a composite score. This score was used to classify patients into remitted and non-remitted categories based on a gold standard cutoff of a GAF score of 61 or higher. The outcomes of the study included determining the area under the curve (AUC) for the combination of the frogs' dimensions to detect functional remission, which was found to be 0.903.",
+    "evolution_type": "multi_context",
+    "episode_done": true,
+    "pmids": [
+      "23731897"
+    ],
+    "fragment_ids": [
+      0
+    ],
+    "ids": [
+      "23731897_0"
+    ]
+  },
+  {
+    "question": "\"What are the benefits of DNA nanotechnology on DNA machines?\"",
+    "contexts": [
+      "dna - based nanomachines are self - assembled dna superstructures that harness chemical free energy to perform mechanical work. the development of dna machines has benefited greatly from the achievements in both structural and dynamic dna nanotechnology. in this review, the configurations of dna machines, fuel systems, and operations are discussed to outline the evolving paths of dna machines. the focus is on the smart mechanical behavior of dna machines, from the standpoint of upgrading the complexity of dna nanostructures, cooperative activation of multimachinary systems, and the establishment of a network of the mechanical states. in the end, the challenges are highlighted and possible solutions are proposed to push forward smart dna nanomachines, with the goal of creating biomimicking systems. insights are also provided into the potential applications of the dna machines with designable intelligence."
+    ],
+    "ground_truth": "The benefits of DNA nanotechnology on DNA machines include advancements in both structural and dynamic DNA nanotechnology, the upgrading of complexity of DNA nanostructures, cooperative activation of multimachinary systems, and the establishment of a network of mechanical states.",
+    "evolution_type": "multi_context",
+    "episode_done": true,
+    "pmids": [
+      "23776091"
+    ],
+    "fragment_ids": [
+      0
+    ],
+    "ids": [
+      "23776091_0"
+    ]
+  }
+]

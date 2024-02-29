@@ -2,10 +2,9 @@ import sys
 from pathlib import Path
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
-import development.commons.env as env
 
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import Optional, List, Union
 from langchain_core.retrievers import BaseRetriever
 from langchain_core.callbacks import CallbackManagerForRetrieverRun
 from langchain_core.documents import Document
@@ -20,9 +19,11 @@ from development.retrieve.opensearch_connector import (
     extract_source_from_hits,
     extract_top_k_unique_pmids_from_response,
 )
+
 import development.commons.env as env
 from development.commons.utils import get_opensearch_client
 from development.retrieve.self_query import get_filters
+import development.retrieve.confidence_score as confidence
 
 
 CLIENT = get_opensearch_client()
@@ -32,7 +33,7 @@ NEURAL_WEIGHT = 0.5
 MATCH_ON_FIELDS = ["abstract_fragment", "title", "keyword_list"]
 ABSTRACT_INDEX = env.OPENSEARCH_ABSTRACT_INDEX
 ABSTRACT_FRAGMENT_INDEX = env.OPENSEARCH_ABSTRACT_FRAGMENT_INDEX
-MAX_FRAGMENTS_PER_ABSTRACT = 20
+MAX_FRAGMENTS_PER_ABSTRACT = 8
 
 
 class DocumentOpenSearch(BaseModel):
@@ -43,6 +44,7 @@ class DocumentOpenSearch(BaseModel):
     author_list: Optional[list[str]] = None
     doi: str
     keyword_list: Optional[list[str]] = None
+    confidence: Optional[Union[str, float]] = None
 
 
 def retrieve_abstracts(question: str, amount: int = 3) -> list[DocumentOpenSearch]:
@@ -97,10 +99,16 @@ def retrieve_abstracts(question: str, amount: int = 3) -> list[DocumentOpenSearc
             TypeError(f"Could not retrieve document for pmid: {pmids[index]}")
         # print(f"Test: {data}")
         documents.append(DocumentOpenSearch(**data))
+
+    # Compute Confidence
+    confidence_ratings = confidence.compute_confidence_ratings(query=question, documents=documents)
+    for index, document in enumerate(documents):
+        document.confidence = confidence_ratings[index]
+
     return documents
 
 
-def convertToDocument(documents: list[DocumentOpenSearch]) -> list[Document]:
+def convert_to_document(documents: list[DocumentOpenSearch]) -> list[Document]:
     """
     Convert a list of DocumentOpenSearch objects to a list of Document objects.
     :param documents: A list of DocumentOpenSearch objects.
@@ -111,6 +119,21 @@ def convertToDocument(documents: list[DocumentOpenSearch]) -> list[Document]:
         metadata = doc.dict()
         abstract = metadata.pop('abstract')
         doc_list.append(Document(page_content=abstract, metadata=metadata))
+    return doc_list
+
+
+def convert_to_document_opensearch(documents: list[Document]) -> list[DocumentOpenSearch]:
+    """
+    Convert a list of Document objects to a list of DocumentOpenSearch objects.
+    :param documents: A list of Document objects.
+    :return: A list of DocumentOpenSearch objects.
+    """
+    doc_list = []
+    for doc in documents:
+        metadata = doc.metadata
+        abstract = doc.page_content
+        metadata["abstract"] = abstract
+        doc_list.append(DocumentOpenSearch(**metadata))
     return doc_list
 
 
@@ -126,7 +149,7 @@ class CustomOpensearchRetriever(BaseRetriever):
         run_manager: CallbackManagerForRetrieverRun,
         amount: int = 3,
     ) -> List[Document]:
-        return convertToDocument(retrieve_abstracts(query, amount))
+        return convert_to_document(retrieve_abstracts(query, amount))
 
 
 #############################

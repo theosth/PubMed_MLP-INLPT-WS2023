@@ -24,3 +24,8 @@ ABSTRACTS_DATASET_PATH = "data/dataset.json"
 ABSTRACT_FRAGMENT_DATASET_PATH = "data/fragment-dataset.json"
 RAW_DATASET_PATH = "../scrape/data/raw.pkl"
 CLEANED_DATASET_PATH = "../scrape/data/dataset.json"
+
+# Testing
+RAGAS_TESTSET_PATH = "development/evaluate/retrieval/testsets/ragas-testset.json"
+RAGAS_UDATED_TESTSET_PATH = "development/evaluate/retrieval/testsets/ragas-updated-testset.json"
+RETRIEVAL_TESTSET_PATH = "development/evaluate/retrieval/testsets/retrieval-testset.json"

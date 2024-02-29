@@ -5,6 +5,7 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent.parent))
 
 import development.retrieve.retrieval_wrapper as retrieve
+import development.answer.answer_generation as answer
 import streamlit as st
 
 PUBMED_ARTICLE_URL = "https://pubmed.ncbi.nlm.nih.gov"
@@ -20,10 +21,17 @@ LATEST_SOURCES_KEY = "latest_sources"
 EMPTY_SOURCES_NOTE = (":gray[Since there is no recent question, there are no sources so far... Don't be shy, "
                       "ask our system!]")
 
+RETRIEVER = retrieve.CustomOpensearchRetriever()
+GENAI = answer.GenAI()
 
-def ask_opensearch(question: str):
-    return retrieve.retrieve_abstracts(question)
 
+def query_retriever(question: str):
+    return RETRIEVER.get_relevant_documents(query=question, amount=3)
+
+
+def prompt_model(retrieved_docs, question: str):
+    return GENAI.invoke(context=retrieved_docs, query=question, withRouting=True)
+    
 
 def build_chat():
     # Website Title
@@ -35,17 +43,24 @@ def build_chat():
             {"role": "assistant", "content": "How can I help you?"}
         ]
 
+    if prompt := st.chat_input():
+        # Asking Question
+        st.session_state.messages.append(
+            {"role": "user", "content": prompt}
+        )
+
+        # Thinking...
+        retrieved_documents = query_retriever(prompt)
+        st.session_state[LATEST_SOURCES_KEY] = retrieve.convert_to_document_opensearch(retrieved_documents)
+        
+        # Answering Question
+        st.session_state.messages.append(
+            {"role": "assistant", "content": prompt_model(retrieved_docs=retrieved_documents, question=prompt)}
+        )
+
     # Reprint Conversation
     for msg in st.session_state.messages:
         st.chat_message(msg["role"]).write(msg["content"])
-
-    if prompt := st.chat_input():
-        st.session_state.messages.append({"role": "user", "content": prompt})
-        message = ask_opensearch(prompt)
-        st.session_state[LATEST_SOURCES_KEY] = message
-        st.session_state.messages.append(
-            {"role": "assistant", "content": "< missing answer >"}
-        )
 
 
 def build_upper_sidebar():
@@ -86,6 +101,16 @@ def to_american_date_format(publication_date):
     return parsed_date.date()
 
 
+def to_colored_confidence_rating(confidence_score):
+    # Thresholds have been chosen empirically
+    if confidence_score > 70:
+        return f"<span style='color: #ACD8AA;'>High ({int(confidence_score)}%)</span>"
+    elif confidence_score > 50:
+        return f"<span style='color: #EDAE49;'>Medium ({int(confidence_score)}%)</span>"
+    else:
+        return f"<span style='color: #D1495B;'>Low ({int(confidence_score)}%)</span>"
+
+
 def write_source_expander(source):
     write_expander_url("URL", f"{PUBMED_ARTICLE_URL}/{source.pmid}/")
     write_expander_normal_entry("Title", source.title)
@@ -97,7 +122,7 @@ def write_source_expander(source):
         publication_date = to_american_date_format(publication_date)
 
     write_expander_normal_entry("Publication Date", publication_date)
-    write_expander_normal_entry("Confidence", "?")
+    write_expander_normal_entry("Confidence", to_colored_confidence_rating(source.confidence))
 
 
 def truncate_to_short_expander_title(message, length):
