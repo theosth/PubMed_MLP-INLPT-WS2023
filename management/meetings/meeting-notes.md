@@ -1,19 +1,3 @@
-# Meetingnotes 26.10.2023
-
-## Participants
-* [X] Lukas
-* [X] Benedikt
-* [X] Theo
-* [X] Dominik
-
-## Topics
-* Explore PubMed API using Python library
-* Explore OpenSearch capabilities for finding relevant documents for a search query
-and analysis of text data (topic recognition etc.). 
-=> can integrate word embedding model to find semantic similarities
-* Experiment with Google Colab and Github and integrating them into our dev process. 
-
-
 # Meetingnotes 23.10.2023
 
 ## Participants
@@ -40,6 +24,23 @@ and analysis of text data (topic recognition etc.).
 * [ ] Analyze data set
 * [ ] Maybe already look into pre-trained models, which could be used for the project (Should we do this already? Maybe it will be more efficient later because it gets introduced in the lecture)
 * [ ] Look into simple first frontend implementation
+
+
+
+# Meetingnotes 26.10.2023
+
+## Participants
+* [X] Lukas
+* [X] Benedikt
+* [X] Theo
+* [X] Dominik
+
+## Topics
+* Explore PubMed API using Python library
+* Explore OpenSearch capabilities for finding relevant documents for a search query
+and analysis of text data (topic recognition etc.). 
+=> can integrate word embedding model to find semantic similarities
+* Experiment with Google Colab and Github and integrating them into our dev process. 
 
 
 # Meetingnotes 13.11.2023
@@ -168,3 +169,14 @@ See above
     * discuss further meetings
     * discuss internal deadlines for the next steps
     * distribute work among the team members
+
+# Meeting Notes 20.02.-01.03
+
+For this time frame we do not have separate Meeting Notes because some of the group 
+members were meeting nearly every other day to work on the project separately or 
+collaboratively. For instance, we met at Theo's on Wednesday 28.02. and Friday 01.03. 
+and spent the whole day working in the same room and discussing things whenever 
+something came up. For instance, we discussed what other features we could implement 
+and get to work in the time. We discussed what other retrieval and generation 
+strategies (like self-querying) we could use and so on. All in all, the collaboration 
+was very smooth and productive
