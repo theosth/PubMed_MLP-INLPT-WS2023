@@ -4,7 +4,7 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent.parent))
 
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import Optional, List, Union
 from langchain_core.retrievers import BaseRetriever
 from langchain_core.callbacks import CallbackManagerForRetrieverRun
 from langchain_core.documents import Document
@@ -33,7 +33,7 @@ NEURAL_WEIGHT = 0.5
 MATCH_ON_FIELDS = ["abstract_fragment", "title", "keyword_list"]
 ABSTRACT_INDEX = env.OPENSEARCH_ABSTRACT_INDEX
 ABSTRACT_FRAGMENT_INDEX = env.OPENSEARCH_ABSTRACT_FRAGMENT_INDEX
-MAX_FRAGMENTS_PER_ABSTRACT = 20
+MAX_FRAGMENTS_PER_ABSTRACT = 8
 
 
 class DocumentOpenSearch(BaseModel):
@@ -44,7 +44,7 @@ class DocumentOpenSearch(BaseModel):
     author_list: Optional[list[str]] = None
     doi: str
     keyword_list: Optional[list[str]] = None
-    confidence: Optional[str] = None
+    confidence: Optional[Union[str, float]] = None
 
 
 def retrieve_abstracts(question: str, amount: int = 3) -> list[DocumentOpenSearch]:
@@ -119,6 +119,21 @@ def convert_to_document(documents: list[DocumentOpenSearch]) -> list[Document]:
         metadata = doc.dict()
         abstract = metadata.pop('abstract')
         doc_list.append(Document(page_content=abstract, metadata=metadata))
+    return doc_list
+
+
+def convert_to_document_opensearch(documents: list[Document]) -> list[DocumentOpenSearch]:
+    """
+    Convert a list of Document objects to a list of DocumentOpenSearch objects.
+    :param documents: A list of Document objects.
+    :return: A list of DocumentOpenSearch objects.
+    """
+    doc_list = []
+    for doc in documents:
+        metadata = doc.metadata
+        abstract = doc.page_content
+        metadata["abstract"] = abstract
+        doc_list.append(DocumentOpenSearch(**metadata))
     return doc_list
 
 
