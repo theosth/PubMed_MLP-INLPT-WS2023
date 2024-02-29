@@ -8,6 +8,11 @@ import development.retrieve.opensearch_connector as oc
 from development.retrieve.retrieval_wrapper import Document
 
 
+WORST_CONFIDENCE_COS_SIM = 80
+PERFECT_CONFIDENCE_COS_SIM = 100
+CONFIDENCE_SCALING_FACTOR = 1.2
+
+
 def compute_confidence_ratings(query: str, documents: list[Document]) -> list[str]:
     """
     This function calculates the confidence rating of a query to a list of documents with cosine similarity.
@@ -16,11 +21,30 @@ def compute_confidence_ratings(query: str, documents: list[Document]) -> list[st
     :param documents: A list of Document objects.
     :return: A list of confidence categories corresponding to each document.
     """
+    # Compute Embeddings
     abstract_embeddings = oc.MODEL.encode([doc.abstract for doc in documents])
     query_embedding = oc.MODEL.encode(query)
+
+    # Compute Distance
     cosine_sim = cosine_similarity(query_embedding, abstract_embeddings)
     perc_dist = (np.pi - np.arccos(cosine_sim)) * 100 / np.pi
-    return perc_dist
+
+    # Compute Confidence
+    # -------------------------------------------------------------------
+    # Note: We have noted that even (intentionally) bad matches lead to
+    # high cosine similarity values. However, they are always in the
+    # range of [0.8:1.0] for bad to perfect matches. Those values have
+    # been determined empirically.
+    #
+    # Thus, we subtract the worst possible similarity. Then, we multiply
+    # it by some factor > 1, so that larger scores are rewarded (scaled
+    # more) and then those values are scaled into a range of [0.0:1.0].
+    # -------------------------------------------------------------------
+    confidence = np.maximum(0.0, perc_dist - WORST_CONFIDENCE_COS_SIM)
+    confidence = confidence * CONFIDENCE_SCALING_FACTOR
+    range_scale_factor = (PERFECT_CONFIDENCE_COS_SIM / (PERFECT_CONFIDENCE_COS_SIM - WORST_CONFIDENCE_COS_SIM))
+    confidence = np.minimum(PERFECT_CONFIDENCE_COS_SIM, confidence * range_scale_factor)
+    return confidence
 
 
 def cosine_similarity(v1, vectors):
