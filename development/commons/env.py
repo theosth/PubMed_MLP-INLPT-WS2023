@@ -20,8 +20,8 @@ OLLAMA_HOST = "localhost"
 OLLAMA_PORT = 11443
 
 # Data Flow
-ABSTRACTS_DATASET_PATH = "data/dataset.json"
-ABSTRACT_FRAGMENT_DATASET_PATH = "data/fragment-dataset.json"
+ABSTRACTS_DATASET_PATH = "../ingest/data/abstracts_dataset.json"
+ABSTRACT_FRAGMENT_DATASET_PATH = "../ingest/data/abstract_fragment_dataset.json"
 RAW_DATASET_PATH = "../scrape/data/raw_retrieved_dataset.pkl"
 CLEANED_DATASET_PATH = "../scrape/data/cleaned_retrieved_dataset.json"
 

@@ -14,7 +14,7 @@ AUTHOR_NAME_SEPARATOR = " "
 
 
 def load_documents():
-    print(f"[{datetime.datetime.now()}] Loading 14GB of Documents ({env.RAW_DATASET_PATH})...")
+    print(f"[{datetime.datetime.now()}] Loading 1.4GB of Documents ({env.RAW_DATASET_PATH})...")
     with open(env.RAW_DATASET_PATH, "rb") as input:
         documents = pickle.load(input)
     print(f"[{datetime.datetime.now()}] Documents successfully loaded!")

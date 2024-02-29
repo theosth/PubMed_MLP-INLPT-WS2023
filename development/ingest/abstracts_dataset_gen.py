@@ -1,5 +1,6 @@
 import datetime
 import json
+import os
 import sys
 
 from tqdm import tqdm
@@ -33,6 +34,11 @@ def restructure(dataset):
 
 
 def save_abstracts(abstracts):
+    # Ensure target folder exists
+    folder_path = os.path.dirname(env.ABSTRACTS_DATASET_PATH)
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+
     print(f"[{datetime.datetime.now()}] Saving Abstracts ({env.ABSTRACTS_DATASET_PATH})")
     with open(env.ABSTRACTS_DATASET_PATH, 'w') as output:
         json.dump(abstracts, output, indent=2, default=str)
