@@ -12,9 +12,9 @@ PUBMED_ARTICLE_URL = "https://pubmed.ncbi.nlm.nih.gov"
 WEBSITE_TITLE = "G2 Q&A System"
 
 SELF_QUERYING_PARAMETERS_TITLE = "Self-Querying Parameters"
+SELF_QUERYING_EXPANDER_TITLE = "Automatically Filtered Parameters"
 SELF_QUERYING_TOGGLE_NOTE = (":gray[Note: By enabling this option, the filtering parameters are automatically "
                              "extracted from the latest query. You cannot change them!]")
-SELF_QUERYING_EXPANDER_TITLE = "Automatically Filtered Parameters"
 
 LATEST_SOURCES_TITLE = "Sources"
 LATEST_SOURCES_KEY = "latest_sources"
@@ -104,11 +104,11 @@ def to_american_date_format(publication_date):
 def to_colored_confidence_rating(confidence_score):
     # Thresholds have been chosen empirically
     if confidence_score > 70:
-        return f"<span style='color: #ACD8AA;'>High ({int(confidence_score)}%)</span>"
+        return f"<span style='color: #69B865;'>High</span>"
     elif confidence_score > 50:
-        return f"<span style='color: #EDAE49;'>Medium ({int(confidence_score)}%)</span>"
+        return f"<span style='color: #EDAE49;'>Medium</span>"
     else:
-        return f"<span style='color: #D1495B;'>Low ({int(confidence_score)}%)</span>"
+        return f"<span style='color: #D1495B;'>Low</span>"
 
 
 def write_source_expander(source):
