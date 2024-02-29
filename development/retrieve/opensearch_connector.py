@@ -113,23 +113,33 @@ def extract_source_from_hits(hits: list[dict[str, any]]):
     return [hit["_source"] for hit in hits]
 
 
-def extract_top_k_unique_pmids_from_response(response: dict[str, any], k: int = None):
+def extract_top_k_unique_abstract_fragments(response: dict[str, any], k: int = None):
     """
-    Extract the top k unique pmids from the response in the order they appear.
+    Extract the first abstract fragment for each of the top k unique abstracts.
     :param response: The response from OpenSearch.
-    :param k: The number of pmids to return. If None, all pmids are returned.
-    :return: A list of pmids.
+    :param k: The number of first abstract fragments to return.
+              If None, all first abstract fragments are returned.
+    :return: A list of {"text": ?, "pmid": ?}.
     """
-    seen_pmids = set()  # Keep track of seen pmids
-    unique_pmids = []  # Store the unique pmids in order
+    unique_pmids = set()
+    fragment_texts = []
+    fragment_pmids = []
+
     for hit in response["hits"]["hits"]:
+        # Extract Fragment Data
         pmid = hit["_source"]["pmid"]
-        if pmid not in seen_pmids:
-            unique_pmids.append(pmid)
-            seen_pmids.add(pmid)
+        text = hit["_source"]["abstract_fragment"]
+        if pmid not in unique_pmids:
+            # Determine Uniqueness
+            unique_pmids.add(pmid)
+            fragment_texts.append(text)
+            fragment_pmids.append(pmid)
+            # Stop searching if enough unique first
+            # abstract fragments have been found
             if k and len(unique_pmids) == k:
                 break
-    return unique_pmids
+
+    return fragment_texts, fragment_pmids
 
 
 def create_term_query(match_value: str, match_key: str = "pmid"):

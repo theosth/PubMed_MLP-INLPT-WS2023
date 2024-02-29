@@ -17,7 +17,7 @@ from development.retrieve.opensearch_connector import (
     execute_query,
     extract_hits_from_response,
     extract_source_from_hits,
-    extract_top_k_unique_pmids_from_response,
+    extract_top_k_unique_abstract_fragments,
 )
 
 import development.commons.env as env
@@ -44,7 +44,7 @@ class DocumentOpenSearch(BaseModel):
     author_list: Optional[list[str]] = None
     doi: str
     keyword_list: Optional[list[str]] = None
-    confidence: Optional[Union[str, float]] = None
+    confidence: Optional[Union[str, int]] = None
 
 
 def retrieve_abstracts(question: str, amount: int = 3) -> list[DocumentOpenSearch]:
@@ -54,30 +54,41 @@ def retrieve_abstracts(question: str, amount: int = 3) -> list[DocumentOpenSearc
     :param amount: The number of abstracts to retrieve.
     :return: A list of Documents.
     """
-
+    # Extract self-querying filters
     filters = get_filters(question, remove_dot_metadata_from_keys=True)
-
-    # Retrieve relevant abstract_fragment pmids
     size = amount * MAX_FRAGMENTS_PER_ABSTRACT
+
+    # Create and execute hybrid abstract fragment query
     query = create_hybrid_query(
-        query_text=question, match_on_fields=MATCH_ON_FIELDS, knn_k=size
+        query_text=question,
+        match_on_fields=MATCH_ON_FIELDS,
+        knn_k=size
     )
+
     fragment_response = execute_hybrid_query(
         query=query,
         pipeline_weight=NEURAL_WEIGHT,
         index=ABSTRACT_FRAGMENT_INDEX,
         size=size,
-        source_includes=["pmid"],
+        source_includes=["pmid", "abstract_fragment"],
         filter=filters,
     )
-    pmids = extract_top_k_unique_pmids_from_response(fragment_response, amount)
 
-    # Retrieve document abstracts with pmids
+    # Extract first fragments of unique abstracts
+    fragment_texts, fragment_pmids = extract_top_k_unique_abstract_fragments(fragment_response, amount)
+
+    # Construct exact abstract query
     term_queries = [
-        create_term_query(match_key="pmid", match_value=pmid) for pmid in pmids
+        create_term_query(
+            match_key="pmid",
+            match_value=pmid)
+        for pmid in fragment_pmids
     ]
+
+    # Retrieve each abstract individually
     documents: list[DocumentOpenSearch] = []
     for index, term_query in enumerate(term_queries):
+        # Execute exact query
         response = execute_query(
             query=term_query,
             index=ABSTRACT_INDEX,
@@ -93,15 +104,20 @@ def retrieve_abstracts(question: str, amount: int = 3) -> list[DocumentOpenSearc
             size=1,
             filter=filters,
         )
+
+        # Extract payload
         hit = extract_hits_from_response(response)
         data = extract_source_from_hits(hit)[0]
+
+        # Assert valid payload
         if len(data) < 0:
-            TypeError(f"Could not retrieve document for pmid: {pmids[index]}")
-        # print(f"Test: {data}")
+            TypeError(f"Could not retrieve document for pmid: {fragment_pmids[index]}")
+
+        # Parse to document structure
         documents.append(DocumentOpenSearch(**data))
 
     # Compute Confidence
-    confidence_ratings = confidence.compute_confidence_ratings(query=question, documents=documents)
+    confidence_ratings = confidence.compute_confidence_ratings(query=question, texts=fragment_texts)
     for index, document in enumerate(documents):
         document.confidence = confidence_ratings[index]
 
