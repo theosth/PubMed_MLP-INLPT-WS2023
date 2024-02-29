@@ -22,8 +22,8 @@ OLLAMA_PORT = 11443
 # Data Flow
 ABSTRACTS_DATASET_PATH = "data/dataset.json"
 ABSTRACT_FRAGMENT_DATASET_PATH = "data/fragment-dataset.json"
-RAW_DATASET_PATH = "../scrape/data/raw.pkl"
-CLEANED_DATASET_PATH = "../scrape/data/dataset.json"
+RAW_DATASET_PATH = "../scrape/data/raw_retrieved_dataset.pkl"
+CLEANED_DATASET_PATH = "../scrape/data/cleaned_retrieved_dataset.json"
 
 # Testing
 RAGAS_TESTSET_PATH = "development/evaluate/retrieval/testsets/ragas-testset.json"

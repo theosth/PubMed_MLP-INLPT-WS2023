@@ -28,11 +28,11 @@ def is_missing_abstract(medium):
 
 
 def is_missing_author(medium):
-    return "AuthorList" not in medium or len(medium['AuthorList']) == 0
+    return "AuthorList" not in medium or len(medium["AuthorList"]) == 0
 
 
 def extract_doi(elocids):
-    elocids = list(filter(lambda v: v.attributes['EIdType'] == 'doi', elocids))
+    elocids = list(filter(lambda v: v.attributes["EIdType"] == "doi", elocids))
     if len(elocids) == 0:
         return ''
     assert len(elocids) == 1
@@ -48,15 +48,32 @@ def extract_authors(authors):
     ]
 
 
+def extract_publication_date(document):
+    history = document["PubmedData"]["History"]
+    newest_entry = history[-1]
+
+    # Ensure that every document has a publication date
+    if len(history) == 0:
+        print(json.dumps(document, indent=4))
+
+    publication_date = datetime.datetime(
+        int(newest_entry["Year"]),
+        int(newest_entry["Month"]),
+        int(newest_entry["Day"])
+    )
+
+    return publication_date
+
+
 def extract_articles(batch):
     documents = []
     articles_without_abstract = 0
     articles_without_authors = 0
 
-    for article in batch['PubmedArticle']:
-        # Unpack Article
-        outer_article = article['MedlineCitation']
-        inner_article = outer_article['Article']
+    for article in batch["PubmedArticle"]:
+        # Unpack Article Hierarchy
+        outer_article = article["MedlineCitation"]
+        inner_article = outer_article["Article"]
 
         # Validate Article
         if is_missing_abstract(inner_article):
@@ -66,23 +83,23 @@ def extract_articles(batch):
         if is_missing_author(inner_article):
             articles_without_authors += 1
 
-        # Extract Publication Date
-        publication_date = [datetime.datetime(
-            int(date['Year']),
-            int(date['Month']),
-            int(date['Day']))
-            for date in inner_article['ArticleDate']
-        ]
-        assert len(publication_date) < 2
+        # Extract Document Properties
+        pmid = outer_article["PMID"]
+        doi = extract_doi(inner_article.get("ELocationID", []))
+        title = inner_article["ArticleTitle"]
+        author_list = extract_authors(inner_article.get("AuthorList", []))
+        abstract = ABSTRACT_JOIN_SEPARATOR.join(inner_article["Abstract"]["AbstractText"])
+        publication_date = extract_publication_date(article)
+        keyword_list = [e for elem in outer_article["KeywordList"] for e in elem]
 
         cleaned_article = {
-            'pmid': outer_article['PMID'],  # pubmed id
-            'doi': extract_doi(inner_article.get('ELocationID', [])),
-            'title': inner_article['ArticleTitle'],
-            'author_list': extract_authors(inner_article.get('AuthorList', [])),
-            'abstract': ABSTRACT_JOIN_SEPARATOR.join(inner_article['Abstract']['AbstractText']),
-            'publication_date': publication_date[0] if len(publication_date) >= 1 else None,
-            'keyword_list': [e for elem in outer_article['KeywordList'] for e in elem],
+            "pmid": pmid,
+            "doi": doi,
+            "title": title,
+            "author_list": author_list,
+            "abstract": abstract,
+            "publication_date": publication_date,
+            "keyword_list": keyword_list,
         }
         documents.append(cleaned_article)
 
@@ -94,10 +111,10 @@ def extract_books(batch):
     books_without_abstract = 0
     books_without_authors = 0
 
-    for book in batch['PubmedBookArticle']:
+    for book in batch["PubmedBookArticle"]:
         # Unpack Book
-        book = book['BookDocument']
-        inner_book = book['Book']
+        outer_book = book["BookDocument"]
+        inner_book = outer_book["Book"]
 
         # Validate Book
         if is_missing_abstract(book):
@@ -107,21 +124,23 @@ def extract_books(batch):
         if is_missing_author(book):
             books_without_authors += 1
 
-        # Extract Publication Date
-        publication_date = datetime.datetime(
-            int(inner_book['PubDate']['Year']),
-            int(inner_book['PubDate'].get('Month', '01')),
-            int(inner_book['PubDate'].get('Day', '01'))
-        )
+        # Extract Document Properties
+        pmid = book["PMID"]
+        doi = extract_doi(inner_book.get('ELocationID', []))
+        title = inner_book["BookTitle"]
+        author_list = extract_authors([a for list in inner_book.get("AuthorList", []) for a in list])
+        abstract = ABSTRACT_JOIN_SEPARATOR.join(book["Abstract"]["AbstractText"])
+        publication_date = extract_publication_date(inner_book)
+        keyword_list = [e for elem in book["KeywordList"] for e in elem]
 
         cleaned_article = {
-            'pmid': book['PMID'],  # pubmed id
-            'doi': extract_doi(inner_book.get('ELocationID', [])),
-            'title': inner_book['BookTitle'],
-            'author_list': extract_authors([a for list in inner_book.get('AuthorList', []) for a in list]),
-            'abstract': ABSTRACT_JOIN_SEPARATOR.join(book['Abstract']['AbstractText']),
-            'publication_date': publication_date,
-            'keyword_list': [e for elem in book['KeywordList'] for e in elem],
+            "pmid": pmid,
+            "doi": doi,
+            "title": title,
+            "author_list": author_list,
+            "abstract": abstract,
+            "publication_date": publication_date,
+            "keyword_list": keyword_list,
         }
         documents.append(cleaned_article)
 
@@ -134,7 +153,7 @@ def extract_relevant_information(data):
     documents_without_author = 0
     documents = []
 
-    for batch in tqdm(data['batched_data'], file=sys.stdout):
+    for batch in tqdm(data["batched_data"], file=sys.stdout):
         # Extract "Articles"
         articles, articles_without_abstract, articles_without_author = extract_articles(batch)
         documents.extend(articles)
@@ -157,9 +176,9 @@ def extract_relevant_information(data):
     print()
 
     extraction = {
-        'dataset_scraped_on': data['timestamp'],
-        'dataset_cleaned_on': datetime.datetime.now(),
-        'documents': documents
+        "dataset_scraped_on": data["timestamp"],
+        "dataset_cleaned_on": datetime.datetime.now(),
+        "documents": documents
     }
     return extraction
 
