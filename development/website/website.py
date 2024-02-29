@@ -97,7 +97,7 @@ def write_self_querying_expander():
 
 
 def to_american_date_format(publication_date):
-    parsed_date = datetime.strptime(publication_date, "%Y-%m-%d %H:%M:%S")
+    parsed_date = datetime.strptime(publication_date, "%Y-%m-%d")
     return parsed_date.date()
 
 

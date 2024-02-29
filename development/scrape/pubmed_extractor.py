@@ -60,7 +60,7 @@ def extract_publication_date(document):
         int(newest_entry["Year"]),
         int(newest_entry["Month"]),
         int(newest_entry["Day"])
-    )
+    ).date()
 
     return publication_date
 

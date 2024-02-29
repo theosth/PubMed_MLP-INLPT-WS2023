@@ -79,7 +79,7 @@ def insert_index(ingest_pipeline_id):
                 "author_list": {"type": "keyword"},
                 "publication_date": {
                     "type": "date",
-                    "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd"
+                    "format": "yyyy-MM-dd"
                 },
                 "ingested_at": {"type": "date"},
                 "fragment_id": {"type": "integer"},
