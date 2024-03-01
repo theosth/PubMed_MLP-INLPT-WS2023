@@ -1,5 +1,4 @@
 import sys
-from datetime import datetime
 from pathlib import Path
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
@@ -21,12 +20,12 @@ LATEST_SOURCES_KEY = "latest_sources"
 EMPTY_SOURCES_NOTE = (":gray[Since there is no recent question, there are no sources so far... Don't be shy, "
                       "ask our system!]")
 
-RETRIEVER = retrieve.CustomOpensearchRetriever()
+RETRIEVER = retrieve.CustomOpensearchAbstractRetriever()
 GENAI = answer.GenAI()
 
 
 def query_retriever(question: str):
-    return RETRIEVER.get_relevant_documents(query=question, amount=3)
+    return RETRIEVER.get_relevant_documents(query=question, amount=3, self_query_retrieval=False)
 
 
 def prompt_model(retrieved_docs, question: str):
@@ -51,7 +50,7 @@ def build_chat():
 
         # Thinking...
         retrieved_documents = query_retriever(prompt)
-        st.session_state[LATEST_SOURCES_KEY] = retrieve.convert_to_document_opensearch(retrieved_documents)
+        st.session_state[LATEST_SOURCES_KEY] = retrieve.convert_langchain_documents_to_abstracts(retrieved_documents)
         
         # Answering Question
         st.session_state.messages.append(
@@ -68,7 +67,8 @@ def build_upper_sidebar():
     st.sidebar.title(SELF_QUERYING_PARAMETERS_TITLE)
 
     # Self-Querying Toggle
-    if st.sidebar.toggle(SELF_QUERYING_TOGGLE_NOTE):
+    toggled = st.sidebar.toggle(SELF_QUERYING_TOGGLE_NOTE)
+    if toggled:
         with st.sidebar.expander(SELF_QUERYING_EXPANDER_TITLE):
             write_self_querying_expander()
 
@@ -96,11 +96,6 @@ def write_self_querying_expander():
     write_expander_normal_entry("Title", title)
 
 
-def to_american_date_format(publication_date):
-    parsed_date = datetime.strptime(publication_date, "%Y-%m-%d")
-    return parsed_date.date()
-
-
 def to_colored_confidence_rating(confidence_score):
     # Thresholds have been chosen empirically
     if confidence_score > 70:
@@ -116,12 +111,7 @@ def write_source_expander(source):
     write_expander_normal_entry("Title", source.title)
     write_expander_normal_entry("PMID", source.pmid)
     write_expander_normal_entry("Authors", ", ".join(source.author_list))
-
-    publication_date = source.publication_date
-    if publication_date is not None:
-        publication_date = to_american_date_format(publication_date)
-
-    write_expander_normal_entry("Publication Date", publication_date)
+    write_expander_normal_entry("Publication Date", source.publication_date)
     write_expander_normal_entry("Confidence", to_colored_confidence_rating(source.confidence))
 
 
