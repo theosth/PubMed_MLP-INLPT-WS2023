@@ -10,19 +10,24 @@ from development.retrieve.retrieval_wrapper import Document
 
 WORST_CONFIDENCE_COS_SIM = 80
 PERFECT_CONFIDENCE_COS_SIM = 100
-CONFIDENCE_SCALING_FACTOR = 1.2
+CONFIDENCE_SCALING_FACTOR = 1.5
 
 
-def compute_confidence_ratings(query: str, documents: list[Document]) -> list[str]:
+def compute_confidence_ratings(query: str, texts: list[str]) -> list[int]:
     """
-    This function calculates the confidence rating of a query to a list of documents with cosine similarity.
+    This function calculates the confidence rating of a query to a list of texts with cosine similarity.
 
     :param query: The query string.
-    :param documents: A list of Document objects.
-    :return: A list of confidence categories corresponding to each document.
+    :param texts: A list of texts objects.
+    :return: A list of confidence categories corresponding to each text.
     """
+    
+    # fast return if no texts are given
+    if len(texts) == 0:
+        return []
+    
     # Compute Embeddings
-    abstract_embeddings = oc.MODEL.encode([doc.abstract for doc in documents])
+    abstract_embeddings = oc.MODEL.encode(texts)
     query_embedding = oc.MODEL.encode(query)
 
     # Compute Distance
@@ -44,7 +49,7 @@ def compute_confidence_ratings(query: str, documents: list[Document]) -> list[st
     confidence = confidence * CONFIDENCE_SCALING_FACTOR
     range_scale_factor = (PERFECT_CONFIDENCE_COS_SIM / (PERFECT_CONFIDENCE_COS_SIM - WORST_CONFIDENCE_COS_SIM))
     confidence = np.minimum(PERFECT_CONFIDENCE_COS_SIM, confidence * range_scale_factor)
-    return confidence
+    return [int(x) for x in confidence]
 
 
 def cosine_similarity(v1, vectors):

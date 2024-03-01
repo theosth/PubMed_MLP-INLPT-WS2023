@@ -1,0 +1,12 @@
+[
+  {
+    "question":"What is the prevalence of attention deficit hyperactivity disorder (ADHD) in adults with autism spectrum disorders (ASDs) compared to the general adult population?",
+    "contexts":[
+      "Features of attention deficit hyperactivity disorder (ADHD) and impairments on neuropsychological, tests of attention have been documented in children with autism spectrum disorders (ASDs). To date, there has been a lack of research comparing attention in adults with ASD and adults with ADHD. In study 1, 31 adults with ASD and average intellectual function completed self-report measures of ADHD symptoms. These were compared with self-report measures of ADHD symptoms in 38 adults with ADHD and 29 general population controls. In study 2, 28 adults with a diagnosis of ASD were compared with an age- and intelligence quotient-matched sample of 28 adults with ADHD across a range of measures of attention. Study 1 showed that 36.7% of adults with ASD met Diagnostic and Statistical Manual-IV criteria for current ADHD \"caseness\" (Barkley Current self-report scores questionnaire). Those with a diagnosis of pervasive developmental disorder-not otherwise specified were most likely to describe ADHD symptoms. The ASD group differed significantly from both the ADHD and control groups on total and individual symptom self-report scores. On neuropsychological testing, adults with ASD and ADHD showed comparable performance on tests of selective attention. Significant group differences were seen on measures of attentional switching; adults with ADHD were significantly faster and more inaccurate, and individuals with Asperger's syndrome showed a significantly slower and more accurate response style. Self-reported rates of ADHD among adults with ASD are significantly higher than in the general adult population and may be underdiagnosed. Adults with ASD have attentional difficulties on some neuropsychological measures."
+    ],
+    "ground_truth":"The prevalence of attention deficit hyperactivity disorder (ADHD) in adults with autism spectrum disorders (ASDs) is significantly higher than in the general adult population.",
+    "evolution_type":"simple",
+    "episode_done":true,
+    "context_relevancy":0.1666666667
+  }
+]

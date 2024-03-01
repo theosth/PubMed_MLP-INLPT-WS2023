@@ -1,5 +1,6 @@
 import datetime
 import json
+import os
 import sys
 
 from langchain.text_splitter import SentenceTransformersTokenTextSplitter
@@ -52,6 +53,10 @@ def split_documents(dataset, splitter):
 
 
 def save_fragments(fragments):
+    folder_path = os.path.dirname(env.ABSTRACT_FRAGMENT_DATASET_PATH)
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+
     print(f"[{datetime.datetime.now()}] Saving Fragments ({env.ABSTRACT_FRAGMENT_DATASET_PATH})")
     with open(env.ABSTRACT_FRAGMENT_DATASET_PATH, 'w') as output:
         json.dump(fragments, output, indent=2, default=str)

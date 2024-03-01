@@ -1,5 +1,4 @@
 import sys
-from datetime import datetime
 from pathlib import Path
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
@@ -12,21 +11,21 @@ PUBMED_ARTICLE_URL = "https://pubmed.ncbi.nlm.nih.gov"
 WEBSITE_TITLE = "G2 Q&A System"
 
 SELF_QUERYING_PARAMETERS_TITLE = "Self-Querying Parameters"
+SELF_QUERYING_EXPANDER_TITLE = "Automatically Filtered Parameters"
 SELF_QUERYING_TOGGLE_NOTE = (":gray[Note: By enabling this option, the filtering parameters are automatically "
                              "extracted from the latest query. You cannot change them!]")
-SELF_QUERYING_EXPANDER_TITLE = "Automatically Filtered Parameters"
 
 LATEST_SOURCES_TITLE = "Sources"
 LATEST_SOURCES_KEY = "latest_sources"
 EMPTY_SOURCES_NOTE = (":gray[Since there is no recent question, there are no sources so far... Don't be shy, "
                       "ask our system!]")
 
-RETRIEVER = retrieve.CustomOpensearchRetriever()
+RETRIEVER = retrieve.CustomOpensearchAbstractRetriever()
 GENAI = answer.GenAI()
 
 
 def query_retriever(question: str):
-    return RETRIEVER.get_relevant_documents(query=question, amount=3)
+    return RETRIEVER.get_relevant_documents(query=question, amount=3, self_query_retrieval=False)
 
 
 def prompt_model(retrieved_docs, question: str):
@@ -51,7 +50,7 @@ def build_chat():
 
         # Thinking...
         retrieved_documents = query_retriever(prompt)
-        st.session_state[LATEST_SOURCES_KEY] = retrieve.convert_to_document_opensearch(retrieved_documents)
+        st.session_state[LATEST_SOURCES_KEY] = retrieve.convert_langchain_documents_to_abstracts(retrieved_documents)
         
         # Answering Question
         st.session_state.messages.append(
@@ -68,7 +67,8 @@ def build_upper_sidebar():
     st.sidebar.title(SELF_QUERYING_PARAMETERS_TITLE)
 
     # Self-Querying Toggle
-    if st.sidebar.toggle(SELF_QUERYING_TOGGLE_NOTE):
+    toggled = st.sidebar.toggle(SELF_QUERYING_TOGGLE_NOTE)
+    if toggled:
         with st.sidebar.expander(SELF_QUERYING_EXPANDER_TITLE):
             write_self_querying_expander()
 
@@ -96,19 +96,14 @@ def write_self_querying_expander():
     write_expander_normal_entry("Title", title)
 
 
-def to_american_date_format(publication_date):
-    parsed_date = datetime.strptime(publication_date, "%Y-%m-%d %H:%M:%S")
-    return parsed_date.date()
-
-
 def to_colored_confidence_rating(confidence_score):
     # Thresholds have been chosen empirically
     if confidence_score > 70:
-        return f"<span style='color: #ACD8AA;'>High ({int(confidence_score)}%)</span>"
+        return f"<span style='color: #69B865;'>High</span>"
     elif confidence_score > 50:
-        return f"<span style='color: #EDAE49;'>Medium ({int(confidence_score)}%)</span>"
+        return f"<span style='color: #EDAE49;'>Medium</span>"
     else:
-        return f"<span style='color: #D1495B;'>Low ({int(confidence_score)}%)</span>"
+        return f"<span style='color: #D1495B;'>Low</span>"
 
 
 def write_source_expander(source):
@@ -116,12 +111,7 @@ def write_source_expander(source):
     write_expander_normal_entry("Title", source.title)
     write_expander_normal_entry("PMID", source.pmid)
     write_expander_normal_entry("Authors", ", ".join(source.author_list))
-
-    publication_date = source.publication_date
-    if publication_date is not None:
-        publication_date = to_american_date_format(publication_date)
-
-    write_expander_normal_entry("Publication Date", publication_date)
+    write_expander_normal_entry("Publication Date", source.publication_date)
     write_expander_normal_entry("Confidence", to_colored_confidence_rating(source.confidence))
 
 
