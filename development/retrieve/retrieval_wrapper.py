@@ -71,8 +71,12 @@ class AbstractFragmentOpenSearch(BaseModel):
 
 
 def retrieve_abstract_fragments(
-    question: str, amount: int = 3, self_query_retrieval: bool = False,
-    strategy: Literal['reciprocal_rank_fusion', 'opensearch_hybrid'] = "reciprocal_rank_fusion"
+    question: str,
+    amount: int = 3,
+    self_query_retrieval: bool = False,
+    strategy: Literal[
+        "reciprocal_rank_fusion", "opensearch_hybrid"
+    ] = "reciprocal_rank_fusion",
 ) -> list[AbstractFragmentOpenSearch]:
     """
     Retrieve a list of abstract fragments relevant to the given question.
@@ -88,14 +92,20 @@ def retrieve_abstract_fragments(
         filters = get_filters(question, remove_dot_metadata_from_keys=True)
 
     if strategy == "opensearch_hybrid":
-        return _retrieve_abstract_fragments_opensearch_hybrid_query(filters)
+        return _retrieve_abstract_fragments_opensearch_hybrid_query(
+            question, filters, amount, NEURAL_WEIGHT
+        )
     elif strategy == "reciprocal_rank_fusion":
-        return _retrieve_abstract_fragments_reciprocal_rank_fusion(filters)
+        return _retrieve_abstract_fragments_reciprocal_rank_fusion(
+            question, filters, amount, NEURAL_WEIGHT
+        )
     else:
         raise ValueError(f"Invalid strategy: {strategy}")
 
 
-def _retrieve_abstract_fragments_opensearch_hybrid_query(filters):
+def _retrieve_abstract_fragments_opensearch_hybrid_query(
+    question, filters, amount, weight
+):
     query = create_hybrid_query(
         query_text=question, match_on_fields=MATCH_ON_FIELDS, knn_k=amount
     )
@@ -103,7 +113,7 @@ def _retrieve_abstract_fragments_opensearch_hybrid_query(filters):
     # Send the query to OpenSearch via API
     fragment_response = execute_hybrid_query(
         query=query,
-        pipeline_weight=NEURAL_WEIGHT,
+        pipeline_weight=weight,
         index=ABSTRACT_FRAGMENT_INDEX,
         size=amount,
         filter=filters,
@@ -114,17 +124,21 @@ def _retrieve_abstract_fragments_opensearch_hybrid_query(filters):
     return [AbstractFragmentOpenSearch(**data) for data in abstract_fragment_data]
 
 
-def _retrieve_abstract_fragments_reciprocal_rank_fusion(filters):
-    knn_query = create_knn_query(
-        query_text=question, k=amount
-    )
+def _retrieve_abstract_fragments_reciprocal_rank_fusion(
+    question, filters, amount, weight
+):
+    knn_query = create_knn_query(query_text=question, k=amount)
     multi_match_query = create_multi_match_BM25_query(
         query_text=question, match_on_fields=MATCH_ON_FIELDS
     )
     queries = [knn_query, multi_match_query]
-    
-    dummy_retriever = CustomOpensearchAbstractFragmentRetriever() # This retriever is NOT used. It is only there because ensamle retriever needs a list of retrievers.
-    ensemble_retriever = EnsembleRetriever(weights=[NEURAL_WEIGHT, 1 - NEURAL_WEIGHT], retrievers=[dummy_retriever, dummy_retriever])
+
+    dummy_retriever = (
+        CustomOpensearchAbstractFragmentRetriever()
+    )  # This retriever is NOT used. It is only there because ensamle retriever needs a list of retrievers.
+    ensemble_retriever = EnsembleRetriever(
+        weights=[weight, 1 - weight], retrievers=[dummy_retriever, dummy_retriever]
+    )
 
     fragments_list = []
     for query in queries:
@@ -138,10 +152,12 @@ def _retrieve_abstract_fragments_reciprocal_rank_fusion(filters):
         abstract_fragment_data = extract_source_from_hits(
             extract_hits_from_response(fragment_response)
         )
-        fragments = [AbstractFragmentOpenSearch(**data) for data in abstract_fragment_data]
+        fragments = [
+            AbstractFragmentOpenSearch(**data) for data in abstract_fragment_data
+        ]
         fragments = convert_abstract_fragments_to_langchain_documents(fragments)
         fragments_list.append(fragments)
-    
+
     fragments = ensemble_retriever.weighted_reciprocal_rank(fragments_list)
 
     return convert_langchain_documents_to_abstract_fragments(fragments)
@@ -295,6 +311,7 @@ def extract_top_k_unique_abstract_fragments(
             if k and len(unique_pmids) == k:
                 break
     return top_k_fragments
+
 
 class CustomOpensearchAbstractRetriever(BaseRetriever):
     """
