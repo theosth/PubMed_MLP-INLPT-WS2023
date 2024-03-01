@@ -16,7 +16,7 @@ CLIENT = get_opensearch_client()
 def execute_query(
         query,
         index: str = "abstracts",
-        source_includes: list[str] = ["_id", "fragment_id"],
+        source_includes: list[str] = None,
         size: int = 5,
         filter: dict[str, any] = None,
         extra_params: dict[str, any] = None,
@@ -25,7 +25,8 @@ def execute_query(
     Execute a generic query on the OpenSearch index.
     :param query: The query to execute.
     :param index: The index to execute the query on.
-    :param source_includes: The fields to include in the response.
+    :param source_includes: The fields to include in the response. If None, all fields are included.
+    e.g. ["_id", "fragment_id", "pmid"]
     :param size: The number of results to return.
     :param extra_params: Additional parameters for OpenSearch query execution.
     :return: The response from OpenSearch.
@@ -41,10 +42,19 @@ def execute_query(
     if extra_params:
         request_params.update(extra_params)
 
+    # only return specified fields
+    if source_includes:
+        return CLIENT.search(
+            body=query_body,
+            index=index,
+            _source_includes=source_includes,
+            params=request_params,
+        )
+        
+    # return all fields
     return CLIENT.search(
         body=query_body,
         index=index,
-        _source_includes=source_includes,
         params=request_params,
     )
 
@@ -53,7 +63,7 @@ def execute_hybrid_query(
         query,
         pipeline_weight: float = 0.0,
         index: str = "abstracts",
-        source_includes: list[str] = ["_id", "fragment_id", "pmid"],
+        source_includes: list[str] = None,
         size: int = 5,
         query_name_prefix: str = "hybrid_search_pipeline_weight_",
         filter: dict[str, any] = None,
@@ -66,7 +76,8 @@ def execute_hybrid_query(
     :param query: The query to execute.
     :param pipeline_weight: The weight of the neural part of the hybrid query. Must be between 0 and 1.
     :param index: The index to execute the query on.
-    :param source_includes: The fields to include in the response.
+    :param source_includes: The fields to include in the response. If None, all fields are included.
+    e.g. ["_id", "fragment_id", "pmid"]
     :param size: The number of results to return.
     :param query_name_prefix: The prefix to use for the query name.
     :return: The response from OpenSearch.
@@ -111,35 +122,6 @@ def extract_source_from_hits(hits: list[dict[str, any]]):
     :return: A list of source fields.
     """
     return [hit["_source"] for hit in hits]
-
-
-def extract_top_k_unique_abstract_fragments(response: dict[str, any], k: int = None):
-    """
-    Extract the first abstract fragment for each of the top k unique abstracts.
-    :param response: The response from OpenSearch.
-    :param k: The number of first abstract fragments to return.
-              If None, all first abstract fragments are returned.
-    :return: A list of {"text": ?, "pmid": ?}.
-    """
-    unique_pmids = set()
-    fragment_texts = []
-    fragment_pmids = []
-
-    for hit in response["hits"]["hits"]:
-        # Extract Fragment Data
-        pmid = hit["_source"]["pmid"]
-        text = hit["_source"]["abstract_fragment"]
-        if pmid not in unique_pmids:
-            # Determine Uniqueness
-            unique_pmids.add(pmid)
-            fragment_texts.append(text)
-            fragment_pmids.append(pmid)
-            # Stop searching if enough unique first
-            # abstract fragments have been found
-            if k and len(unique_pmids) == k:
-                break
-
-    return fragment_texts, fragment_pmids
 
 
 def create_term_query(match_value: str, match_key: str = "pmid"):
