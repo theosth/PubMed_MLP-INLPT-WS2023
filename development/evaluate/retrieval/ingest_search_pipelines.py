@@ -31,7 +31,7 @@ def create_hybrid_pipeline(
                         "combination": {
                             "technique": "arithmetic_mean",
                             "parameters": {
-                                "weights": [pipeline_weight, 1 - pipeline_weight]
+                                "weights": [pipeline_weight, 1.0 - pipeline_weight]
                             },
                         },
                     }
