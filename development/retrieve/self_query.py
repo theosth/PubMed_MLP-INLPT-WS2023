@@ -27,8 +27,8 @@ metadata_field_info = [
     ),  
     AttributeInfo(
         name="publication_date",
-        description="The year the article was published",
-        type="date",
+        description="The year the article was published.",
+        type="year",
     ),
 ]
 

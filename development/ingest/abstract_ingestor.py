@@ -76,7 +76,7 @@ def insert_index(ingest_pipeline_id):
                 "author_list": {"type": "keyword"},
                 "publication_date": {
                     "type": "date",
-                    "format": "yyyy-MM-dd"
+                    "format": "yyyy-MM-dd|yyyy" # yyyy is required for self-query
                 },
                 "ingested_at": {"type": "date"}
             }
