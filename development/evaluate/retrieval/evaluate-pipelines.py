@@ -1,6 +1,10 @@
 import sys
 from pathlib import Path
 
+from development.retrieve.retrieval_wrapper import (
+    _retrieve_abstract_fragments_reciprocal_rank_fusion,
+)
+
 sys.path.append(str(Path(__file__).parent.parent.parent.parent))
 
 from development.retrieve.opensearch_connector import (
@@ -10,12 +14,13 @@ from development.retrieve.opensearch_connector import (
 )
 import ijson
 from pydantic import BaseModel, FilePath
-from typing import Callable
+from typing import Callable, Literal
 import pandas as pd
 from tqdm import tqdm
 import time
 
 # from 0.0 to 1.0 with 0.05 steps
+
 
 class Query(BaseModel):
     question: str
@@ -114,6 +119,9 @@ def evaluate_pipeline(
     size: int,
     eval_metrics: list[Callable[[list[str], str, dict[str, any]], float]],
     eval_metric_settings: list[dict[str, any]] = None,
+    strategy: Literal[
+        "reciprocal_rank_fusion", "opensearch_hybrid"
+    ] = "opensearch_hybrid",
 ) -> list[dict[str, float]]:
     """
     Evaluate a set of queries against a search pipeline using multiple evaluation metrics.
@@ -150,18 +158,27 @@ def evaluate_pipeline(
 
     scores = []
     for query in queries:
-        hybrid_query = create_hybrid_query(query.question)
-        response = execute_hybrid_query(
-            hybrid_query, pipeline_weight, index, source_includes, size
-        )
-        hits = extract_hits_from_response(response)
-        retrieved_document_ids = [hit["_id"] for hit in hits]
+        retrieved_document_ids = []
+        if strategy == "opensearch_hybrid":
+            hybrid_query = create_hybrid_query(query.question)
+            response = execute_hybrid_query(
+                hybrid_query, pipeline_weight, index, source_includes, size
+            )
+            hits = extract_hits_from_response(response)
+            retrieved_document_ids = [hit["_id"] for hit in hits]
+        elif strategy == "reciprocal_rank_fusion":
+            fragments = _retrieve_abstract_fragments_reciprocal_rank_fusion(
+                query.question, None, size, pipeline_weight
+            )
+            retrieved_document_ids = [fragment["id"] for fragment in fragments]
+        else:
+            raise ValueError(f"Invalid strategy: {strategy}")
 
         # Apply each evaluation metric to the query results
         query_scores = {
             "pipeline_weight": pipeline_weight,
             "query_id": query.id,
-            "retrieved_document_ids": retrieved_document_ids
+            "retrieved_document_ids": retrieved_document_ids,
         }  # Include neural-weight in the results
         for eval_metric, settings in zip(eval_metrics, eval_metric_settings):
             score = eval_metric(retrieved_document_ids, query.id, settings)
@@ -179,13 +196,14 @@ def main():
     pipeline_weights = [i / 20 for i in range(21)]  # from 0.0 to 1.0 with 0.05 steps
     index = "abstract_fragments"
     source_includes = ["_id", "fragment_id"]
-    size = 10   # Number of search results to retrieve for each query from OpenSearch
+    size = 10  # Number of search results to retrieve for each query from OpenSearch
     eval_metrics = [binary_at_k, rank_score]  # specify the metrics to use
-    k = 3 # specify the value of k for the binary_at_k metric
+    k = 3  # specify the value of k for the binary_at_k metric
     eval_metric_settings = [{"k": k}, {}]
 
     file_path = "development/evaluate/retrieval/retrieval-testset.json"
-    output_path = f"development/evaluate/retrieval/results/retrieval_result_scores_s{size}_k{k}.csv"
+    output_path_a = f"development/evaluate/retrieval/results/retrieval_result_scores_s{size}_k{k}_opensearch_hybrid.csv"
+    output_path_b = f"development/evaluate/retrieval/results/retrieval_result_scores_s{size}_k{k}_rrf.csv"
 
     first_write = True  # Flag to indicate if header should be written
 
@@ -203,11 +221,11 @@ def main():
         for pipeline_weight in pipeline_weights:
             # if an error occours the program will wait 5 seconds and try again
             # -> this helps to avoid connection errors
-            # -> also if OpenSearch draws max HEAP memory, 
+            # -> also if OpenSearch draws max HEAP memory,
             # this will help to avoid the error because it will wait for GC
             while True:
                 try:
-                    results = evaluate_pipeline(
+                    results_opensearch_hybrid = evaluate_pipeline(
                         pipeline_weight,
                         queries,
                         index,
@@ -215,6 +233,17 @@ def main():
                         size,
                         eval_metrics,
                         eval_metric_settings,
+                        "opensearch_hybrid",
+                    )
+                    results_rrf = evaluate_pipeline(
+                        pipeline_weight,
+                        queries,
+                        index,
+                        source_includes,
+                        size,
+                        eval_metrics,
+                        eval_metric_settings,
+                        "reciprocal_rank_fusion",
                     )
                     break
                 except Exception as e:
@@ -222,8 +251,14 @@ def main():
                     time.sleep(2)
 
             # Convert batch results to DataFrame and write to CSV
-            results_df = pd.DataFrame(results)
-            results_df.to_csv(output_path, mode="a", index=False, header=first_write)
+            results_df_opensearch_hybrid = pd.DataFrame(results_opensearch_hybrid)
+            results_df_rrf = pd.DataFrame(results_rrf)
+            results_df_opensearch_hybrid.to_csv(
+                output_path_a, mode="a", index=False, header=first_write
+            )
+            results_df_rrf.to_csv(
+                output_path_b, mode="a", index=False, header=first_write
+            )
 
             if first_write:
                 first_write = False
