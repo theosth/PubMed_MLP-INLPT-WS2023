@@ -4,13 +4,16 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent.parent))
 
 from pydantic import BaseModel
-from typing import Optional, List, Union
+from typing import Optional, List, Union, Literal
 from langchain_core.retrievers import BaseRetriever
 from langchain_core.callbacks import CallbackManagerForRetrieverRun
 from langchain_core.documents import Document
+from langchain.retrievers import EnsembleRetriever
 
 
 from development.retrieve.opensearch_connector import (
+    create_knn_query,
+    create_multi_match_BM25_query,
     create_hybrid_query,
     execute_hybrid_query,
     create_term_query,
@@ -68,7 +71,8 @@ class AbstractFragmentOpenSearch(BaseModel):
 
 
 def retrieve_abstract_fragments(
-    question: str, amount: int = 3, self_query_retrieval: bool = False
+    question: str, amount: int = 3, self_query_retrieval: bool = False,
+    strategy: Literal['reciprocal_rank_fusion', 'opensearch_hybrid'] = "reciprocal_rank_fusion"
 ) -> list[AbstractFragmentOpenSearch]:
     """
     Retrieve a list of abstract fragments relevant to the given question.
@@ -78,15 +82,23 @@ def retrieve_abstract_fragments(
     :return: A list of AbstractFragmentOpenSearch.
     """
 
-    # Create and execute hybrid abstract fragment query
-    query = create_hybrid_query(
-        query_text=question, match_on_fields=MATCH_ON_FIELDS, knn_k=amount
-    )
-
     # Extract query filters for self-query retrieval
     filters = None
     if self_query_retrieval:
         filters = get_filters(question, remove_dot_metadata_from_keys=True)
+
+    if strategy == "opensearch_hybrid":
+        return _retrieve_abstract_fragments_opensearch_hybrid_query(filters)
+    elif strategy == "reciprocal_rank_fusion":
+        return _retrieve_abstract_fragments_reciprocal_rank_fusion(filters)
+    else:
+        raise ValueError(f"Invalid strategy: {strategy}")
+
+
+def _retrieve_abstract_fragments_opensearch_hybrid_query(filters):
+    query = create_hybrid_query(
+        query_text=question, match_on_fields=MATCH_ON_FIELDS, knn_k=amount
+    )
 
     # Send the query to OpenSearch via API
     fragment_response = execute_hybrid_query(
@@ -100,6 +112,39 @@ def retrieve_abstract_fragments(
         extract_hits_from_response(fragment_response)
     )
     return [AbstractFragmentOpenSearch(**data) for data in abstract_fragment_data]
+
+
+def _retrieve_abstract_fragments_reciprocal_rank_fusion(filters):
+    knn_query = create_knn_query(
+        query_text=question, k=amount
+    )
+    multi_match_query = create_multi_match_BM25_query(
+        query_text=question, match_on_fields=MATCH_ON_FIELDS
+    )
+    queries = [knn_query, multi_match_query]
+    
+    dummy_retriever = CustomOpensearchAbstractFragmentRetriever() # This retriever is NOT used. It is only there because ensamle retriever needs a list of retrievers.
+    ensemble_retriever = EnsembleRetriever(weights=[NEURAL_WEIGHT, 1 - NEURAL_WEIGHT], retrievers=[dummy_retriever, dummy_retriever])
+
+    fragments_list = []
+    for query in queries:
+        # Send the query to OpenSearch via API
+        fragment_response = execute_query(
+            query=query,
+            index=ABSTRACT_FRAGMENT_INDEX,
+            size=amount,
+            filter=filters,
+        )
+        abstract_fragment_data = extract_source_from_hits(
+            extract_hits_from_response(fragment_response)
+        )
+        fragments = [AbstractFragmentOpenSearch(**data) for data in abstract_fragment_data]
+        fragments = convert_abstract_fragments_to_langchain_documents(fragments)
+        fragments_list.append(fragments)
+    
+    fragments = ensemble_retriever.weighted_reciprocal_rank(fragments_list)
+
+    return convert_langchain_documents_to_abstract_fragments(fragments)
 
 
 def retrieve_abstracts_from_pmids(pmids: list[str]) -> list[AbstractOpenSearch]:
