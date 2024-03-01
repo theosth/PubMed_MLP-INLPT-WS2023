@@ -17,13 +17,12 @@ from development.retrieve.opensearch_connector import (
     execute_query,
     extract_hits_from_response,
     extract_source_from_hits,
-    extract_top_k_unique_abstract_fragments,
 )
 
 import development.commons.env as env
 from development.commons.utils import get_opensearch_client
 from development.retrieve.self_query import get_filters
-import development.retrieve.confidence_score as confidence
+import development.retrieve.confidence_score as confidence_score
 
 
 CLIENT = get_opensearch_client()
@@ -36,73 +35,93 @@ ABSTRACT_FRAGMENT_INDEX = env.OPENSEARCH_ABSTRACT_FRAGMENT_INDEX
 MAX_FRAGMENTS_PER_ABSTRACT = 8
 
 
-class DocumentOpenSearch(BaseModel):
-    pmid: str
-    title: Optional[str] = None
-    publication_date: Optional[str] = None
+class AbstractOpenSearch(BaseModel):
+    ingested_at: str
+    publication_date: str
     abstract: str
-    author_list: Optional[list[str]] = None
+    pmid: str
+    title: str
+    author_list: list[str]
     doi: str
-    keyword_list: Optional[list[str]] = None
+    keyword_list: list[str]
+
+    # not a part of the original response:
     confidence: Optional[Union[str, int]] = None
 
 
-def retrieve_abstracts(question: str, amount: int = 3) -> list[DocumentOpenSearch]:
+class AbstractFragmentOpenSearch(BaseModel):
+    abstract_fragment: str
+    pmid: str
+    title: str
+    author_list: list[str]
+    keyword_list: list[str]
+    number_of_fragments: int
+    fragment_id: int
+    ingested_at: str
+    publication_date: str
+    id: str
+    abstract_fragment_embedding: list[float]
+    doi: str
+
+    # not a part of the original response:
+    confidence: Optional[Union[str, int]] = None
+
+
+def retrieve_abstract_fragments(
+    question: str, amount: int = 3, self_query_retrieval: bool = False
+) -> list[AbstractFragmentOpenSearch]:
     """
-    Retrieve a list of abstract documents relevant to the given question.
-    :param question: The question to retrieve abstracts for.
-    :param amount: The number of abstracts to retrieve.
-    :return: A list of Documents.
+    Retrieve a list of abstract fragments relevant to the given question.
+    :param question: The question to retrieve abstract fragments for.
+    :param amount: The number of abstract fragments to retrieve.
+    :param self_query_retrieval: Whether to retrieve fragments using self-querying.
+    :return: A list of AbstractFragmentOpenSearch.
     """
-    # Extract self-querying filters
-    filters = get_filters(question, remove_dot_metadata_from_keys=True)
-    size = amount * MAX_FRAGMENTS_PER_ABSTRACT
 
     # Create and execute hybrid abstract fragment query
     query = create_hybrid_query(
-        query_text=question,
-        match_on_fields=MATCH_ON_FIELDS,
-        knn_k=size
+        query_text=question, match_on_fields=MATCH_ON_FIELDS, knn_k=amount
     )
 
+    # Extract query filters for self-query retrieval
+    filters = None
+    if self_query_retrieval:
+        filters = get_filters(question, remove_dot_metadata_from_keys=True)
+
+    # Send the query to OpenSearch via API
     fragment_response = execute_hybrid_query(
         query=query,
         pipeline_weight=NEURAL_WEIGHT,
         index=ABSTRACT_FRAGMENT_INDEX,
-        size=size,
-        source_includes=["pmid", "abstract_fragment"],
+        size=amount,
         filter=filters,
     )
+    abstract_fragment_data = extract_source_from_hits(
+        extract_hits_from_response(fragment_response)
+    )
+    return [AbstractFragmentOpenSearch(**data) for data in abstract_fragment_data]
 
-    # Extract first fragments of unique abstracts
-    fragment_texts, fragment_pmids = extract_top_k_unique_abstract_fragments(fragment_response, amount)
 
-    # Construct exact abstract query
+def retrieve_abstracts_from_pmids(pmids: list[str]) -> list[AbstractOpenSearch]:
+    """
+    Retrieve a list of abstracts for a given list of pmids from OpenSearch
+    :param pmids: A list of pmids.
+    :return: A list of Abstracts.
+    """
+
+    # Construct term queries to retrieve each abstract
     term_queries = [
-        create_term_query(
-            match_key="pmid",
-            match_value=pmid)
-        for pmid in fragment_pmids
+        create_term_query(match_key="pmid", match_value=pmid) for pmid in pmids
     ]
 
     # Retrieve each abstract individually
-    documents: list[DocumentOpenSearch] = []
-    for index, term_query in enumerate(term_queries):
+    documents: list[AbstractOpenSearch] = []
+    for term_query in term_queries:
         # Execute exact query
         response = execute_query(
             query=term_query,
             index=ABSTRACT_INDEX,
-            source_includes=[
-                "pmid",
-                "title",
-                "publication_date",
-                "abstract",
-                "author_list",
-                "doi",
-                "keyword_list",
-            ],
             size=1,
-            filter=filters,
         )
 
         # Extract payload
@@ -114,48 +133,79 @@ def retrieve_abstracts(question: str, amount: int = 3) -> list[DocumentOpenSearc
             TypeError(f"Could not retrieve document for pmid: {fragment_pmids[index]}")
 
         # Parse to document structure
-        documents.append(DocumentOpenSearch(**data))
-
-    # Compute Confidence
-    confidence_ratings = confidence.compute_confidence_ratings(query=question, texts=fragment_texts)
-    for index, document in enumerate(documents):
-        document.confidence = confidence_ratings[index]
-
+        documents.append(AbstractOpenSearch(**data))
     return documents
 
 
-def convert_to_document(documents: list[DocumentOpenSearch]) -> list[Document]:
+def convert_abstracts_to_langchain_documents(
+    documents: list[AbstractOpenSearch],
+) -> list[Document]:
     """
-    Convert a list of DocumentOpenSearch objects to a list of Document objects.
-    :param documents: A list of DocumentOpenSearch objects.
-    :return: A list of Document objects.
+    Convert a list of AbstractOpenSearch objects to a list of langchain Document objects.
+    :param documents: A list of AbstractOpenSearch objects.
+    :return: A list of langchain compatible Document objects.
     """
     doc_list = []
     for doc in documents:
-        metadata = doc.dict()
-        abstract = metadata.pop('abstract')
+        metadata = doc.model_dump()
+        abstract = metadata.pop("abstract")
         doc_list.append(Document(page_content=abstract, metadata=metadata))
     return doc_list
 
 
-def convert_to_document_opensearch(documents: list[Document]) -> list[DocumentOpenSearch]:
+def convert_abstract_fragments_to_langchain_documents(
+    documents: list[AbstractFragmentOpenSearch],
+) -> list[Document]:
     """
-    Convert a list of Document objects to a list of DocumentOpenSearch objects.
+    Convert a list of AbstractFragmentOpenSearch objects to a list of langchain Document objects.
+    :param documents: A list of AbstractFragmentOpenSearch objects.
+    :return: A list of langchain compatible Document objects.
+    """
+    doc_list = []
+    for doc in documents:
+        metadata = doc.model_dump()
+        abstract_fragment = metadata.pop("abstract_fragment")
+        doc_list.append(Document(page_content=abstract_fragment, metadata=metadata))
+    return doc_list
+
+
+def convert_langchain_documents_to_abstracts(
+    documents: list[Document],
+) -> list[AbstractOpenSearch]:
+    """
+    Convert a list of Document objects to a list of AbstractOpenSearch objects.
     :param documents: A list of Document objects.
-    :return: A list of DocumentOpenSearch objects.
+    :return: A list of AbstractOpenSearch objects.
     """
     doc_list = []
     for doc in documents:
         metadata = doc.metadata
         abstract = doc.page_content
         metadata["abstract"] = abstract
-        doc_list.append(DocumentOpenSearch(**metadata))
+        doc_list.append(AbstractOpenSearch(**metadata))
     return doc_list
 
 
-class CustomOpensearchRetriever(BaseRetriever):
+def convert_langchain_documents_to_abstract_fragments(
+    documents: list[Document],
+) -> list[AbstractFragmentOpenSearch]:
     """
-    A custom langchain retriever that retrieves relevant documents from an OpenSearch index.
+    Convert a list of Document objects to a list of AbstractFragmentOpenSearch objects.
+    :param documents: A list of Document objects.
+    :return: A list of AbstractFragmentOpenSearch objects.
+    """
+    doc_list = []
+    for doc in documents:
+        metadata = doc.metadata
+        abstract_fragment = doc.page_content
+        metadata["abstract_fragment"] = abstract_fragment
+        doc_list.append(AbstractFragmentOpenSearch(**metadata))
+    return doc_list
+
+
+class CustomOpensearchAbstractFragmentRetriever(BaseRetriever):
+    """
+    A custom langchain retriever that retrieves relevant abstract fragments from an OpenSearch index.
     """
 
     def _get_relevant_documents(
@@ -164,8 +214,86 @@ class CustomOpensearchRetriever(BaseRetriever):
         *,
         run_manager: CallbackManagerForRetrieverRun,
         amount: int = 3,
+        caclulate_confidence: bool = True,
+        self_query_retrieval: bool = False,
     ) -> List[Document]:
-        return convert_to_document(retrieve_abstracts(query, amount))
+
+        abstract_fragments = retrieve_abstract_fragments(
+            query, amount, self_query_retrieval
+        )
+
+        # Compute confidence ratings for each fragment
+        if caclulate_confidence:
+            confidence_ratings = confidence_score.compute_confidence_ratings(
+                query=query,
+                texts=[fragment.abstract_fragment for fragment in abstract_fragments],
+            )
+            # Assign confidence ratings to fragments
+            for index, fragment in enumerate(abstract_fragments):
+                fragment.confidence = confidence_ratings[index]
+
+        return convert_abstract_fragments_to_langchain_documents(abstract_fragments)
+
+
+def extract_top_k_unique_abstract_fragments(
+    abstract_fragments: list[AbstractFragmentOpenSearch], k: int = None
+):
+    unique_pmids = set()
+    top_k_fragments: list[AbstractFragmentOpenSearch] = []
+
+    for fragment in abstract_fragments:
+        if fragment.pmid not in unique_pmids:
+            # Determine Uniqueness
+            unique_pmids.add(fragment.pmid)
+            top_k_fragments.append(fragment)
+            # Stop searching if k unique are found
+            if k and len(unique_pmids) == k:
+                break
+    return top_k_fragments
+
+class CustomOpensearchAbstractRetriever(BaseRetriever):
+    """
+    A custom langchain retriever that retrieves relevant abstracts from an OpenSearch index.
+    """
+
+    def _get_relevant_documents(
+        self,
+        query: str,
+        *,
+        run_manager: CallbackManagerForRetrieverRun,
+        amount: int = 3,
+        calculate_confidence: bool = True,
+        self_query_retrieval: bool = False,
+    ) -> List[Document]:
+
+        # Retrieve abstract fragments
+        abstract_fragments = retrieve_abstract_fragments(
+            query, amount * MAX_FRAGMENTS_PER_ABSTRACT, self_query_retrieval
+        )
+
+        # Filter out duplicate abstracts
+        top_k_unique_abstract_fragments = extract_top_k_unique_abstract_fragments(
+            abstract_fragments=abstract_fragments, k=amount
+        )
+        unique_pmids = [fragment.pmid for fragment in top_k_unique_abstract_fragments]
+
+        # Retrieve 'amount' abstracts from obtained pmids
+        abstracts = retrieve_abstracts_from_pmids(unique_pmids)
+
+        if calculate_confidence:
+            confidence_ratings = confidence_score.compute_confidence_ratings(
+                query=query,
+                texts=[
+                    fragment.abstract_fragment
+                    for fragment in top_k_unique_abstract_fragments
+                ],
+            )
+
+            # Assign confidence ratings to abstracts
+            for abstract, confidence in zip(abstracts, confidence_ratings):
+                abstract.confidence = confidence
+
+        return convert_abstracts_to_langchain_documents(abstracts)
 
 
 #############################
@@ -174,14 +302,21 @@ class CustomOpensearchRetriever(BaseRetriever):
 if __name__ == "__main__":
     question = "What is the impact of COVID-19 on mental health?"
     amount = 3
-    documents_basic = retrieve_abstracts(question, amount)
-    print(f"Retrieved {len(documents_basic)} documents for the question: {question}")
-    for doc in documents_basic:
-        print(doc, "\n\n")
-    
-    # Test custom retriever
-    print("Testing custom retriever:\n")
-    documents_custom_retr = CustomOpensearchRetriever().get_relevant_documents(question, amount=amount)
-    print(f"Retrieved {len(documents_custom_retr)} documents for the question: {question}")
-    for doc in documents_custom_retr:
-        print(doc, "\n\n")
+
+    # Test abstract fragment retriever
+    abstract_fragment_retriever = CustomOpensearchAbstractFragmentRetriever()
+    abstract_fragments = abstract_fragment_retriever.get_relevant_documents(
+        question, amount=amount, caclulate_confidence=True, self_query_retrieval=False
+    )
+
+    # Test abstract retriever
+    abstract_retriever = CustomOpensearchAbstractRetriever()
+    abstracts = abstract_retriever.get_relevant_documents(
+        question, amount=amount, calculate_confidence=True, self_query_retrieval=False
+    )
+
+    print("Abstract Fragments:\n")
+    print(abstract_fragments)
+    print("\n\n")
+    print("Abstracts:\n")
+    print(abstracts)
