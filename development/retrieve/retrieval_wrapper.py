@@ -83,6 +83,7 @@ def retrieve_abstract_fragments(
     :param question: The question to retrieve abstract fragments for.
     :param amount: The number of abstract fragments to retrieve.
     :param self_query_retrieval: Whether to retrieve fragments using self-querying.
+    :param strategy: Select by which strategy the hybrid search should work
     :return: A list of AbstractFragmentOpenSearch.
     """
 
@@ -105,7 +106,15 @@ def retrieve_abstract_fragments(
 
 def _retrieve_abstract_fragments_opensearch_hybrid_query(
     question, filters, amount, weight
-):
+) -> list[AbstractFragmentOpenSearch]:
+    """
+    Retrieve a list of abstract fragments relevant to the given question utilizing the opensearch hybrid query.
+    :param question: The question to retrieve abstract fragments for.
+    :param filters: Restrict the query to documents that fulfill the filter criteria
+    :param amount: The number of abstract fragments to retrieve.
+    :param weight: The weight of the semantic part of the hybrid query. Must be between 0 and 1.
+    :return: A list of AbstractFragmentOpenSearch.
+    """
     query = create_hybrid_query(
         query_text=question, match_on_fields=MATCH_ON_FIELDS, knn_k=amount
     )
@@ -126,7 +135,16 @@ def _retrieve_abstract_fragments_opensearch_hybrid_query(
 
 def _retrieve_abstract_fragments_reciprocal_rank_fusion(
     question, filters, amount, weight
-):
+) -> list[AbstractFragmentOpenSearch]:
+    """
+    Retrieve a list of abstract fragments relevant to the given question utilizing a custom
+    hybrid query implementation that combines the ranks with reciprocal rank fusion.
+    :param question: The question to retrieve abstract fragments for.
+    :param filters: Restrict the query to documents that fulfill the filter criteria
+    :param amount: The number of abstract fragments to retrieve.
+    :param weight: The weight of the semantic part of the hybrid query. Must be between 0 and 1.
+    :return: A list of AbstractFragmentOpenSearch.
+    """
     knn_query = create_knn_query(query_text=question, k=amount)
     multi_match_query = create_multi_match_BM25_query(
         query_text=question, match_on_fields=MATCH_ON_FIELDS
