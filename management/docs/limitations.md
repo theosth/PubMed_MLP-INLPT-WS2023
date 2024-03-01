@@ -1,4 +1,0 @@
-- Can not search by journal: it is not listed on which pages the article appeared
-- Dropped affiliation of author, so it can not be searched by that
-- Authors only consist of names and are either natural persons or groups(entities)
-- Reference chains are not included (where was this cited/what did it cite)
