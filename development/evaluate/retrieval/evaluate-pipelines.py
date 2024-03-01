@@ -1,12 +1,12 @@
 import sys
 from pathlib import Path
+sys.path.append(str(Path(__file__).parent.parent.parent.parent))
 
 from development.retrieve.retrieval_wrapper import (
     _retrieve_abstract_fragments_reciprocal_rank_fusion,
 )
 
-sys.path.append(str(Path(__file__).parent.parent.parent.parent))
-
+import development.commons.env as env
 from development.retrieve.opensearch_connector import (
     execute_hybrid_query,
     create_hybrid_query,
@@ -18,8 +18,6 @@ from typing import Callable, Literal
 import pandas as pd
 from tqdm import tqdm
 import time
-
-# from 0.0 to 1.0 with 0.05 steps
 
 
 class Query(BaseModel):
@@ -141,7 +139,7 @@ def evaluate_pipeline(
     :param eval_metric_settings: A list of dictionaries containing settings for each evaluation metric.
         Each dictionary in this list corresponds to the respective metric in `eval_metrics`.
         If None, an empty dictionary is used for each metric.
-
+    :param strategy: The strategy to use for retrieval. Options are "opensearch_hybrid" and "reciprocal_rank_fusion".
     :return: A list of dictionaries, each representing the scores of a single query across all metrics.
         The keys in each dictionary are the names of the evaluation metrics, and the values are the scores.
 
@@ -170,7 +168,7 @@ def evaluate_pipeline(
             fragments = _retrieve_abstract_fragments_reciprocal_rank_fusion(
                 query.question, None, size, pipeline_weight
             )
-            retrieved_document_ids = [fragment["id"] for fragment in fragments]
+            retrieved_document_ids = [fragment.id for fragment in fragments]
         else:
             raise ValueError(f"Invalid strategy: {strategy}")
 
@@ -194,17 +192,18 @@ def main():
 
     # Setup for evaluation
     pipeline_weights = [i / 20 for i in range(21)]  # from 0.0 to 1.0 with 0.05 steps
-    index = "abstract_fragments"
+    index = env.OPENSEARCH_ABSTRACT_FRAGMENT_INDEX
     source_includes = ["_id", "fragment_id"]
     size = 10  # Number of search results to retrieve for each query from OpenSearch
     eval_metrics = [binary_at_k, rank_score]  # specify the metrics to use
     k = 3  # specify the value of k for the binary_at_k metric
     eval_metric_settings = [{"k": k}, {}]
 
-    file_path = "development/evaluate/retrieval/retrieval-testset.json"
-    output_path_a = f"development/evaluate/retrieval/results/retrieval_result_scores_s{size}_k{k}_opensearch_hybrid.csv"
-    output_path_b = f"development/evaluate/retrieval/results/retrieval_result_scores_s{size}_k{k}_rrf.csv"
-
+    file_path = env.RETRIEVAL_TESTSET_PATH
+    
+    output_path_a = f"{env.RETRIEVAL_RESULT_FOLDER_PATH}retrieval_result_scores_s{size}_k{k}_opensearch_hybrid.csv"
+    output_path_b = f"{env.RETRIEVAL_RESULT_FOLDER_PATH}retrieval_result_scores_s{size}_k{k}_rrf.csv"
+    
     first_write = True  # Flag to indicate if header should be written
 
     # Calculate total number of queries to do for tqdm (assuming each batch is num_lines)

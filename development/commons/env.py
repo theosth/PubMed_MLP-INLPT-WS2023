@@ -28,5 +28,7 @@ CLEANED_DATASET_PATH = "../scrape/data/cleaned_retrieved_dataset.json"
 # Testing
 RAGAS_TESTSET_PATH = "development/evaluate/retrieval/testsets/ragas-testset.json"
 RAGAS_UDATED_TESTSET_PATH = "development/evaluate/retrieval/testsets/ragas-updated-testset.json"
-RETRIEVAL_TESTSET_PATH = "development/evaluate/answering/question-context-pairs.json"
 RETRIEVAL_RAGAS_EVAL_RESULT_PATH = "development/evaluate/retrieval/results/retriever_ragas_eval_result.json"
+
+RETRIEVAL_TESTSET_PATH = "development/evaluate/retrieval/testsets/retrieval-testset.json"
+RETRIEVAL_RESULT_FOLDER_PATH = "development/evaluate/retrieval/results/"
