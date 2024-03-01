@@ -21,6 +21,11 @@ def compute_confidence_ratings(query: str, texts: list[str]) -> list[int]:
     :param texts: A list of texts objects.
     :return: A list of confidence categories corresponding to each text.
     """
+    
+    # fast return if no texts are given
+    if len(texts) == 0:
+        return []
+    
     # Compute Embeddings
     abstract_embeddings = oc.MODEL.encode(texts)
     query_embedding = oc.MODEL.encode(query)
