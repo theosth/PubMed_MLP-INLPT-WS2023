@@ -12,11 +12,13 @@ WEBSITE_TITLE = "G2 Q&A System"
 
 SELF_QUERYING_PARAMETERS_TITLE = "Self-Querying Parameters"
 SELF_QUERYING_EXPANDER_TITLE = "Automatically Filtered Parameters"
+SELF_QUERYING_TOGGLE_KEY = "self_querying_toggle"
 SELF_QUERYING_TOGGLE_NOTE = (":gray[Note: By enabling this option, the filtering parameters are automatically "
                              "extracted from the latest query. You cannot change them!]")
 
 LATEST_SOURCES_TITLE = "Sources"
 LATEST_SOURCES_KEY = "latest_sources"
+LATEST_FILTERS_KEY = "latest_filters"
 EMPTY_SOURCES_NOTE = (":gray[Since there is no recent question, there are no sources so far... Don't be shy, "
                       "ask our system!]")
 
@@ -25,7 +27,12 @@ GENAI = answer.GenAI()
 
 
 def query_retriever(question: str):
-    return RETRIEVER.get_relevant_documents(query=question, amount=3, self_query_retrieval=False)
+    self_query_retrieval = st.session_state.get(SELF_QUERYING_TOGGLE_KEY)
+    return RETRIEVER.get_relevant_documents(
+        query=question,
+        amount=3,
+        self_query_retrieval=self_query_retrieval
+    )
 
 
 def prompt_model(retrieved_docs, question: str):
@@ -49,13 +56,28 @@ def build_chat():
         )
 
         # Thinking...
-        retrieved_documents = query_retriever(prompt)
-        st.session_state[LATEST_SOURCES_KEY] = retrieve.convert_langchain_documents_to_abstracts(retrieved_documents)
-        
-        # Answering Question
-        st.session_state.messages.append(
-            {"role": "assistant", "content": prompt_model(retrieved_docs=retrieved_documents, question=prompt)}
-        )
+        retrieved_langchain_documents = query_retriever(prompt)
+        abstracts = retrieve.convert_langchain_documents_to_abstracts(retrieved_langchain_documents)
+        st.session_state[LATEST_SOURCES_KEY] = abstracts
+
+        # Answering
+        latest_filters = None
+        if len(abstracts) > 0:
+            latest_filters = abstracts[0].filters
+            answer = prompt_model(
+                retrieved_docs=retrieved_langchain_documents,
+                question=prompt
+            )
+
+            st.session_state.messages.append({"role": "assistant", "content": answer})
+        else:
+            st.session_state.messages.append(
+                {"role": "assistant",
+                 "content": "I can't answer your question because I couldn't retrieve any documents."}
+            )
+
+        print(latest_filters)
+        st.session_state[LATEST_FILTERS_KEY] = latest_filters
 
     # Reprint Conversation
     for msg in st.session_state.messages:
@@ -68,6 +90,7 @@ def build_upper_sidebar():
 
     # Self-Querying Toggle
     toggled = st.sidebar.toggle(SELF_QUERYING_TOGGLE_NOTE)
+    st.session_state[SELF_QUERYING_TOGGLE_KEY] = toggled
     if toggled:
         with st.sidebar.expander(SELF_QUERYING_EXPANDER_TITLE):
             write_self_querying_expander()

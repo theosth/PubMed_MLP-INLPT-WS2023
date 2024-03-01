@@ -1,10 +1,10 @@
 import sys
 from pathlib import Path
+import random
 
 sys.path.append(str(Path(__file__).parent.parent.parent.parent))
 
 from development.commons import env
-from development.retrieve.retrieval_wrapper import DocumentOpenSearch
 from development.retrieve.opensearch_connector import (
     execute_query,
     create_single_match_BM25_query,
@@ -71,7 +71,10 @@ def get_abstract_fragments(amount: int = 10) -> list[Document]:
         metadata_func=extract_metadata_abstract_fragments,
     ).load()
     if amount is None:
-        return data
+        return datagenerate_with_langchain_docs
+
+    # shuffle the data and return the first 'amount' of documents
+    random.shuffle(data)
     return data[:amount]
 
 
@@ -101,14 +104,63 @@ def generate_testset(
     return testset.to_pandas().to_json(file_path, orient="records", indent=2)
 
 
-class RagasDatasetEntry(BaseModel):
+class RagasRefinedDatasetEntry(BaseModel):
     question: str
     contexts: list[str]
     ground_truth: str
     evolution_type: str
     episode_done: bool
     pmids: Optional[list[str]] = None
+    fragment_ids: Optional[list[int]] = None
+    ids: Optional[list[str]] = None
 
+class OwnDatasetEntry(BaseModel):
+    question: str
+    pmid: str
+    fragment_id: int
+    id: str
+    question_type: str
+
+
+def convert_ragas_dataset_to_own_dataset(
+    ragas_dataset: list[RagasRefinedDatasetEntry],
+    save_to_file: bool = False,
+    file_path: str = env.RETRIEVAL_TESTET_FROM_RAGAS_TESTSET_PATH,
+) -> list[OwnDatasetEntry]:
+    own_dataset: list[OwnDatasetEntry] = []
+    for entry in ragas_dataset:
+        if len(entry.contexts) > 1:
+            raise ValueError("Only one context per question is expected")
+        if len(entry.pmids) > 1:
+            raise ValueError("Only one pmid per question is expected")
+        if len(entry.fragment_ids) > 1:
+            raise ValueError("Only one fragment_id per question is expected")
+        if len(entry.ids) > 1:
+            raise ValueError("Only one id per question is expected")
+        own_dataset.append(
+            OwnDatasetEntry(
+                question=entry.question,
+                pmid=entry.pmids[0],
+                fragment_id=entry.fragment_ids[0],
+                id=entry.ids[0],
+                question_type=entry.evolution_type,
+            )
+        )
+
+    if save_to_file:
+        with open(file_path, "w") as f:
+            own_dataset_json = json.dumps(
+                own_dataset, indent=2, default=pydantic_encoder
+            )
+            f.write(own_dataset_json)
+
+    return own_dataset
+
+def load_ragas_testset(file_path: str = env.RAGAS_UDATED_TESTSET_PATH) -> list[RagasRefinedDatasetEntry]:
+    json_data = None
+    with open(file_path, "r") as f:
+        json_data = json.load(f)
+    return [RagasRefinedDatasetEntry(**entry) for entry in json_data]
 
 def get_matching_abstracts_from_opensearch(
     testset_file_path: str = env.RAGAS_TESTSET_PATH,
@@ -119,7 +171,7 @@ def get_matching_abstracts_from_opensearch(
     with open(testset_file_path, "r") as f:
         testset = json.load(f)
 
-    print(testset[0])
+    # print(testset[0])
     # get the abstracts from opensearch
     for item in testset:
         pmids = []
@@ -156,11 +208,11 @@ def get_matching_abstracts_from_opensearch(
 
 if __name__ == "__main__":
     # abstracts = get_abstract_documents(amount=1000)
-    abstract_fragments = get_abstract_fragments(amount=10)
-
+    # abstract_fragments = get_abstract_fragments(amount=1000)
+    # print("Abstract fragments loaded successfully")
     # choose a testset generator:
     # ! local one (currently not functional)
-    generator = get_local_TestsetGenerator()
+    # generator = get_local_TestsetGenerator()
 
     # openai - generator:
     # ! execution costs money
@@ -171,8 +223,13 @@ if __name__ == "__main__":
     #     critic_llm="gpt-3.5-turbo-16k",
     # )
 
-    generate_testset(generator, abstract_fragments, amount=3)
-    print("Testset generated successfully")
-    print(abstract_fragments[0])
+    # generate_testset(generator, abstract_fragments, amount=10)
+    # print("Testset generated successfully")
+    # print(abstract_fragments[0])
 
-    get_matching_abstracts_from_opensearch(overwrite_updated_testset=True)
+    # get_matching_abstracts_from_opensearch(overwrite_updated_testset=True)
+
+    convert_ragas_dataset_to_own_dataset(
+        ragas_dataset=load_ragas_testset(),
+        save_to_file=True,
+    )

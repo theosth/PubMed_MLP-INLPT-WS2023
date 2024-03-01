@@ -1,0 +1,72 @@
+[
+  {
+    "question": "What is the relationship between publicly accessible benchmarks and progress in artificial intelligence in the medical practice field?",
+    "pmid": "36539106",
+    "fragment_id": 0,
+    "id": "36539106_0",
+    "question_type": "simple"
+  },
+  {
+    "question": "How does the platform using live cell imaging algorithm and artificial intelligence help in identifying cancer cells with brain metastatic potential?",
+    "pmid": "30810557",
+    "fragment_id": 0,
+    "id": "30810557_0",
+    "question_type": "simple"
+  },
+  {
+    "question": "How does the genetic algorithm and artificial neural network contribute to the real-time adaptation of the dynamic multi-layered facade system?",
+    "pmid": "35892355",
+    "fragment_id": 0,
+    "id": "35892355_0",
+    "question_type": "simple"
+  },
+  {
+    "question": "What potential advancements in understanding and treatment of Bloom syndrome have been found through the literature on rare diseases and the use of artificial intelligence?",
+    "pmid": "37796556",
+    "fragment_id": 1,
+    "id": "37796556_1",
+    "question_type": "simple"
+  },
+  {
+    "question": "What are some important aspects to consider when bringing autonomous AI algorithms into clinical practice, specifically in the context of diabetic retinopathy screening and diagnostic imaging?",
+    "pmid": "32126819",
+    "fragment_id": 0,
+    "id": "32126819_0",
+    "question_type": "simple"
+  },
+  {
+    "question": "What is the purpose of the comprehensive catalogue of datasets and benchmarks for clinical and biomedical NLP, and how does it enable AI in ophthalmology?",
+    "pmid": "36539106",
+    "fragment_id": 0,
+    "id": "36539106_0",
+    "question_type": "multi_context"
+  },
+  {
+    "question": "\"What methods measure the durability of ni-w-p coated pa fabric and how can the results be used in multi-scene applications?\"",
+    "pmid": "33043668",
+    "fragment_id": 1,
+    "id": "33043668_1",
+    "question_type": "multi_context"
+  },
+  {
+    "question": "How does the cost of cmi-guided treatment compare to prior or planned treatment options in terms of outcome results and treatment decision changes?",
+    "pmid": "31641338",
+    "fragment_id": 0,
+    "id": "31641338_0",
+    "question_type": "reasoning"
+  },
+  {
+    "question": "By using the electrostatic potential values extracted from 3-dimensional grid cubes of the drug-protein binding sites, what method was implemented in this study to predict the binding affinities of checkpoint kinase 1 and caspase 3 inhibitors in drug design?",
+    "pmid": "31596082",
+    "fragment_id": 0,
+    "id": "31596082_0",
+    "question_type": "reasoning"
+  },
+  {
+    "question": "What were the effects of milnacipran administration on attention and information processing in non-depressed individuals with brain injury?",
+    "pmid": "26083047",
+    "fragment_id": 1,
+    "id": "26083047_1",
+    "question_type": "simple"
+  }
+]

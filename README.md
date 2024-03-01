@@ -1,13 +1,27 @@
 # PubMed_MLP-INLPT-WS2023
 
-## Contributors
 
-| **Username**      | **Real Name**      |
-|---------------|----------------|
-|  theosth       | Theo Stempel-Hauburger       |
-|BenediktV | Benedikt Vidic |
-|llambdaa | Lukas Rapp |
-|4kills | Dominik Ochs |
+## Key Information
+
+**Title**: G2 PubMed RAG-System
+
+**Contributors:**
+
+| User | Name       | Matriculation Number | Email Addresses                             |
+|----------|------------------------|----------------------|---------------------------------------------|
+|4kills    | Dominik Ochs           | 4736026              | dominik.ochs@gmx.net                        |
+|llambdaa  | Lukas Rapp             | 4736025              | lu.rapp@web.de                              |
+|theosth   | Theo Stempel-Hauburger | 4740729              | theo.stempel-hauburger@stud.uni-heidelberg.de|
+|BenediktV | Benedikt Vidic         | 4738257              | benedikt.vidic@stud.uni-heidelberg.de       |
+
+We are all enrolled in the Master Data and Computer Science.
+
+
+**Advisor**: Ashish Chouhan
+
+**Anti-Plagiarism Confirmation**: see ...
+
+
 
 ## Setup project environment
 
@@ -99,6 +113,7 @@ this should not be necessary and the defaults in `commons/env.py` should work fo
 
 ## Run project
 
+```bash
 ```bash
 cd development/website
 streamlit run website.py

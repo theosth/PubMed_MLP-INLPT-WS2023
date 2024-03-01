@@ -1,20 +1,66 @@
 <!--  -->
+
+- [Introduction](#introduction)
+  - [MoSCoW](#moscow)
+    - [Must-Have Requirements](#must-have-requirements)
+    - [Should-Have Requirements](#should-have-requirements)
+    - [Could-Have / Nice-to-Have Features](#could-have--nice-to-have-features)
+    - [Won't-Have Features](#wont-have-features)
+- [System Architecture](#system-architecture)
+  - [Functional Overview](#functional-overview)
+  - [Technological Decisions](#technological-decisions)
+- [Data Preparation](#data-preparation)
+  - [Data Scraping](#data-scraping)
+  - [Data Extraction](#data-extraction)
+  - [Document Model](#document-model)
+    - [Document Splitting Bug](#document-splitting-bug)
+- [Retrieval](#retrieval)
+  - [OpenSearch](#opensearch)
+    - [Querying OpenSearch - Hybrid Search](#querying-opensearch---hybrid-search)
+    - [Evaluating Pipeline-Weights](#evaluating-pipeline-weights)
+      - [1. For this we first need to define different pipelines in Opensearch](#1-for-this-we-first-need-to-define-different-pipelines-in-opensearch)
+    - [Hybrid Search via MinMax Normalization vs Reciprocal Rank Fusion](#hybrid-search-via-minmax-normalization-vs-reciprocal-rank-fusion)
+  - [Testing the LangChain OpenSearch Self-Query Retriever](#testing-the-langchain-opensearch-self-query-retriever)
+    - [Other Subsections](#other-subsections)
+    - [Rethinking approximate k-NN search](#rethinking-approximate-k-nn-search)
+    - [Confidence](#confidence)
+  - [Retrieval Testset Generation](#retrieval-testset-generation)
+  - [Testing Retriever](#testing-retriever)
+    - [Idea](#idea)
+    - [Steps](#steps)
+- [Answer Generation](#answer-generation)
+  - [Choice of Generation Backend](#choice-of-generation-backend)
+  - [Choice of Generation Model](#choice-of-generation-model)
+    - [Llama 2](#llama-2)
+    - [Mistral](#mistral)
+    - [Gemma](#gemma)
+  - [Question-type dependent answer generation](#question-type-dependent-answer-generation)
+  - [Evaluation](#evaluation)
+- [User Interface](#user-interface)
+- [Related Work](#related-work)
+- [Conclusion / Resulting QA-System](#conclusion--resulting-qa-system)
+- [Thank you for reading!](#thank-you-for-reading)
+
+
+
+
 # Introduction
 
-This is the project report for our graded *Natural Language Processing with Transformer
-* module of Heidelberg University. In this section, we have designed and listed the business requirements for a PUbMed-supported question answering system. 
+This is the project report for our graded *Natural Language Processing with Transformer* module of Heidelberg University. In this section, we have designed and listed the business requirements for a PubMed-supported question answering system.
+
 ## MoSCoW
 
-When we started 
-ur project, we thought of requirments and categorized them :### Must-Have Requirements
+When we started our project, we thought of requirements and categorized them:
+
+### Must-Have Requirements
 
 1. Answering in natural language: The system must be capable of understanding and responding to queries in natural language, ensuring a user-friendly interaction.
-1. Support for various Question Types:
-   - Confirmation Questions: Yes/No type qeustions.
+2. Support for various Question Types:
+   - Confirmation Questions: Yes/No type questions.
    - Factoid Questions: To provide concise, factual answers to "Wh"-Questions.
-1. Abstractive Answer Generation: The ability to synthesize answers from multiple sources rather than extracting text. This allows for more nuanced and comprehensive responses.
-1. Context-based Answering: Answers must be derived based on the context provided by a retrieval system which works on the user query.
-1. Context Citation: The contexts used for answering the question should be provided to the user as sources.
+3. Abstractive Answer Generation: The ability to synthesize answers from multiple sources rather than extracting text. This allows for more nuanced and comprehensive responses.
+4. Context-based Answering: Answers must be derived based on the context provided by a retrieval system which works on the user query.
+5. Context Citation: The contexts used for answering the question should be provided to the user as sources.
 
 ### Should-Have Requirements
 
@@ -25,11 +71,10 @@ ur project, we thought of requirments and categorized them :### Must-Have Requir
 
 ### Could-Have / Nice-to-Have Features
 
-
 1. Confidence metric: Showing a confidence metric for retrieved contexts.
-1. Graphical User Interface (GUI): Development of a website as a more accessible and interactive platform for users.
-1. Additional Context info: Providing extra details such as links to the original papers or documents for further reading.
-1. More Question types:
+2. Graphical User Interface (GUI): Development of a website as a more accessible and interactive platform for users.
+3. Additional Context info: Providing extra details such as links to the original papers or documents for further reading.
+4. More Question types:
    - Casual Questions: For example explaining connections.
    - Hypothetical Questions: To explore speculative scenarios.
 
@@ -37,11 +82,11 @@ ur project, we thought of requirments and categorized them :### Must-Have Requir
 
 1. Dialogue model with chat history: The system will not support to remember the history of the chat.
 
-
 # System Architecture
-The *G2 System Architecture* has been designed from scratch to enable
+
+The *G2 PubMed RAG-System Architecture* has been designed from scratch to enable
 custom solutions and for better learning effects. However, regarding
-technologies, the architecture has been heavily inspired by the lecture
+technologies, the architecture has been guided by the lecture
 and tutorials. The following graphic shows the architecture and corresponding data flow:
 
 ![System Architecture](images/System%20Architecture.svg)
@@ -50,8 +95,8 @@ and tutorials. The following graphic shows the architecture and corresponding da
 Our RAG system relies on data fetched from the `PubMed` database. In a
 first step, we scrape all relevant information from `PubMed` and then
 store it locally. The data is then processed, so that unnecessary
-information can be disgarded. From there, we extract information to
-construct `Abstracts` and `Abstract Fragments`. Those are then ingested
+information can be discarded. From there, we extract information to
+construct `Abstracts` (the entire PubMed abstracts) and `Abstract Fragments` (the chunks we got by splitting the abstract). Those are then ingested
 into our dockerized `OpenSearch` instance, from where we can access the
 processed and sanitized data from now on. Technically, that step has to
 be done only once.
@@ -61,7 +106,7 @@ options - such as title and a publication date range - from the query.
 Both are then passed to a `Retriever` interface, which we can swap out
 (e.g. for retrieving abstract fragments or whole abstracts or for totally
 different retrieval architecture). The retriever interacts with the
-`OpenSearch API`, which we wrapped and called `OpenSearch Connector`,
+`OpenSearch API`, using wrapper-functionality that we encapsulated in our `OpenSearch Connector`,
 to retrieve the requested documents from a given index (e.g. index for
 abstracts or fragments).
 
@@ -74,12 +119,11 @@ documents) and their confidence (or rather relevancy) ratings and the
 answer generated by the LLM.
 
 ## Technological Decisions
-We decided for `OpenSearch` because it (1) was suggested, (2) because
-it is well-known and seemed like a proven platform and (3) because it
+We decided for `OpenSearch` because it
 supports a variety of search mechanisms, namely BM25 (syntactic
 search) and neural search (semantic search), which we want to rely on
 to realize a powerful hybrid search. Furthermore, there already exists
-a communication library in Python, which we uused to combine all
+a communication library in Python, which we used to combine all
 components and to introduce custom functionality (e.g. confidence 
 ratings).
 
@@ -90,20 +134,17 @@ same embedding model for embedding abstract fragments and run-time
 queries, because otherwise we cannot compare their respective vector
 representations to search for documents.
 
-For self-querying we decided to employ the `mistral` LLM. For
-answering we decided on the `Llama2` model, which is being made 
+For self-querying and answer generation we decided to employ the `mistral` LLM which is being made 
 accessible locally using `ollama`. 
 Furthermore, we used `streamlit` for a web-based interface that allows
 the user to productively interact with our retrieval system and be shown
 additional information, such as the sources.
 
-At this point, we would like to note that we did not use `langchain`
-as we started early with the project and hence we were using other
-technologies suggested before the introduction of langchain. We
-figured that switching the platform would lead to (more) problems.
+In the following we will further explain the individual components and the associated decisions we took.
 
 # Data Preparation
-Preparing the PubMed data is the first important step in our RAG architecture:
+
+The first part is getting the correct PubMed abstracts in a usable format into our OpenSearch database. This consist of four main steps.
 
 1. **Data Scraping**: We have to download all abstracts that are somehow
 connected to the topic *Intelligence*. The data is fetched as XML and
@@ -111,7 +152,7 @@ is then stored locally for further processing.
 
 2. **Data Extraction**: We have to extract the relevant information
 from data dump we scraped beforehand. That means that we discard
-information that we deem uninteresting (e.g. citation graph) for our
+information that we deem not interesting (e.g. citation graph) for our
 architecture. Note that we keep all information that seems relevant
 at first. We discard the obviously irrelevant data, which means that
 maybe some of the remaining data will not be used later.
@@ -126,9 +167,9 @@ two separate indices with differing structure. Note that this stage
 includes tokenization, removing special characters, converting text to
 lowercase and stemming/lemmatizing words.
 
-4. **Ingestion**: The prepared abstract and fragment datasets are
+4. **Ingestion**: The preprocessed abstract and fragment datasets then get
 inserted into indices in OpenSearch to be searchable. We won't go
-into detail in a later section as there is nothing worth knowing.
+into detail in a later section as this did not involve any interesting decisions.
 Ingestion is mostly configuration of the stored data format.
 
 To be a bit more precise, we want to elaborate on what information
@@ -175,7 +216,7 @@ parsed the information from the raw XML data. Furthermore, the
 data model exhibited by the data PubMed returns is partially
 inconsistent, intransparent or hard to grasp. For example, we had
 our fair share of trouble with extracting the publication date,
-which is of utmost importance for filtered retrieval. There exists
+which is of utmost importance for filtered retrieval. There exist
 a handful of cryptic fields containing dates in a document
 response. We picked one and later found out that not each document
 has that field with that data, which lead to problems with self-querying.
@@ -192,7 +233,7 @@ However, the content greatly varies:
 ```
 
 Sometimes, only the year is contained, sometimes a season and sometimes 
-a fully-fledged date. However, that is hardtparse correctly, 
+a fully-fledged date. However, that is hard to parse correctly, 
 especially when there could be more special cases. Answering the 
 question about what "the" publication date is, is hard because it could 
 mean the date of the latest revision, the date of publishing it to a
@@ -200,10 +241,10 @@ journal or the date of publishing it to PubMed. Hence, we decided to
 access the latest element in the `document["PubmedData"]["History"]`
 field, which always yields a reasonable date in the `YYYY-MM-DD` format.
 
-From the $n = 62960$ obtained documents, a total of $k = 4388$ documents
+From the $62960$ obtained documents, a total of $4388$ documents
 has been discarded because they had no abstract - which is mandatory for
-searching. That leaves us with $t = 58572$ valid documents. Furthermore,
-a total of $a = 50$ documents were author-less.
+searching. That leaves us with $58572$ valid documents. Furthermore,
+a total of $50$ documents were author-less.
 
 ## Document Model
 
@@ -218,22 +259,21 @@ Example:
 - Split without overlap: ["The Declaration of Independence was signed by George", "Washington earlier that year."]
 - Split with overlap: ["The Declaration of Independence was signed by George Washington earlier", "signed by George Washington earlier that year."]
 - Question: By whom was the Declaration of Independence signed?
-In this example, the split without overlap could not answer the question fully because of missing context / the answer being split across fragments. With overlap we aim to minimize the probability of this happening. The number 32 was more or less arbitrarily chosen. However, the research points out that the overlap is highly application dependent
-and should include enough overlap to augment the fragment in a meaningful way instead of just a few words. Furthermore it should not be too large, as this leads to indistinct fragments,
+
+In this example, the split without overlap could not answer the question fully because of missing context / the answer being split across fragments. With overlap we aim to minimize the probability of this happening. The number 32 was more or less arbitrarily chosen. It is large enough to ensure that there are no meaningless sentence fragments but still not too large, as this leads to indistinct fragments,
 thus blurring the line between fragments during semantic text search.
 
-Moreover, we noticed that in a first run, where we left the `tokens_per_chunk` parameter untouched, we received 76146 fragments from 55924 documents.
+Moreover, we noticed that in a first run, where we left the `tokens_per_chunk` parameter untouched, we received 76146 fragments from 55924 documents (this was an older scrape, therefore the number of documents is a little bit smaller than the current version).
 This means that, on average, each abstract yielded 1.36x fragments. By inspecting the resulting fragments, we found that oftentimes most of the abstract
 test was contained in the first fragment, where the second fragment only included the tail of the document.
 In these cases, the second fragment doesn't include a lot of meaning, so that the chunking process effectively equates a truncation process.
 To remedy this, we set a `tokens_per_chunk` number lower than the limit of 350 tokens.  
-As an addition, this facilitates the later question answering process because here the QA model has to receive the context **and** a question.
-If the context is already 350 tokens long, there is no space for the question.  
-To comfortably accommodate the question, as well as to make the second fragment more meaningful, we settle for a `tokens_per_chunk` of **256** tokens.  
+
+To not run into any input token limit issues with our answering system, as well as to make the second fragment more meaningful, we settle for a `tokens_per_chunk` of **256** tokens.  
 With this token limit, the number of fragments rose to 101571 fragments and the factor to 1,82.
 
 Furthermore, we thought about splitting the abstract at paragraphs first, before then running it through the token splitter. However, this yields fragments where for example the
-result paragraph of the abstract is in its own fragment, but reading these paragraphs on their own is really confusing and doesn't give much insight, since you just read some random results, without knowing what they are results of. However, often the answer to a specific question can be found in the result paragraph. But without knowing the context of the results, they are worthless. By not splitting at paragraph boundries, the result paragraph is combined with the previous paragraph, thus giving the results some context.
+result paragraph of the abstract is in its own fragment, but reading these paragraphs on their own is really confusing and doesn't give much insight, since you just read some random results, without knowing what they are results of. However, often the answer to a specific question can be found in the result paragraph. But without knowing the context of the results, they are worthless. By not splitting at paragraph boundaries, the result paragraph is combined with the previous paragraph, thus giving the results some context.
 
 Lastly, we decided against including any of the metadata in the fragment text to be embedded for semantic search. Instead, we tackle this by evaluating a hybrid search.
 We hope to enrich our search with this hybrid search in a meaningful, more interpretable, easier and more structured way, as opposed to including the information in the text data.
@@ -243,7 +283,7 @@ We hope to enrich our search with this hybrid search in a meaningful, more inter
 While developing and experimenting with our retriever we sometimes encountered unusually short document fragments, even shorter than our overlap window for the document splitting. This kind of fragment should not exist. This is an issue because these fragments do not provide useful information for generating answers but potentially achieve exceptionally high scores by our retrieving system because they are so short.
 After looking further into it we discovered that this weren't just a few exceptions. We found 8109 fragments that only included text that is already fully present in their preceding fragment (The code to find and count these documents can be found in `development/ingest/analyse_fragment_split.py`).
 
-We could track it down to a bug in the langchain text splitter that was not accounting for the overlap when checking whether to add a new fragment. At the point we discovered this, the bug was already fixed in December in a new langchain version ([Github commit that fixed this](https://github.com/langchain-ai/langchain/commit/ea331f31364266f7a6414dc76265553a52279b0a)). Therefore the solution for us to clean up the fragments simply consisted of updating the langchain version and redoing the document splitting and opensearch ingestion.
+We could track it down to a bug in the langchain text splitter that was not accounting for the overlap when checking whether to add a new fragment. In December 2023 this issue got addressed and the fix released in the new langchain version ([Github commit that fixed this](https://github.com/langchain-ai/langchain/commit/ea331f31364266f7a6414dc76265553a52279b0a)). Therefore the solution for us to clean up the fragments simply consisted of updating the langchain version and redoing the document splitting and OpenSearch ingestion.
 
 <!--  -->
 # Retrieval
@@ -253,25 +293,43 @@ We could track it down to a bug in the langchain text splitter that was not acco
 
 ### Querying OpenSearch - Hybrid Search
 
-To query OpenSearch, we use the opensearch-py Python library, which allows us to make API calls to OpenSearch directly from Python. Because the library itself is fairly low-level we decided to abstract away the details of it. To archive this, we created an [``opensearch_connector.py``](../../development/retrieve/opensearch_connector.py) that serves as a wrapper around the `opensearch-py` library, implementing all the to us relevant functionality.
+To query OpenSearch, we use the opensearch-py Python library, which allows us to make API calls to OpenSearch directly from Python. Because the library itself is fairly low-level we decided to abstract away the details of it. To archive this, we created an [``opensearch_connector.py``](../../development/retrieve/opensearch_connector.py) that serves as a wrapper around the `opensearch-py` library, implementing all the functionality that is relevant for us.
 
 To find relevant documents, we explored two main methods - `BM25` and `Semantic Search`.
 
-BM25 can be utilized to identify documents containing specific keywords such as "Covid-19" or "Influenza". These keywords, when present in the search query, increase the likelihood of the document being about that particular illness rather than a semantically similar illness or topic. We believe this precision is particularly crucial in the medical field. Additonally we can use BM25 to match on multiple other metadata fields of the documents, such as the title, authors or keywords and not only on the text of the abstract-fragments.  
-This type of query translates to an [``Multi-match query``](https://opensearch.org/docs/latest/query-dsl/full-text/multi-match/) in Opensearch, with the corresponding match-field as implemented in the [``create_multi_match_BM25_query``](../../development/retrieve/opensearch_connector.py#L137) function.
+BM25 can be utilized to identify documents containing specific keywords such as "Covid-19" or "Influenza". These keywords, when present in the search query, increase the likelihood of the document being about that particular illness rather than a semantically similar illness or topic. We believe this precision is particularly crucial in the medical field. Additionally we can use BM25 to match on multiple other metadata fields of the documents, such as the title, authors or keywords and not only on the text of the abstract-fragments.  
+This type of query translates to an [``Multi-match query``](https://opensearch.org/docs/latest/query-dsl/full-text/multi-match/) in OpenSearch, with the corresponding match-field as implemented in the [``create_multi_match_BM25_query``](../../development/retrieve/opensearch_connector.py#L137) function.
 
 In order to find a document that matches a given query, while also taking into account the semantic meaning of the query, we decided to incorporate a semantic search. The idea is that this will take synonyms into account and also be able to 'read between the lines' and better understand the intent of the query.
 We achieve this by querying the [abstract_fragment_embeddings field](#document-model) of the abstract-fragment documents with the embedded search-query. The embedding of the query is generated by the same model that was used to embed the abstract-fragments. This way we can compare the semantic similarity of the query and the documents.
-The corresponding opensearch query-type for this is the [``k-NN query``](https://opensearch.org/docs/latest/search-plugins/knn/index/) which we implemented in the [``create_knn_query``](../../development/retrieve/opensearch_connector.py#L144) function.
+The corresponding OpenSearch query-type for this is the [``k-NN query``](https://opensearch.org/docs/latest/search-plugins/knn/index/) which we implemented in the [``create_knn_query``](../../development/retrieve/opensearch_connector.py#L144) function.
 
-Since both approaches have their own strengths and weaknesses, we combined them to form a hybrid search. This way, we can benefit from the precision of BM25 and the semantic understanding in the semantic search. Luckily for us, combining different queries in Opensearch is relatively straightforward. It involves, first combining both sub-queries into a single query like in the  [``create_hybrid_query``](../../development/retrieve/opensearch_connector.py#L155) function. Secondly creating a [``search pipeline``](https://opensearch.org/docs/latest/search-plugins/search-pipelines/index/) in Opensearch for hybrid search that combines the results of the different queries, like in the [``create_hybrid_search_pipeline``](../../development/evaluate/retrieval/ingest_search_pipelines.py#L12) function. Here we can specify how results of the different queries are weighed and combined into a single result. And lastly executing the query against an opensearch index with the specified pipeline, like in the [``execute_hybrid_query``](../../development/retrieve/opensearch_connector.py#L62) function. The `pipeline_weight` parameter here specifies how the semantic search is weighed. Correspondingly, the BM25 search is weighed with `1 - pipeline_weight`.  
+Since both approaches have their own strengths and weaknesses, we combined them to form a hybrid search. This way, we can benefit from the precision of BM25 and the semantic understanding in the semantic search. Luckily for us, combining different queries in OpenSearch is relatively straightforward. It involves, first combining both sub-queries into a single query like in the  [``create_hybrid_query``](../../development/retrieve/opensearch_connector.py#L155) function. Secondly creating a [``search pipeline``](https://opensearch.org/docs/latest/search-plugins/search-pipelines/index/) in OpenSearch for hybrid search that combines the results of the different queries, like in the [``create_hybrid_search_pipeline``](../../development/evaluate/retrieval/ingest_search_pipelines.py#L12) function. Here we can specify how results of the different queries are weighed and combined into a single result. And lastly executing the query against an opensearch index with the specified pipeline, like in the [``execute_hybrid_query``](../../development/retrieve/opensearch_connector.py#L62) function. The `pipeline_weight` parameter here specifies how the semantic search is weighed. Correspondingly, the BM25 search is weighed with `1 - pipeline_weight`.  
 This allows us to always use the same hybrid search-quey, even for isolated BM25 or semantic search, by just setting the `pipeline_weight` to 0 or 1 respectively.
 
 ### Evaluating Pipeline-Weights
 <!-- ! Write this -->
 
-### Custom Hybrid Search
+#### 1. For this we first need to define different pipelines in Opensearch
 
+- Here we opted for incremental steps of 0.05 from an weight of 0 to 1 for the neural search. Like this we are testing all above mentioned pipelines:
+  - -> neural search weight = 0.00 -> BM25
+  - -> neural search weight = 0.05 -> hybrid search (with 0.05 neural search and 0.95 BM25)
+  - ...
+  - -> neural search weight = 1.00 -> neural search
+
+  - Our naming convention for the pipelines was:  "hybrid_search_pipeline_weight{neural_search_weight}". E.g. "hybrid_search_pipeline_weight0.05" for a neural search weight of 0.05.
+
+
+
+### Hybrid Search via MinMax Normalization vs Reciprocal Rank Fusion
+
+We implemented the standard OpenSearch hybrid query with Min Max Normalization of BM25 and kNN dense vector search of document embeddings.
+Additionally, we also implemented ([``Reciprocal Rank Fusion``](https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf)) using ([``Langchain's Ensemble Retriever``](https://python.langchain.com/docs/modules/data_connection/retrievers/ensemble))
+
+However, we assume there is a bug within the implementation of OpenSearch's hybrid search since TODO EVALUATION
+
+TODO EVALUATION
 
 
 ## Testing the LangChain OpenSearch Self-Query Retriever
@@ -285,54 +343,49 @@ As GenAI model for query filter extraction we tested:
 
 This is why we eventually chose Mistral to do the self-querying. 
 
-
-### OpenSearch Hybrid-Search-Pipeline Bug
-
 ### Other Subsections
 
 ### Rethinking approximate k-NN search
 
-### Additional OpenSearch Features
-Ideas:
-  - Weighing different fields of multimatch query differently
-  - 
 
 ### Confidence
-- we want to give the user a hint about how good the returned abstracts related to the user query
-- shall indicate how certain the retrieving model is that the
-abstracts are actually useful
-- divided into three modes (High, Medium, Low)
-- gives the user a hint about how to trust the result
-- also gives link to publication so that the user can have
-a look for themselves
-- gives more feedback to the user which shall boost contentment
-- also helps the user to refine the query
 
-- the confidence measurement is not an exact or scientific
-metric
-- much more like some orientation for the end user
+For each retrieved document (abstract or abstract fragment) we compute
+a `Confidence Rating`, which gives the user a hint about how certain
+the retriever is that those documents are relevant for answering the
+query. That rating is based on the `Cosine Similarity` between the
+document and query embeddings. However, it is no scientific measurement.
 
-- the fundamental idea is the cosine similarity of the embeddings
-vectors of the retrieved abstracts and the query
-- the cosine similarity is also used by opensearch to search for
-documents / abstract fragments related to the query
-- hence, cosine similarity seems to be a good metric to determine
-similarity
-- we are calculating the similarity between abstracts and the query
+Nevertheless, it allows the user some insight into retrieval. The
+rating system differentiates between *High*, *Medium* and *Low*. 
+Furthermore, the user is given links to the corresponding publications,
+so that they can inspect the sources themselves - for example if the
+rating indicates that no similar or matching sources are available.
+The rating can also help the user to refine the query, so that documents
+are returned with higher confidence.
 
-- empirically we noticed that the similarity is between [0.8; 1.0],
-while 1.0 is achieved for perfect matches and 0.8 achieved for
-random matches
+OpenSearch searches for the best matches for a query by employing
+cosine similarity. Therefore, cosine similarity seems like a suitable
+metric to determine similarity. Hence, we use to determine the
+*similarity* or *confidence* of the retrieved abstracts to the query. 
 
-- yet, we want a normalized score between 0 and 100 percent
-- for that value range we want to define thresholds that determine the confidence level
+Empirically we determined the value range of the computed
+abstract-to-query similarity to be $I = [0.8; 1.0]$. For perfect
+matches a similarity of $1.0$ is achieved, while for unrelated
+documents and queries, a similarity of approximately $0.8$ is achieved.
+Yet, we want a normalizes score range of $J = [0.0; 100.0]$. For that
+range we define thresholds that differentiate the confidence levels.
 
 ```
 confidence = np.maximum(0.0, similarity - 0.8)
 confidence = confidence * CONFIDENCE_SCALING_FACTOR
 confidence = np.minimum(100.0, confidence * 5)
 ```
-- 
+
+In order to rescale the confidence range, we subtract the empirical
+minimum value. Then, we multiply the difference with a scaling factor.
+It rewards larger ratings (e.g. 0.16) more than lower ratings (e.g. 0.05).
+Then, the resulting value is scaled up to the range $J$.
 
 ## Retrieval Testset Generation
 
@@ -363,105 +416,6 @@ We wrote a script that takes a random document and prompts the open-ai API to ge
 
 ### Steps
 
-#### 1. For this we first need to define different pipelines in Opensearch
-
-- Here we opted for incremental steps of 0.05 from an weight of 0 to 1 for the neural search. Like this we are testing all above mentioned pipelines:
-  - -> neural search weight = 0.00 -> BM25
-  - -> neural search weight = 0.05 -> hybrid search (with 0.05 neural search and 0.95 BM25)
-  - ...
-  - -> neural search weight = 1.00 -> neural search
-
-- Since the we didn't find any way of adding these search-pipelines into Opensearch via its Pyhon API, we had to do this manually via the Opensearch dashboard.
-
-  - Our naming convention for the pipelines was:  "hybrid_search_pipeline_weight{neural_search_weight}". E.g. "hybrid_search_pipeline_weight0.05" for a neural search weight of 0.05.
-
-Example Pipeline for a neural search weight of 0.00 (This represents the BM25 retrieval pipeline):
-
-```json
-PUT /_search/pipeline/hybrid_search_pipeline_weight_0.00
-{
-  "description": "Post processor for hybrid search",
-  "phase_results_processors": [
-    {
-      "normalization-processor": {
-        "normalization": {
-          "technique": "min_max"
-        },
-        "combination": {
-          "technique": "arithmetic_mean",
-          "parameters": {
-            "weights": [
-              0.00, // neural search weight -> increase this in increments of 0.05
-              1.00 // BM25 weight -> proportionally decrease this in increments of 0.05
-            ]
-          }
-        }
-      }
-    }
-  ]
-}
-```
-
-#### 2. Adjust the Opensearch Python APi connector libary (written by us) to be able to specify which neural search weight to use for the retrieval pipeline
-
-For this we combine both an **BM25** and a **neural search** query into a single query. Were the above pipleline is used to combine the results of the two queries into a single result. Wheighing the results of the two queries according to the neural search weight.
-
-For the BM25 query, we are able to do the matching on multiple fields of the documents. Fields we for now are matching on are: 'abstract-fragment', 'title' and 'keywords_list'.
-
-```python
-def create_multi_match_BM25_query(
-    query_text, match_on_fields=["abstract_fragment", "title", "keyword_list"]
-):
-    return {"multi_match": {"query": query_text, "fields": match_on_fields}}
-```
-
-While the neural search query is  matching on the 'abstract-fragment-embedding' field of the documents. This field contains the embeddings of the 'abstract-fragment' generated by the 'pritamdeka/S-PubMedBert-MS-MARCO' model during ingestion. To make this possible we first also embed the query text using the same model.
-
-```python
-def create_neural_query(query_text):
-    return {
-        "neural": {
-            "abstract_fragment_embedding": {
-                "query_text": query_text,
-                "model_id": get_model_id(CLIENT),
-            }
-        }
-    }
-```
-
-Both of these queries are then combined into a single hybrid query, which is then used to retrieve the documents.
-
-```python
-def create_hybrid_query(
-    query_text, match_on_fields=["abstract_fragment", "title", "keyword_list"]
-):
-    """
-    Create a hybrid query that combines BM25 and neural search.
-    """
-    return {
-        "hybrid": {
-            "queries": [
-                create_neural_query(query_text),
-                create_multi_match_BM25_query(query_text, match_on_fields),
-            ],
-        }
-    }
-```
-
-When executing the query we then specify the pipeline to use for the retrieval. Thereby also indirectly specifying the neural search weight to use (naming is done with an function and thereby abstracted away; below is just an example).
-
-```python
-CLIENT.search(
-        body=query_body, # the before mentioned hybrid query
-        index="abstracts", # index to search in
-        _source_includes=["_id", "fragment_id"], # fields to include in the result
-        params={"search_pipeline": "hybrid_search_pipeline_weight_0.05"}, # specify the pipeline
-    )
-```
-
-#### 3. Setup the retrieval script for evaluation
-
-The Idea is to retrieve the top i documents for each query in the test set.
 
 <!--  -->
 # Answer Generation

@@ -50,6 +50,7 @@ class AbstractOpenSearch(BaseModel):
 
     # not a part of the original response:
     confidence: Optional[Union[str, int]] = None
+    filters: Optional[dict] = None
 
 
 class AbstractFragmentOpenSearch(BaseModel):
@@ -68,6 +69,7 @@ class AbstractFragmentOpenSearch(BaseModel):
 
     # not a part of the original response:
     confidence: Optional[Union[str, int]] = None
+    filters: Optional[dict] = None
 
 
 def retrieve_abstract_fragments(
@@ -93,15 +95,20 @@ def retrieve_abstract_fragments(
         filters = get_filters(question, remove_dot_metadata_from_keys=True)
 
     if strategy == "opensearch_hybrid":
-        return _retrieve_abstract_fragments_opensearch_hybrid_query(
+        abstract_fragments = _retrieve_abstract_fragments_opensearch_hybrid_query(
             question, filters, amount, NEURAL_WEIGHT
         )
     elif strategy == "reciprocal_rank_fusion":
-        return _retrieve_abstract_fragments_reciprocal_rank_fusion(
+        abstract_fragments = _retrieve_abstract_fragments_reciprocal_rank_fusion(
             question, filters, amount, NEURAL_WEIGHT
         )
     else:
         raise ValueError(f"Invalid strategy: {strategy}")
+
+    for fragment in abstract_fragments:
+        fragment.filters = filters
+
+    return abstract_fragments
 
 
 def _retrieve_abstract_fragments_opensearch_hybrid_query(
@@ -293,7 +300,7 @@ class CustomOpensearchAbstractFragmentRetriever(BaseRetriever):
         *,
         run_manager: CallbackManagerForRetrieverRun,
         amount: int = 3,
-        caclulate_confidence: bool = True,
+        calculate_confidence: bool = True,
         self_query_retrieval: bool = False,
     ) -> List[Document]:
 
@@ -302,7 +309,7 @@ class CustomOpensearchAbstractFragmentRetriever(BaseRetriever):
         )
 
         # Compute confidence ratings for each fragment
-        if caclulate_confidence:
+        if calculate_confidence:
             confidence_ratings = confidence_score.compute_confidence_ratings(
                 query=query,
                 texts=[fragment.abstract_fragment for fragment in abstract_fragments],
@@ -373,6 +380,10 @@ class CustomOpensearchAbstractRetriever(BaseRetriever):
             for abstract, confidence in zip(abstracts, confidence_ratings):
                 abstract.confidence = confidence
 
+        # Transmit filters from fragments to corresponding abstracts
+        for abstract, fragment in zip(abstracts, top_k_unique_abstract_fragments):
+            abstract.filters = fragment.filters
+
         return convert_abstracts_to_langchain_documents(abstracts)
 
 
@@ -386,7 +397,7 @@ if __name__ == "__main__":
     # Test abstract fragment retriever
     abstract_fragment_retriever = CustomOpensearchAbstractFragmentRetriever()
     abstract_fragments = abstract_fragment_retriever.get_relevant_documents(
-        question, amount=amount, caclulate_confidence=True, self_query_retrieval=False
+        question, amount=amount, calculate_confidence=True, self_query_retrieval=False
     )
 
     # Test abstract retriever
