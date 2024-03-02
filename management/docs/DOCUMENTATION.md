@@ -590,6 +590,8 @@ As conclusion, we managed to fulfill **all** the requirements which we specified
 
 - Potentially fix our bugs with the ragas-testset generation using local models, create a bigger evaluation set and utilize the different evaluation metrics of ragas for a more thorough evaluation (only retriever, only answer generation, full pipeline)
 
+- Research and utilize different methods for testset generation. We would hope to thereby find out the most optimal semantic search weight for our hybrid search.
+
 All in all, we created a stable, fun-to-engage-with, nicely performing Question Answering System.
 
 
