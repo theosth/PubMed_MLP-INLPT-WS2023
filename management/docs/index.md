@@ -1,7 +1,7 @@
 <!--  -->
 
 - [Introduction](#introduction)
-  - [MoSCoW](#moscow)
+  - [Project Requirements - MoSCoW](#project-requirements---moscow)
 - [System Architecture](#system-architecture)
   - [Functional Overview](#functional-overview)
   - [Technological Decisions](#technological-decisions)
@@ -11,15 +11,16 @@
   - [Document Model](#document-model)
 - [Retrieval](#retrieval)
   - [OpenSearch](#opensearch)
-  - [Testing the LangChain OpenSearch Self-Query Retriever](#testing-the-langchain-opensearch-self-query-retriever)
   - [Retrieval Testset Generation](#retrieval-testset-generation)
-  - [Testing Retriever](#testing-retriever)
+  - [Re-Evaluating new Hybrid Search](#re-evaluating-new-hybrid-search)
+  - [Natural Language Based Metadata Filtering](#natural-language-based-metadata-filtering)
 - [Answer Generation](#answer-generation)
   - [Choice of Generation Backend](#choice-of-generation-backend)
   - [Choice of Generation Model](#choice-of-generation-model)
-  - [Question-type dependent answer generation](#question-type-dependent-answer-generation)
+  - [Routing - Question-Type Dependent Answer-Generation](#routing---question-type-dependent-answer-generation)
   - [Evaluation](#evaluation)
 - [User Interface](#user-interface)
+  - [Confidence](#confidence)
 - [Related Work](#related-work)
 - [Conclusion / Resulting QA-System](#conclusion--resulting-qa-system)
 - [Contributions](#contributions)
@@ -33,7 +34,7 @@
 
 This is the project report for our graded *Natural Language Processing with Transformer* module of Heidelberg University. In this section, we have designed and listed the business requirements for a PubMed-supported question answering system.
 
-## MoSCoW
+## Project Requirements - MoSCoW
 
 When we started our project, we thought of requirements and categorized them:
 
@@ -292,94 +293,17 @@ The corresponding OpenSearch query-type for this is the [``k-NN query``](https:/
 Since both approaches have their own strengths and weaknesses, we combined them to form a hybrid search. This way, we can benefit from the precision of BM25 and the semantic understanding in the semantic search. Luckily for us, combining different queries in OpenSearch is relatively straightforward. It involves, first combining both sub-queries into a single query like in the  [``create_hybrid_query``](../../development/retrieve/opensearch_connector.py#L155) function. Secondly creating a [``search pipeline``](https://opensearch.org/docs/latest/search-plugins/search-pipelines/index/) in OpenSearch for hybrid search that combines the results of the different queries, like in the [``create_hybrid_search_pipeline``](../../development/evaluate/retrieval/ingest_search_pipelines.py#L12) function. Here we can specify how results of the different queries are weighed and combined into a single result. And lastly executing the query against an opensearch index with the specified pipeline, like in the [``execute_hybrid_query``](../../development/retrieve/opensearch_connector.py#L62) function. The `pipeline_weight` parameter here specifies how the semantic search is weighed. Correspondingly, the BM25 search is weighed with `1 - pipeline_weight`.  
 This allows us to always use the same hybrid search-quey, even for isolated BM25 or semantic search, by just setting the `pipeline_weight` to 0 or 1 respectively.
 
-### Evaluating Pipeline-Weights
-<!-- ! Write this -->
-
-#### 1. For this we first need to define different pipelines in Opensearch
-
-- Here we opted for incremental steps of 0.05 from an weight of 0 to 1 for the neural search. Like this we are testing all above mentioned pipelines:
-  - -> neural search weight = 0.00 -> BM25
-  - -> neural search weight = 0.05 -> hybrid search (with 0.05 neural search and 0.95 BM25)
-  - ...
-  - -> neural search weight = 1.00 -> neural search
-
-  - Our naming convention for the pipelines was:  "hybrid_search_pipeline_weight{neural_search_weight}". E.g. "hybrid_search_pipeline_weight0.05" for a neural search weight of 0.05.
-
-
-
-### Hybrid Search via MinMax Normalization vs Reciprocal Rank Fusion
-
-We implemented the standard OpenSearch hybrid query with Min Max Normalization of BM25 and kNN dense vector search of document embeddings.
-Additionally, we also implemented ([``Reciprocal Rank Fusion``](https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf)) using ([``Langchain's Ensemble Retriever``](https://python.langchain.com/docs/modules/data_connection/retrievers/ensemble))
-
-However, we assume there is a bug within the implementation of OpenSearch's hybrid search since TODO EVALUATION
-
-TODO EVALUATION
-
-
-## Testing the LangChain OpenSearch Self-Query Retriever
-
-In order to enable user queries where additional filters are specified, like the publication date of an article, we sought to implement the Self-Query Retriever of Langchain which allows this behavior ([``LangChain Documentation: Self-Query OpenSearch Retriever``](https://python.langchain.com/docs/integrations/retrievers/self_query/opensearch_self_query)). To this end, we implement a custom Vectorstore. It retrieves filters from a user query which can be used in our OpenSearch queries. This is done by querying a GenAI model to extract filter parameters in a vectorstore-agnostic language and then translate this domain specific language to an OpenSearch filter query. We then extend our existing queries by these filter queries.  
-
-As GenAI model for query filter extraction we tested:
-- Llama2: It could not follow the instruction to extract filter parameters at all. Even when playing with the temperature and prompt. Absolutely unsuitable. 
-- Gemma: It was able to extract parameters and was especially proficient in getting mathematical comparisons like greater than or lesser than right. However, it was too strictly adhering to the prompt. For example, when we queried it to extract *the year of the publication* it could only handle queries like "Cancer research after 2015", but not "Cancer research after January 1st 2015". However, when changing the prompt to *the date of the publication*, it could no longer handle "Cancer research after 2015".
-- Mistral: Mistral got this right more easily. It was able to make the abstraction and return the queried parameters, no matter if only a year of specific date was provided. However, Mistral struggled with correctly extracting comparison operators. This is in line with the claims made by Google, which promised Gemma to outperform other small-scale models in terms of mathematical ability. However, by fiddling with the temperature we got Mistral to work and extract greater than/less than correctly.
-
-This is why we eventually chose Mistral to do the self-querying. 
-
-### Other Subsections
-
-### Rethinking approximate k-NN search
-
-
-### Confidence
-
-For each retrieved document (abstract or abstract fragment) we compute
-a `Confidence Rating`, which gives the user a hint about how certain
-the retriever is that those documents are relevant for answering the
-query. That rating is based on the `Cosine Similarity` between the
-document and query embeddings. However, it is no scientific measurement.
-
-Nevertheless, it allows the user some insight into retrieval. The
-rating system differentiates between *High*, *Medium* and *Low*. 
-Furthermore, the user is given links to the corresponding publications,
-so that they can inspect the sources themselves - for example if the
-rating indicates that no similar or matching sources are available.
-The rating can also help the user to refine the query, so that documents
-are returned with higher confidence.
-
-OpenSearch searches for the best matches for a query by employing
-cosine similarity. Therefore, cosine similarity seems like a suitable
-metric to determine similarity. Hence, we use to determine the
-*similarity* or *confidence* of the retrieved abstracts to the query. 
-
-Empirically we determined the value range of the computed
-abstract-to-query similarity to be $I = [0.8; 1.0]$. For perfect
-matches a similarity of $1.0$ is achieved, while for unrelated
-documents and queries, a similarity of approximately $0.8$ is achieved.
-Yet, we want a normalizes score range of $J = [0.0; 100.0]$. For that
-range we define thresholds that differentiate the confidence levels.
-
-```
-confidence = np.maximum(0.0, similarity - 0.8)
-confidence = confidence * CONFIDENCE_SCALING_FACTOR
-confidence = np.minimum(100.0, confidence * 5)
-```
-
-In order to rescale the confidence range, we subtract the empirical
-minimum value. Then, we multiply the difference with a scaling factor.
-It rewards larger ratings (e.g. 0.16) more than lower ratings (e.g. 0.05).
-Then, the resulting value is scaled up to the range $J$.
 
 ## Retrieval Testset Generation
 
 For our retriever we want to generate a set of questions for which we have a ground truth. The ground truth in the context of the retriever does not mean the answer to the question but rather the id of an abstract fragment that can be used to properly answer this question. Therefore we prompted a language model to generate questions, each based on an abstract fragment. We decided to use a strong language model, ChatGPT 3.5, to generate the questions to ensure better quality.
 We wrote a script that takes a random document and prompts the open-ai API to generate a question for that. With the first versions of our prompt we encountered the issue that a lot of questions are formulated in a way that they are only useful when you already have the document, e.g. "What were the findings of the study?". After improving the prompt over multiple iterations we managed to reduce the frequency of questions like these, but sometimes they still appeared. Because we did not achieve any further progress with prompt engineering we implemented some kind of "validation" afterwards, that filters the generated questions based on a few key phrases like "in the study" which were present in most of the invalid questions.
 
-## Testing Retriever
 
-### Idea
+### Evaluating Pipeline-Weights with OpenSearch Hybrid Search
+<!-- ! Write this -->
+
+#### Idea
 
 - We want to check how good different retrieval Pipelines (in OpenSearch) are at retrieving relevant documents for a given query-document pair dataset.
 
@@ -399,7 +323,52 @@ We wrote a script that takes a random document and prompts the open-ai API to ge
 
 ---
 
-### Steps
+<!-- Explain code here -->
+#### 1. For this we first need to define different pipelines in Opensearch
+
+- Here we opted for incremental steps of 0.05 from an weight of 0 to 1 for the neural search. Like this we are testing all above mentioned pipelines:
+  - -> neural search weight = 0.00 -> BM25
+  - -> neural search weight = 0.05 -> hybrid search (with 0.05 neural search and 0.95 BM25)
+  - ...
+  - -> neural search weight = 1.00 -> neural search
+
+  - Our naming convention for the pipelines was:  "hybrid_search_pipeline_weight{neural_search_weight}". E.g. "hybrid_search_pipeline_weight0.05" for a neural search weight of 0.05.
+
+
+
+### Hybrid Search via MinMax Normalization vs Reciprocal Rank Fusion
+<!-- introduction why (auf opensearch verweisen) -->
+We implemented the standard OpenSearch hybrid query with Min Max Normalization of BM25 and kNN dense vector search of document embeddings.
+Additionally, we also implemented ([``Reciprocal Rank Fusion``](https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf)) using ([``Langchain's Ensemble Retriever``](https://python.langchain.com/docs/modules/data_connection/retrievers/ensemble))
+
+However, we assume there is a bug within the implementation of OpenSearch's hybrid search since TODO EVALUATION
+
+TODO EVALUATION
+
+
+## Re-Evaluating new Hybrid Search
+<!-- evaluation of new langchain hybrid search -->
+<!-- ... -->
+<!-- Result: Testset hevily favors BM25 -->
+
+### Automatic Testset Generation with Ragas
+
+### Evaluation on Ragas Testset
+
+
+
+## Natural Language Based Metadata Filtering
+
+### Testing the LangChain OpenSearch Self-Query Retriever
+
+In order to enable user queries where additional filters are specified, like the publication date of an article, we sought to implement the Self-Query Retriever of Langchain which allows this behavior ([``LangChain Documentation: Self-Query OpenSearch Retriever``](https://python.langchain.com/docs/integrations/retrievers/self_query/opensearch_self_query)). To this end, we implement a custom Vectorstore. It retrieves filters from a user query which can be used in our OpenSearch queries. This is done by querying a GenAI model to extract filter parameters in a vectorstore-agnostic language and then translate this domain specific language to an OpenSearch filter query. We then extend our existing queries by these filter queries.
+
+As GenAI model for query filter extraction we tested:
+- Llama2: It could not follow the instruction to extract filter parameters at all. Even when playing with the temperature and prompt. Absolutely unsuitable. 
+- Gemma: It was able to extract parameters and was especially proficient in getting mathematical comparisons like greater than or lesser than right. However, it was too strictly adhering to the prompt. For example, when we queried it to extract *the year of the publication* it could only handle queries like "Cancer research after 2015", but not "Cancer research after January 1st 2015". However, when changing the prompt to *the date of the publication*, it could no longer handle "Cancer research after 2015".
+- Mistral: Mistral got this right more easily. It was able to make the abstraction and return the queried parameters, no matter if only a year of specific date was provided. However, Mistral struggled with correctly extracting comparison operators. This is in line with the claims made by Google, which promised Gemma to outperform other small-scale models in terms of mathematical ability. However, by fiddling with the temperature we got Mistral to work and extract greater than/less than correctly.
+
+This is why we eventually chose Mistral to do the self-querying. 
 
 
 <!--  -->
@@ -484,7 +453,7 @@ The answers were mostly correct, however, it did not adhere to answer format and
 
 Additionally, Gemma is generally larger (5.2 vs 4.1 GB) than Mistral and has slower inference times on lower-end hardware. Furthermore, it is highly cutting edge being only released for a few days, which is generally unfavorable as we want to build a stable and safe product. This is why we decided to proceed with Mistral as text generation model.
 
-## Question-type dependent answer generation
+## Routing - Question-Type Dependent Answer-Generation
 
 Our system should be able to answer different types of questions. In our first naive approach, we just defined one chain with a very general prompt that should answer all types of questions. The obvious problem with that is that different questions can have different requirements for either the answer format or the answering process. When we e.g. want factual questions to be answered with a concise statement and causal questions to be answered with a longer explanation, it is difficult to handle this with just a single answering chain and prompt.
 Therefore we implemented a routing system. Questions get first prompted to an llm which classifies them by their type. Depending on this type they can now get handeled differently. In our first version this only translates to using different prompts that specify the answer format more precisely. Also possible but not yet implemented would be using different retrieving behaviour for the different question types. For example it might be beneficial to use more context documents for complex questions than for confirmation questions.
@@ -516,6 +485,46 @@ relevant context to base your answer on. Be concise and factual.
 ```
 
 # User Interface
+
+## Confidence
+
+For each retrieved document (abstract or abstract fragment) we compute
+a `Confidence Rating`, which gives the user a hint about how certain
+the retriever is that those documents are relevant for answering the
+query. That rating is based on the `Cosine Similarity` between the
+document and query embeddings. However, it is no scientific measurement.
+
+Nevertheless, it allows the user some insight into retrieval. The
+rating system differentiates between *High*, *Medium* and *Low*. 
+Furthermore, the user is given links to the corresponding publications,
+so that they can inspect the sources themselves - for example if the
+rating indicates that no similar or matching sources are available.
+The rating can also help the user to refine the query, so that documents
+are returned with higher confidence.
+
+OpenSearch searches for the best matches for a query by employing
+cosine similarity. Therefore, cosine similarity seems like a suitable
+metric to determine similarity. Hence, we use to determine the
+*similarity* or *confidence* of the retrieved abstracts to the query. 
+
+Empirically we determined the value range of the computed
+abstract-to-query similarity to be $I = [0.8; 1.0]$. For perfect
+matches a similarity of $1.0$ is achieved, while for unrelated
+documents and queries, a similarity of approximately $0.8$ is achieved.
+Yet, we want a normalizes score range of $J = [0.0; 100.0]$. For that
+range we define thresholds that differentiate the confidence levels.
+
+```
+confidence = np.maximum(0.0, similarity - 0.8)
+confidence = confidence * CONFIDENCE_SCALING_FACTOR
+confidence = np.minimum(100.0, confidence * 5)
+```
+
+In order to rescale the confidence range, we subtract the empirical
+minimum value. Then, we multiply the difference with a scaling factor.
+It rewards larger ratings (e.g. 0.16) more than lower ratings (e.g. 0.05).
+Then, the resulting value is scaled up to the range $J$.
+
 
 <!--  -->
 # Related Work
