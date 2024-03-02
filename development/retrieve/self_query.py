@@ -38,13 +38,13 @@ class FilterReturner(OpenSearchVectorSearch):
     def __init__(self):
         pass 
 
-    def _remove_dot_metadata_from_keys(self, d):
+    def _remove_dot_metadata_and_keyword_from_keys(self, d):
         new_dict = {}
         for k, v in d.items():
-            new_key = k.replace("metadata.", "")
+            new_key = k.replace("metadata.", "").replace(".keyword", "")
             
             if isinstance(v, dict):
-                new_dict[new_key] = self._remove_dot_metadata_from_keys(v)
+                new_dict[new_key] = self._remove_dot_metadata_and_keyword_from_keys(v)
             else:
                 new_dict[new_key] = v
         return new_dict
@@ -57,7 +57,7 @@ class FilterReturner(OpenSearchVectorSearch):
         returns *filters* not *documents*.
         """
         if self.remove_dot_metadata_from_keys:
-            return self._remove_dot_metadata_from_keys(kwargs)
+            return self._remove_dot_metadata_and_keyword_from_keys(kwargs)
         return kwargs
 
 
