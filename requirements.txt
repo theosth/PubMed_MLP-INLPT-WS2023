@@ -1,8 +1,8 @@
 pandas==2.0.3 # requirement of opensearch-py-ml
 deprecated~=1.2.14  # requirement of opensearch-py-ml
 accelerate~=0.26.1  # requirement of opensearch-py-ml
-ollama
-langchain_openai
+ollama==0.1.6
+langchain_openai==0.0.6
 lark==1.1.9
 ragas==0.1.0 # do not upgrade to latest version as it contains a bug
 
@@ -15,12 +15,11 @@ pydantic==2.5.3
 python-dotenv==1.0.0
 Requests==2.31.0
 streamlit==1.30.0
-streamlit_tags
 torch==2.1.2
 tqdm==4.66.1
 transformers==4.36.2
 uvicorn==0.25.0
 
-sentence_transformers # for ingestor.py
-ijson # for reading large json files
-jq # for langchain JSONLoader
+sentence_transformers==2.4.0 # for ingestor.py
+ijson==3.2.3 # for reading large json files
+jq==1.6.0 # for langchain JSONLoader
