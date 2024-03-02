@@ -71,8 +71,11 @@ On Linux (tested on Ubuntu), the process should be the same as for Windows WSL2.
 
 Process of ingesting and embedding the documents yourself, you can use our pre-packaged OpenSearch index.
 To do that, create the folder `data/opensearch` and unpack our `opensearch.zip` into that folder. You can find `opensearch.zip`
-in our Github release. After unpacking, check if `data/opensearch/nodes` along with other files exists. 
-
+here:
+```
+https://drive.google.com/drive/folders/1RFKnvQT_dRFUv4zJgBV8tarvRsjkxjqL?usp=sharing
+```
+After unpacking, check if `data/opensearch/nodes` along with other files exists.
 The structure of the data folder should look something like this:
 ```
 data
@@ -87,7 +90,20 @@ data
 If you, however, want to ingest the data yourself using `ingestor.py` (takes 3-6 hours without acceleration, 15 min with acceleration), you can do so by just creating `data/opensearch`
 and leaving it empty.
 
-In any case, use  `docker compose up` in the base directory to start OpenSearch. 
+In any case, use  `docker compose up` in the base directory to start OpenSearch.
+
+**Manual Index Creation**:  
+If you want to create the indices manually, not using our pre-packaged ones, you can use the `development/ingest/abstract_fragment_ingestor.py` and `development/ingest/abstract_ingestor.py` scripts.  
+For that, first create a folder `development/ingest/data`, then downloading the `abstract_fragment_dataset.json` and the `abstracts_dataset.json` from the following link:
+```
+https://drive.google.com/drive/folders/1RFKnvQT_dRFUv4zJgBV8tarvRsjkxjqL?usp=sharing
+```
+After downloading, place the files in the `development/ingest/data` folder. Then run the `ingestor.py` script.
+
+**Creating the datasets manually**:
+If you want to create the datasets manually, first execute the scraper script `development/scrape/pubmed_scraper.py`.
+Then execute the extractor that sanitizes the data using the `development/scrape/pubmed_extractor.py` script.
+After that, you can execute the scripts `development/ingest/abstracts_dataset_gen.py` and `development/ingest/abstract_fragments_dataset_gen.py` to create the datasets in the folder `development/ingest/data`.
 
 
 ### Python
