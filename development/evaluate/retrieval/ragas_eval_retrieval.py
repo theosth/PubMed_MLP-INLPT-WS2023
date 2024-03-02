@@ -106,6 +106,6 @@ if __name__ == "__main__":
     print(f"Dataset prepared with {len(dataset)} elements")
     print(dataset.to_dict())
 
-    # TODO: uncomment when ready, this is a safety measure
+    # uncomment when ready, this is a safety measure
     # evaluate_retrieval(dataset)
     print("Retrieval Ragas Evaluation completed")
