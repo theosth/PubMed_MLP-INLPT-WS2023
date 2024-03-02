@@ -1,5 +1,7 @@
 # PubMed_MLP-INLPT-WS2023
 
+![Demonstration](management/docs/images/self_query_and_confidence.gif)
+<center>Demonstration of the G2 RAG System</center>
 
 ## Key Information
 
@@ -7,15 +9,14 @@
 
 **Contributors:**
 
-| User | Name       | Matriculation Number | Email Addresses                             |
-|----------|------------------------|----------------------|---------------------------------------------|
-|4kills    | Dominik Ochs           | 4736026              | dominik.ochs@gmx.net                        |
-|llambdaa  | Lukas Rapp             | 4736025              | lu.rapp@web.de                              |
-|theosth   | Theo Stempel-Hauburger | 4740729              | theo.stempel-hauburger@stud.uni-heidelberg.de|
-|BenediktV | Benedikt Vidic         | 4738257              | benedikt.vidic@stud.uni-heidelberg.de       |
+| User | Name       | Matriculation Number | Email Addresses                               |
+|----------|------------------------|----------------------|-----------------------------------------------|
+|4kills    | Dominik Ochs           | 4736026              | dominik.ochs@gmx.net                          |
+|llambdaa  | Lukas Rapp             | 4736025              | lu.rapp@stud.uni-heidelberg.de                |
+|theosth   | Theo Stempel-Hauburger | 4740729              | theo.stempel-hauburger@stud.uni-heidelberg.de |
+|BenediktV | Benedikt Vidic         | 4738257              | benedikt.vidic@stud.uni-heidelberg.de         |
 
 We are all enrolled in the Master Data and Computer Science.
-
 
 **Advisor**: Ashish Chouhan
 
@@ -90,6 +91,7 @@ In any case, use  `docker compose up` in the base directory to start OpenSearch.
 
 
 ### Python
+(tested with Python 3.10.12)
 
 1. Setup a venv with python (or `conda`)
 ```bash
@@ -109,16 +111,35 @@ pip install -r requirements.txt
 ### Settings
 
 If necessary (for example to adjust your OpenSearch credentials), edit `commons/env.py`. However, if you have set up the project using docker,
-this should not be necessary and the defaults in `commons/env.py` should work for you. 
+this should not be necessary and the defaults in `commons/env.py` should work for you.  
+To reproduce some evaluation results, it is necessary to set the `OPENAI_API_KEY` environment variable in the `.env` file to a valid OpenAI API key.
 
-## Run project
 
-```bash
-cd development/website
-streamlit run website.py
-```
 
 ## Troubleshooting
 
 - If you have any trouble with OpenSearch memory or JVM heap size, 
 go to the `docker-compose.yml` line 12 and adjust the memory. We tried to use sensible defaults.
+- If you have problems with docker, this could be because it is not installed in rootless mode. In this case, you might have to use `sudo docker compose up` instead (not recommended).
+
+## Usage Guide
+
+
+The *G2 RAG System* is equipped with an interactive interface, as can be seen in our [Demonstration](#pubmed_mlp-inlpt-ws2023).
+The interface allows the user to enter a query, for which matching abstracts are searched for by the OpenSe
+Filter in OS Connector:  None compared directly to the abstracts in the database.
+
+The retrieval system yields the most relevant abstracts. The sources are listed in a sidebar, consisting of useful
+information, such as a PubMed link, the PMID, the title, an author list and a confidence rating. Using the retrieved
+context documents and the user query, an LLM produces an answer, which is displayed in the chat window.
+
+For better assessability of the results, we designed the `Confidence Rating`, which is displayed alongside the retrieved
+documents. The rating hints the user at how suitable the retriever thinks the returned documents are for answering the
+user query. The better and more precise a query is, the better the retrieved documents and their corresponding confidence
+ratings tend to be. Poorly asked questions or questions without data basis naturally get a low rating. Hence, the confidence
+classifications help the user to assess the quality of the context and answer, as well as to refine the query at hand.
+
+### Run Project
+```bash
+streamlit run development/website/website.py
+```
