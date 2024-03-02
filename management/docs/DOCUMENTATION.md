@@ -4,7 +4,7 @@
 - [Table of Contents](#table-of-contents)
 - [Introduction](#introduction)
   - [Project Requirements - MoSCoW](#project-requirements---moscow)
-- [System Architecture {#architecture}](#system-architecture-architecture)
+- [System Architecture](#system-architecture)
   - [Functional Overview](#functional-overview)
   - [Technological Decisions](#technological-decisions)
 - [Data Preparation](#data-preparation)
@@ -17,6 +17,7 @@
   - [Evaluating Pipeline-Weights with OpenSearch Hybrid Search](#evaluating-pipeline-weights-with-opensearch-hybrid-search)
   - [Hybrid Search via MinMax Normalization vs Reciprocal Rank Fusion](#hybrid-search-via-minmax-normalization-vs-reciprocal-rank-fusion)
   - [Re-Evaluating new Hybrid Search](#re-evaluating-new-hybrid-search)
+  - [Context Enrichment](#context-enrichment)
   - [Natural Language Based Metadata Filtering](#natural-language-based-metadata-filtering)
 - [Answer Generation](#answer-generation)
   - [Choice of Generation Backend](#choice-of-generation-backend)
@@ -27,12 +28,10 @@
   - [Capabilties](#capabilties)
   - [Confidence Rating](#confidence-rating)
 - [Future Work](#future-work)
-- [Conclusion / Resulting QA-System](#conclusion--resulting-qa-system)
+- [Conclusion](#conclusion)
 - [Contributions](#contributions)
-  - [Dominik Ochs](#dominik-ochs)
-  - [Theo Stempel-Hauburger](#theo-stempel-hauburger)
-  - [Lukas Rapp](#lukas-rapp)
-  - [Benedikt Vidic](#benedikt-vidic)
+  - [Challenges we faced](#challenges-we-faced)
+- [References](#references)
 
 
 # Introduction
@@ -73,10 +72,10 @@ When we started our project, we thought of requirements and categorized them:
 
 1. Dialogue model with chat history: The system will not support to remember the history of the chat.
 
-# System Architecture {#architecture}
+# System Architecture 
 
 The *G2 PubMed RAG-System Architecture* has been designed from scratch to enable
-custom solutions and for better learning effects. However, regarding
+custom solutions and for better understanding the RAG Architecture. However, regarding
 technologies, the architecture has been guided by the lecture
 and tutorials. The following graphic shows the architecture and corresponding data flow:
 
@@ -124,15 +123,13 @@ model, which we use for embedding abstract fragments before ingestion
 into OpenSearch, and for embedding the user query. We have to use the
 same embedding model for embedding abstract fragments and run-time
 queries, because otherwise we cannot compare their respective vector
-representations to search for documents.
+representations to search for documents. We decided to use this embedding model in the hopes that it can better understand technical terms specific to the medical domain and therefore provide a better embedding for our retrieval system.
 
 For self-querying and answer generation we decided to employ the `mistral` LLM which is being made
-accessible locally using `ollama`.
+accessible locally using `ollama` (we explained this decision further [here](#choice-of-generation-model)).
 Furthermore, we used `streamlit` for a web-based interface that allows
 the user to productively interact with our retrieval system and be shown
 additional information, such as the sources.
-
-In the following we will further explain the individual components and the associated decisions we took.
 
 # Data Preparation
 
@@ -175,18 +172,19 @@ could theoretically be used for answering (when searching for "related"
 papers) but that is much too complex for what is achieves.
 
 ## Data Scraping
-We obtained the necessary data from PubMed using our `development/scrape/pubmed_scraper.py` script. The PubMed database has a payload
+We obtained the necessary data from PubMed using [`this`](../../development/scrape/pubmed_scraper.py) script. The PubMed database has a payload
 limit, which is why we cannot fetch all relevant abstracts at once.
 
 Instead, we resorted to requesting the relevant abstract ID's and
-downloaded them in batches of size $s_{id} = 10,000$, starting from
-the publication year $2013$ - $2023$. Only after that did we
-retrieve the actual abstracts in batches of size $s_{ab} = 1,000$.
-In total, we retrieved $n = 62,967$ documents. The fetched abstracts
+downloaded them in batches of size $10,000$, starting from
+the publication year $2013$ up till including $2023$. Only after that did we
+retrieve the actual abstracts in batches of size $1,000$.
+In total, we retrieved $62,967$ documents. The fetched abstracts
 (with metadata) are stored into a single file using `pickle`.
 
 ## Data Extraction
-We use our `development/scrape/pubmed_extractor.py` script to
+
+We use our [``pubmed_extractor``](../../development/scrape/pubmed_extractor.py) script to
 extract the most relevant data. It extracts information and bundles
 it in the following format, which is found throughout the whole
 project as it is the base for ingestion and subsequent retrieval:
@@ -241,7 +239,7 @@ a total of $50$ documents were author-less.
 ## Document Model
 
 Each abstract is split into fragments using the `SentenceTransformersTokenTextSplitter` of the `langchain` library.
-It is used to accurately split texts for the specific embedding model used (which is Huggingface's `pritamdeka/S-PubMedBert-MS-MARCO` (350 token model) in our case).
+It is used to accurately split texts for the specific embedding model used (which is Huggingface's [`pritamdeka/S-PubMedBert-MS-MARCO`](https://huggingface.co/pritamdeka/S-PubMedBert-MS-MARCO) (350 token model) in our case).
 
 Additionally, we define an overlap of 32 tokens of each fragment, to capture semantic context more coherently and to avoid breaking context too abruptly,
 in case an answer is at the splitting point of two fragments. This ensures the answer can still be answered using either fragment instead of being lost.
@@ -268,12 +266,12 @@ Furthermore, we thought about splitting the abstract at paragraphs first, before
 result paragraph of the abstract is in its own fragment, but reading these paragraphs on their own is really confusing and doesn't give much insight, since you just read some random results, without knowing what they are results of. However, often the answer to a specific question can be found in the result paragraph. But without knowing the context of the results, they are worthless. By not splitting at paragraph boundaries, the result paragraph is combined with the previous paragraph, thus giving the results some context.
 
 Lastly, we decided against including any of the metadata in the fragment text to be embedded for semantic search. Instead, we tackle this by evaluating a hybrid search.
-We hope to enrich our search with this hybrid search in a meaningful, more interpretable, easier and more structured way, as opposed to including the information in the text data.
+We hope to enrich our search with a hybrid search in a meaningful, more interpretable, easier and more structured way, as opposed to including the information in the text data.
 
 ### Document Splitting Bug
 
 While developing and experimenting with our retriever we sometimes encountered unusually short document fragments, even shorter than our overlap window for the document splitting. This kind of fragment should not exist. This is an issue because these fragments do not provide useful information for generating answers but potentially achieve exceptionally high scores by our retrieving system because they are so short.
-After looking further into it we discovered that this weren't just a few exceptions. We found 8109 fragments that only included text that is already fully present in their preceding fragment (The code to find and count these documents can be found in `development/ingest/analyse_fragment_split.py`).
+After looking further into it we discovered that this weren't just a few exceptions. We found 8109 fragments that only included text that is already fully present in their preceding fragment (The code to find and count these documents can be found in the [``analyse_fragment_split.py``](../../development/evaluate/ingestion/analyse_fragment_split.py) file).
 
 We could track it down to a bug in the langchain text splitter that was not accounting for the overlap when checking whether to add a new fragment. In December 2023 this issue got addressed and the fix released in the new langchain version ([Github commit that fixed this](https://github.com/langchain-ai/langchain/commit/ea331f31364266f7a6414dc76265553a52279b0a)). Therefore the solution for us to clean up the fragments simply consisted of updating the langchain version and redoing the document splitting and OpenSearch ingestion.
 
@@ -282,7 +280,7 @@ We could track it down to a bug in the langchain text splitter that was not acco
 
 ## Querying OpenSearch - Hybrid Search
 
-To query OpenSearch, we use the opensearch-py Python library, which allows us to make API calls to OpenSearch directly from Python. Because the library itself is fairly low-level we decided to abstract away the details of it. To archive this, we created an [``opensearch_connector.py``](../../development/retrieve/opensearch_connector.py) that serves as a wrapper around the `opensearch-py` library, implementing all the functionality that is relevant for us.
+To query OpenSearch, we use the opensearch-py Python library, which allows us to make API calls to OpenSearch directly from Python. Because the library itself is fairly low-level we decided to abstract away the details of it. To achieve this, we created an [``opensearch_connector.py``](../../development/retrieve/opensearch_connector.py) file that serves as a wrapper around the `opensearch-py` library, implementing all the functionality that is relevant for us.
 
 To find relevant documents, we explored two main methods - `BM25` and `Semantic Search`.
 
@@ -290,56 +288,58 @@ BM25 can be utilized to identify documents containing specific keywords such as 
 This type of query translates to an [``Multi-match query``](https://opensearch.org/docs/latest/query-dsl/full-text/multi-match/) in OpenSearch, with the corresponding match-field as implemented in the [``create_multi_match_BM25_query``](../../development/retrieve/opensearch_connector.py#L137) function.
 
 In order to find a document that matches a given query, while also taking into account the semantic meaning of the query, we decided to incorporate a semantic search. The idea is that this will take synonyms into account and also be able to 'read between the lines' and better understand the intent of the query.
-We achieve this by querying the [abstract_fragment_embeddings field](#document-model) of the abstract-fragment documents with the embedded search-query. The embedding of the query is generated by the same model that was used to embed the abstract-fragments. This way we can compare the semantic similarity of the query and the documents.
+We achieve this by querying the [abstract_fragment_embeddings field](#document-model) of the abstract-fragment documents with the embedded search-query. The embedding of the query is generated by the same model that was used to embed the abstract-fragments. This way we can compare the semantic similarity of the query and the abstract fragment text.
 The corresponding OpenSearch query-type for this is the [``k-NN query``](https://opensearch.org/docs/latest/search-plugins/knn/index/) which we implemented in the [``create_knn_query``](../../development/retrieve/opensearch_connector.py#L144) function.
 
-Since both approaches have their own strengths and weaknesses, we combined them to form a hybrid search. This way, we can benefit from the precision of BM25 and the semantic understanding in the semantic search. Luckily for us, combining different queries in OpenSearch is relatively straightforward. It involves, first combining both sub-queries into a single query like in the  [``create_hybrid_query``](../../development/retrieve/opensearch_connector.py#L155) function. Secondly creating a [``search pipeline``](https://opensearch.org/docs/latest/search-plugins/search-pipelines/index/) in OpenSearch for hybrid search that combines the results of the different queries, like in the [``create_hybrid_search_pipeline``](../../development/evaluate/retrieval/ingest_search_pipelines.py#L12) function. Here we can specify how results of the different queries are weighed and combined into a single result. And lastly executing the query against an opensearch index with the specified pipeline, like in the [``execute_hybrid_query``](../../development/retrieve/opensearch_connector.py#L62) function. The `pipeline_weight` parameter here specifies how the semantic search is weighed. Correspondingly, the BM25 search is weighed with `1 - pipeline_weight`. 
-This allows us to always use the same hybrid search-quey, even for isolated BM25 or semantic search, by just setting the `pipeline_weight` to 0 or 1 respectively.
+Since both, BM25 and semantic search, have their own strengths and weaknesses, we combined them to form a hybrid search. This way, we can benefit from the precision of BM25 and the semantic understanding of semantic search. Luckily for us, combining different queries in OpenSearch is relatively straightforward. It involves, first combining both sub-queries into a single query like in the  [``create_hybrid_query``](../../development/retrieve/opensearch_connector.py#L154) function. Secondly creating a [``search pipeline``](https://opensearch.org/docs/latest/search-plugins/search-pipelines/index/) in OpenSearch for hybrid search that combines the results of the different queries, like in the [``create_hybrid_search_pipeline``](../../development/evaluate/retrieval/ingest_search_pipelines.py#L12) function. Here we can specify how results of the different queries are weighed and combined into a single result. And lastly executing the query against an opensearch index with the specified pipeline, like in the [``execute_hybrid_query``](../../development/retrieve/opensearch_connector.py#L62) function. The `pipeline_weight` parameter here specifies how the semantic search is weighed. Correspondingly, the BM25 search is weighed with `1 - pipeline_weight`. 
+This allows us to always use the same hybrid search-query, even for isolated BM25 or semantic search, by just setting the `pipeline_weight` to 0 or 1 respectively.
 
 
 ## Retrieval Testset Generation
 
-For our retriever we want to generate a set of questions for which we have a ground truth. The ground truth in the context of the retriever does not mean the answer to the question but rather the id of an abstract fragment that can be used to properly answer this question. Therefore we prompted a language model to generate questions, each based on an abstract fragment. We decided to use a strong language model, ChatGPT 3.5, to generate the questions to ensure better quality.
-We wrote a script that takes a random document and prompts the open-ai API to generate a question for that. With the first versions of our prompt we encountered the issue that a lot of questions are formulated in a way that they are only useful when you already have the document, e.g. "What were the findings of the study?". After improving the prompt over multiple iterations we managed to reduce the frequency of questions like these, but sometimes they still appeared. Because we did not achieve any further progress with prompt engineering we implemented some kind of "validation" afterwards, that filters the generated questions based on a few key phrases like "in the study" which were present in most of the invalid questions. However, this potentially still leaves a few questions that might not make sense without the context.
+For our retriever we want to generate a set of questions for which we have a ground truth. The ground truth in the context of the retriever does not mean the answer to the question but rather the id of an abstract fragment that can be used to properly answer this question. Therefore we prompted a language model to generate questions, each based on an abstract fragment.  
+
+We decided to use a strong language model, ChatGPT 3.5, to generate the questions to ensure better quality. We wrote a script that takes a random document and prompts the open-ai API to generate a question for that. With the first versions of our prompt we encountered the issue that a lot of questions are formulated in a way that they are only useful when you already have the document, e.g. "What were the findings of the study?".  
+After improving the prompt over multiple iterations we managed to reduce the frequency of questions like these, but sometimes they still appeared. Because we did not achieve any further progress with prompt engineering we implemented some kind of "validation" afterwards, that filters the generated questions based on a few key phrases like "in the study" which were present in most of the invalid questions. However, this potentially still leaves a few questions that might not make sense without the context.
 
 ## Evaluating Pipeline-Weights with OpenSearch Hybrid Search
 
 We want to check how good different retrieval Pipelines (in OpenSearch) are at retrieving relevant documents for a given query-document pair dataset.
 Therefore, we use OpenSearch’s Hybrid Search with different weights.
-The main hyperparamter for these tests is Neural Search Weight $w$. The weight of BM25 will then be $1 - w$. A weight $w = 1$ means only Neural Search is employed and a weight of $w = 0$ means only BM25 is employed. Any other values are a weighted blend between the two.  
+The main hyperparameter for these tests is the semantic search weight $w$. The weight of BM25 will then be $1 - w$. A weight $w = 1$ means only semantic search is employed and a weight of $w = 0$ means only BM25 is employed. Any other values are a weighted blend between the two.  
 
-In these pipelines, the BM25 parts match on multiple fields of the document, namely the 'abstract-fragment', 'title' and 'keywords' fields. The neural search pipeline only matches on the embedding of the 'abstract-fragment' field, which we named 'abstract-fragment-embedding' in the documents.
+In these pipelines, the BM25 parts match on multiple fields of the document, namely the 'abstract-fragment', 'title' and 'keywords' fields. The semantic search pipeline only matches on the embedding of the 'abstract-fragment' field, which we named 'abstract-fragment-embedding' in the documents.
   
 As a test set we use the previously described auto-generated test set constructed with OpenAi GPT-3.5Turbo. Explicitly, to test this, we first take the Question (query) of the test set, then retrieve the most relevant $i$ document abstract-fragments for the given pipelines. In the following, we evaluate on the entire test set how good the retrieval was, based on how many of the retrieved documents were the actual ground truth documents from which the question was generated.  
 For the evaluation we use the following metrics:
 
-- Binary Accuracy at k: This score returns 1 if the ground-truth document was in the top-k of retrieved documents, or 0 else.
+- Binary Accuracy at k: This score returns 1 if the ground-truth document was in the top-k of retrieved abstract fragments, or 0 else.
 - Rank Score: This computes the spot of the ground-truth document in the list of retrieved documents. Returns 1 if document is at the top spot, 0 if the ground-truth document is not within the retrieved documents and $1/s$ else, where $s$ is the spot of ground-truth in the list of retrieved documents.
 
-We tested in 0.05 increments of the weight. The result is shown in the following figure: 
+We tested in 0.05 increments of the weight. The result is shown in the following figure with k=3:
 
 ![Image of test results with 0.05 weight increments showing a bad score for only BM25 and from w in 0.05 to 1 a good score at the same level.](../../development/evaluate/retrieval/results/retrieval_result_scores_s10_k3_opensearch_hybrid.png)
 
-We can see that only $w=0$ performs relatively poorly compared to $w>0$, and all other results are on the same level. This is highly unexpected and odd. We would expect to see a more gradual shift as the weight increases. Therefore, we did further investigation and found out that from w=0.05 to w=1 all the same documents are retrieved, whilst for w=0 totally different documents are retrieved by OpenSearch. Unfortunately, we can not debug the OpenSearch code and therefore have to assume that this is a bug. Especially, since sporadically calculating the min-max normalized score combinations of BM25 and Semantic Search ourselves, lead to other scores than those returned by OpenSearch’s Hybrid Search. 
+We can see that only $w=0$ performs relatively poorly compared to $w>0$, and all other results are on the same level. This is highly unexpected and odd. We would expect to see a more gradual shift as the weight increases. Therefore, we did further investigation and found out that from w=0.05 to w=1 all the same documents are retrieved, whilst for w=0 totally different documents are retrieved by OpenSearch. Unfortunately, we can not debug the OpenSearch code. In our further investigations we did not find any issues with misconfiguration of the search on our side and therefore assume that this could be a bug. Especially, since sporadically calculating the min-max normalized score combinations of BM25 and Semantic Search ourselves, lead to other scores than those returned by OpenSearch’s Hybrid Search.
 
 ## Hybrid Search via MinMax Normalization vs Reciprocal Rank Fusion
 
-Therefore we decided to implement a different approach. The issue we had was only with the OpenSearch pipeline, not the individual queries. This means we can still use the same queries as before, now we just execute them separately and combine the results afterward. For the combination of the result lists, we chose ([``Reciprocal Rank Fusion``](https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf)) (RRF) <<TODO: Properly cite>>, because the returned scores of the two separate queries are not necessarily comparable which means we need some kind of fusion that is based on ranks and not the specific scores. Moreover, it is easy to assign weights to our two queries with RRF, so that we can choose to put more emphasis on either the BM25 or semantic search.
-In our code, we used a mocked version of the ([``Langchain's Ensemble Retriever``](https://python.langchain.com/docs/modules/data_connection/retrievers/ensemble)) that already has the RRF implemented (see `development/retrieve/retrieval_wrapper.py: _retrieve_abstract_fragments_reciprocal_rank_fusion()
-`).
+We therefore decided to implement a different approach. The issue we had was only with the OpenSearch pipeline, not the individual queries. This means we can still use the same queries as before, now we just execute them separately and combine the results afterward. For the combination of the result lists, we chose Reciprocal Rank Fusion (RRF) [``[1.]``](#references), because the returned scores of the two separate queries are not necessarily comparable which means we need some kind of fusion that is based on ranks and not the specific scores. Moreover, it is easy to assign weights to our two queries with RRF, so that we can choose to put more emphasis on either the BM25 or semantic search.
+In our code, we used a mocked version of the ([``Langchain's Ensemble Retriever``](https://python.langchain.com/docs/modules/data_connection/retrievers/ensemble)) that already has the RRF implemented (see [``here``](../../development/retrieve/retrieval_wrapper.py#143)).
 
 ## Re-Evaluating new Hybrid Search
 
-We then evaluated our custom hybrid query as an alternative to the OpenSearch hybrid query. We repeated the same evaluation from before (see Evaluating Pipeline-Weights with OpenSearch Hybrid Search) and tried out different weightings between the two queries.
+We then evaluated our custom hybrid query as an alternative to the OpenSearch hybrid query. We repeated the same evaluation from before (see [``here``](#evaluating-pipeline-weights-with-opensearch-hybrid-search)) and tried out different weightings between the two queries with k=3.
+
 ![Evaluation of custom hybrid query](../../development/evaluate/retrieval/results/retrieval_result_scores_s10_k3_rrf.png)
 The results show that BM25 performs significantly better on our retrieval testset than the semantic search. At first, this was a bit surprising to us because we did not expect to see such a clear trend favoring one search type over the other. But when looking in more detail at our testset, the results make sense. The drawback of generating questions each based on a fragment is that the resulting question is very similar to its respective document. Most of the words in the question were taken directly from the fragment and the questions rarely contain any synonyms. This of course favors a syntactical search like BM25.
 
 ### Automatic Testset Generation with Ragas
 
-To improve our testset we looked into ([``ragas``](https://github.com/explodinggradients/ragas)), a framework that promises to help evaluation of RAG pipelines. Ragas not only supports evaluation but also implements its on spin of synthetic test data generation, information about it can be found in their ([``docs``](https://docs.ragas.io/en/stable/concepts/testset_generation.html)).
+To improve our testset we looked into ([``ragas``](https://github.com/explodinggradients/ragas)), a framework that promises to help evaluation of RAG pipelines. Ragas not only supports evaluation but also implements its own spin of synthetic test data generation, information about it can be found in their [``docs``](https://docs.ragas.io/en/stable/concepts/testset_generation.html).
 
 We first implemented the ragas TestsetGenerator with openai based embeddings and models, leveraging the `gpt-3.5-turbo-16k` model and `ada-002` embeddings. However, during generation of a limited testset with only 10 entries we encountered significant costs in our openai-dashboard. For these 10 entries ragas made 1,105 API requests to the gpt-3.5 model with an astonishing amount of 488,443 overall tokens used. This resulted in an overall cost of $1.53, which is way too much for such a small dataset. Extrapolating that to a meaningful dataset size of e.g. 500 entries would cost $76.5, too much for our group project.  
-To reduce this cost we tried to utilize locally running models inside ragas’ TestsetGenerator-Class ([``(our code)``](../../development/evaluate/retrieval/local_ragas_testset_generator.py)) as  presented ([``here``](https://docs.ragas.io/en/stable/howtos/customisations/bring-your-own-llm-or-embs.html)) in their docs. This sadly did not work out, leaving us stuck with our previous testset.
+To reduce this cost we tried to utilize locally running models inside ragas’ TestsetGenerator-Class ([``our code``](../../development/evaluate/retrieval/local_ragas_testset_generator.py)) as  presented [``here``](https://docs.ragas.io/en/stable/howtos/customisations/bring-your-own-llm-or-embs.html) in their docs. After investing a significant amount of time into implementing this, on the way encountering a lot of issues, we chose to no longer pursue this path.
 
 ### Evaluation on Ragas Testset
 Keep in mind that the following is only based on our very small ragas testset with 10 entries, therefore quantitative analysis of this dataset doesn't provide statistically relevant results.  
@@ -347,26 +347,30 @@ However looking at the questions ourselves provides us with a good idea of how r
 
 Example question from the ragas testset:
 
-"What is the relationship between **publicly accessible benchmarks** and **progress in artificial intelligence** in the **medical practice** field?"  
+"What is the relationship between **publicly accessible benchmarks** and **progress in artificial intelligence** in the **medical practice** field?"
 
-Here the phrases in bold are also present in the abstract fragment which was used as context to generate the question. This is a lot of exact overlap. Looking at the quantitative results, this also shows. In this limited dataset, questions generated with ragas don’t seem to improve much upon our previous dataset.
+The bold phrases also appear in the abstract fragment which was used as context to generate the question. This is a lot of exact overlap. Looking at the quantitative results, this also shows. In this limited dataset, questions generated with ragas don’t seem to improve much upon our previous dataset.
 
-![Evaluation of custom hybrid query with ragas generated questions](../../development/evaluate/retrieval/results/retrieval_result_scores_s10_k3_rrf_ragas.png)
+![Evaluation of custom hybrid query with ragas generated questions](../../development/evaluate/retrieval/results/retrieval_result_scores_s10_k3_rrf_ragas_test.png)
 
-It does however reach higher scores overall which could be contributed to even higher overlap between questions and contexts. This could also be a source of less ‘unanswerable’ bad questions in the dataset.
+The retrieval however reaches higher scores overall which could be contributed to even higher overlap between questions and contexts. This could also be a source of less ‘unanswerable’ bad questions in the dataset.
 This could also be due to our dataset potentially still including more questions for which the corresponding abstract fragment is not inferrable see ([``retrieval``](#retrieval-testset-generation)).
+
+## Context Enrichment
+
+After retrieving the most relevant abstract fragments we extract the top k unique pmids from the retrieved abstract fragments. We then query the OpenSearch `abstracts` index for the full abstracts of these pmids and return them as results from our retriever. While we want to use abstract fragments to improve our search, we provide the full abstracts as contexts to the answer generation model. This is because the full abstracts provide more context and are more likely to contain the information needed to answer the question.
 
 ## Natural Language Based Metadata Filtering
 
-In order to enable user queries where additional filters are specified, like the publication date of an article, we sought to implement the Self-Query Retriever of Langchain which allows this behavior ([``LangChain Documentation: Self-Query OpenSearch Retriever``](https://python.langchain.com/docs/integrations/retrievers/self_query/opensearch_self_query)). To this end, we implement a custom Vectorstore. It retrieves filters from a user query which can be used in our OpenSearch queries. This is done by querying a GenAI model to extract filter parameters in a vectorstore-agnostic language and then translate this domain specific language to an OpenSearch filter query. We then extend our existing queries by these filter queries. 
+In order to enable user queries where additional filters are specified, like the publication date of an article, we sought to implement the Self-Query Retriever of LangChain which allows this behavior ([``LangChain Documentation: Self-Query OpenSearch Retriever``](https://python.langchain.com/docs/integrations/retrievers/self_query/opensearch_self_query)). To this end, we implement a custom Vectorstore. It retrieves filters from a user query which can be used in our OpenSearch queries. This is done by querying a llm model to extract filter parameters in a vectorstore-agnostic language and then translate this domain specific language to an OpenSearch filter query. We then extend our existing queries by these filter queries.
 
 ### Model Performance Comparison
 
-As GenAI model for query filter extraction we tested:
-- Llama2: It could not follow the instruction to extract filter parameters at all. Even when playing with the temperature and prompt. Absolutely unsuitable.
+As llm for query filter extraction we tested:
+- Llama2: It could not follow the instruction to extract filter parameters at all. Even when playing with the temperature and prompt. -  Absolutely unsuitable.
+
 - Gemma: It was able to extract parameters and was especially proficient in getting mathematical comparisons like greater than or lesser than right. However, it was too strictly adhering to the prompt. For example, when we queried it to extract *the year of the publication* it could only handle queries like "Cancer research after 2015", but not "Cancer research after January 1st 2015". However, when changing the prompt to *the date of the publication*, it could no longer handle "Cancer research after 2015".
-- Mistral: Mistral got this right more easily. It was able to make the abstraction and return the queried parameters, no matter if only a year of specific date was provided. However, Mistral struggled with correctly extracting comparison operators. This is in line with the claims made by Google, which promised Gemma to outperform other small-scale models in terms of mathematical ability (Found in this report: [Gemma Team, Google Deep Mind: Gemma: Open Models Based on Gemini
-Research and Technology](https://storage.googleapis.com/deepmind-media/gemma/gemma-report.pdf)). However, by fiddling with the temperature we got Mistral to work and extract greater than/less than correctly.
+- Mistral: Mistral got this right more easily. It was able to make the abstraction and return the queried parameters, no matter if only a year of specific date was provided. However, Mistral struggled with correctly extracting comparison operators. This is in line with the claims made by Google, which promised Gemma to outperform other small-scale models in terms of mathematical ability (Found in this report [`[2.]`](#references)). However, by fiddling with the temperature we got Mistral to work and extract greater than/less than correctly.
 
 This is why we eventually chose Mistral to do the self-querying.
 
@@ -382,13 +386,15 @@ Unfortunately, with our setup, we can not use Google Colab. This is because Goog
 
 We chose Ollama as backend for Llama2 because hardware acceleration is essential in order to receive answers in real time.
 However, getting the hardware acceleration set-up properly is very time-consuming and cumbersome with other solutions.
-To improve the user experience and workflow for our team we evaluated the following frameworks:
+To improve the user experience and workflow for our team we tested the following solutions:
 
 - Downloading the model directly and quantizing it ourselves: The quantization process takes quite a lot of time and space.
 Also, on Windows, the libraries are not updated to perform 4bit quantization without custom C++ compilation. It is much better to use an already quantized model.
 - CTransformers: It allows for downloading already quantized models. However, it is extremely hard to get hardware acceleration working on MacOS.
 - LlamaCpp: It also allows for downloading already quantized models, but it requires a lot of manual configuration for hardware acceleration.
 - Ollama: It provides by far the easiest setup (as easy as installing any app), allows for already quantized models and, additionally, it has Langchain support.
+
+We therefore chose Ollama.
 
 ## Choice of Generation Model
 
@@ -442,10 +448,9 @@ We also tested question answering on more complex questions and PubMed abstracts
 
 ### Gemma
 
-At the time of writing this, Google's Gemini-based open-source Gemma model has been released for 13 hours. There are two versions, a 7 billion and 2 billion parameter model. We tested the 4 bit quantized 7 billion parameter model requiring 5.2 GB of disk space. Again, without changing the prompt, context or questions, the answering performance appeared worse than with Mistral. The report for Google Gemma ([Gemma Team, Google Deep Mind: Gemma: Open Models Based on Gemini
-Research and Technology](https://storage.googleapis.com/deepmind-media/gemma/gemma-report.pdf)) stresses the model's performance being especially strong on coding and mathematical tasks compared to models of a similar size. In free recall question answering tasks (MMLU) it is comparable to Llama2 or Mistral. However, there is no benchmark on RAG and question answering with provided context. In our tests, it blatantly ignored the instruction to answer to the best of its ability if the answer is not contained within the context. Fiddling with the temperature only made answers worse. Here are the examples:
+At the time of writing this, Google's Gemini-based open-source Gemma model has been released for 13 hours. There are two versions, a 7 billion and 2 billion parameter model. We tested the 4 bit quantized 7 billion parameter model requiring 5.2 GB of disk space. Again, without changing the prompt, context or questions, the answering performance appeared worse than with Mistral. The report for Google Gemma[``[2.]``](#references) stresses the model's performance being especially strong on coding and mathematical tasks compared to models of a similar size. In free recall question answering tasks (MMLU) it is comparable to Llama2 or Mistral. However, there is no benchmark on RAG and question answering with provided context. In our tests, it blatantly ignored the instruction to answer to the best of its ability if the answer is not contained within the context. Fiddling with the temperature only made answers worse. Here are the examples:
 
-Prompt, context, questions same as for llama2 
+Prompt, context, questions same as for Llama2.  
 Answers:
    - The provided text does not specify whether Jesse's favorite color is orange or not, therefore I cannot answer the query. (Worse than Mistral. It should have extracted red as favorite color.)
    - The text does not provide information about Theo's favorite color, therefore I cannot answer this query. (Good)
@@ -458,9 +463,11 @@ Additionally, Gemma is generally larger (5.2 vs 4.1 GB) than Mistral and has slo
 
 ## Routing - Question-Type Dependent Answer-Generation
 
-Our system should be able to answer different types of questions. In our first naive approach, we just defined one chain with a very general prompt that should answer all types of questions. The obvious problem with that is that different questions can have different requirements for either the answer format or the answering process. When we e.g. want factual questions to be answered with a concise statement and causal questions to be answered with a longer explanation, it is difficult to handle this with just a single answering chain and prompt.
-Therefore we implemented a routing system. Questions get first prompted to an llm which classifies them by their type. Depending on this type they can now get handeled differently. In our first version this only translates to using different prompts that specify the answer format more precisely. Also possible but not yet implemented would be using different retrieving behaviour for the different question types. For example it might be beneficial to use more context documents for complex questions than for confirmation questions.
-For our implementation we did not use langchains RouterChain or the MultiPromptChain. This is due to issues with forwarding the inputs from the routing chain to the destination chains (the chains that answer the question) as they don't allow additional external inputs and the input of the destination chain is just one field. Workarounds like prompting the routing chain to return the output in a special format by encapsulating everything in one nested json-like string would be possible but more prone for errors. Therefore we built our own routing chain.
+Our system should be able to answer different types of questions. In our first naive approach, we just defined one chain with a very general prompt that should answer all types of questions. The obvious problem with that is that different questions can have different requirements for either the answer format or the answering process. When we e.g. want factual questions to be answered with a concise statement and causal questions to be answered with a longer explanation, it is difficult to handle this with just a single answering chain and prompt.  
+Therefore we implemented a routing system. Questions get first prompted to an llm which classifies them by their type. Depending on this type they can now get handeled differently. In our first version this only translates to using different prompts that specify the answer format more precisely.  
+Also possible but not yet implemented would be using different retrieving behaviour for the different question types. For example it might be beneficial to use more context documents for complex questions than for confirmation questions.  
+
+For our implementation we did not use langchains RouterChain or the MultiPromptChain. This is due to issues with forwarding the inputs from the routing chain to the destination chains (the chains that answer the question) as they don't allow additional external inputs and the input of the destination chain is just one field. Workarounds like prompting the routing chain to return the output in a special format by encapsulating everything in one nested json-like string would be possible but more prone for errors. Therefore we built our own routing chain.  
 In total routing the question depending on its type gives us more flexibility and possibilities to support different questions. The main drawback is that this doubles inference time, as we are now prompting llms twice, once for the routing, once for the generation of the actual answer.
 
 ## Evaluation
@@ -490,7 +497,7 @@ relevant context to base your answer on. Be concise and factual.
 # User Interface
 
 ## Capabilties
-The `streamlit` interface is the entry point to our interactive RAG system and is started by issuing the `streamlit run development/website/website.py` command. An overview about the embedding of the interface in the context of the system is given in section [System Architecture](#architecture).
+The `streamlit` interface is the entry point to our interactive RAG system and is started by issuing the `streamlit run development/website/website.py` command. An overview about the embedding of the interface in the context of the system is given in section [System Architecture](#system-architecture).
 
 The interface allows the user to enter a query, for which matching abstracts are
 searched for by the OpenSearch backend. When `Self-Querying` is enabled, additional search filters are extracted from the query using an LLM, e.g. publication year or title keywords.
@@ -505,7 +512,7 @@ the retriever is that those documents are relevant for answering the
 query. That rating is based on the `Cosine Similarity` between the
 document and query embeddings. However, it is no scientific measurement.
 
-Nevertheless, it allows the user some insight into retrieval. The
+Nevertheless, it gives the user some insight into retrieved results. The
 rating system differentiates between *High*, *Medium* and *Low*.
 Furthermore, the user is given links to the corresponding publications,
 so that they can inspect the sources themselves - for example if the
@@ -513,10 +520,10 @@ rating indicates that no similar or matching sources are available.
 The rating can also help the user to refine the query, so that documents
 are returned with higher confidence.
 
-OpenSearch searches for the best matches for a query by employing
+OpenSearch searches for the best matches for a query text by employing
 cosine similarity. Therefore, cosine similarity seems like a suitable
 metric to determine similarity. Hence, we use to determine the
-*similarity* or *confidence* of the retrieved abstracts to the query.
+*similarity* or *confidence* of the retrieved abstracts to the query text.
 
 Empirically we determined the value range of the computed
 abstract-to-query similarity to be $I = [0.8; 1.0]$. For perfect
@@ -544,21 +551,137 @@ Then, the resulting value is scaled up to the range $J$.
 - Conversational
 
 
-# Conclusion / Resulting QA-System
+# Conclusion
+
+As conclusion, we managed to fulfill **all** the requirements which we specified in the beginning of the project (see report). Furthermore, we also met all requirements by the project definition of Prof. Dr. Gertz:
+
+**Data Acquisition**:
+
+- We successfully retrieved all requested abstracts from the **PubMed** database.
+
+**Text Retrieval**:
+
+- We implemented a search system that can take natural language queries and search our database from it. It also allows you to specify filters like the year of the abstracts in natural language. 
+- We implemented and evaluated a hybrid scheme to both take semantic and lexicographical aspects into account
+- Our Retrieval system has good performance in both quality and answer latency.
+
+**Question and Answer types**:
+
+- We implemented confirmation, factoid, casual, and hypothetical questions.
+- We managed to answer questions in a fully abstractive manner.
+  
+**User Interface**:
+
+- We managed to create an appealing, usable, convenient, and effective user interface.
+- The user gets the answer in natural language and receives the sources.
+- Additionally, we greatly exceeded the requirements by providing additional info such as retrieval confidence which works very well.
+
+**Evaluation**:
+
+- We thoroughly checked our implementations
+- We conducted deeper examination to find reasons for why expectations were not met like with the hybrids search.
+- We compared several approaches and methodologies (e.g. LLM for text generation, hybrid search strategies).
+- We created several test sets (own test set, ragas generation) and evaluation schemes (accuracy at k, rank score, faithfulness etc). 
+
+
+**Future Work**:
+
+- implement different handling of retrieval system dependent on the extracted question type e.g. by utilizing a langchain multi-query retriever for complex questions
+
+- Potentially fix our bugs with the ragas-testset generation using local models, create a bigger evaluation set and utilize the different evaluation metrics of ragas for a more thorough evaluation (only retriever, only answer generation, full pipeline)
+
+All in all, we created a stable, fun-to-engage-with, nicely performing Question Answering System.
+
+
 
 # Contributions
+Legend:  
+BV = Benedikt Vidic  
+LR = Lukas Rapp  
+DO = Dominik Ochs  
+TS-H = Theo Stempel-Hauburger
 
-The following contains the statements of contribution for each team member as required by the final report specification. However, please keep in mind that we collaborated **highly cooperatively** and everyone is in the loop and know of what goes on in each part of our QA-system. Oftentimes, we discussed our changes. Even though only one person was working on it, everyone contributed to the discussions. In the following texts we try to make clear when we worked cooperatively. However, some topics were worked on in such equal parts that it is hard to make a clear distinction. For example, the documentation we wrote jointly. To that end, we used *Visual Studio Code Live Share* so everyone could edit the report simultaneously. We spent several days sitting in the same room and working together on the project. 
+|Task| B V| L R|D O| T S-H|
+|---|---|---|---|---|
+|System Setup & Guide     |||x|x|
+|Docker & Docker Compose      |||x||
+|Docker Hardware Acceleration   ||||x|
+|PubMed Scraping        |x|x|x||
+|Abstract Extraction        ||x|x||
+|Abstract Fragmentation     |||x||
+|Abstract Fragmentation Bug Analysis  |x|x|||
+|Document Model       ||x|x||
+|OpenSearch Ingestion     ||x|x||
+|OpenSearch Connector Library   ||x||x|
+|Retrieval System Framework     ||x||x|
+|Self-Querying        ||x|x|x|
+|Custom Hybrid Search     |x||x||
+|Retrieval Testset Generation   |x||||
+|Automatic Testset Generation - Ragas ||||x|
+|Retriever Evaluation     |x|x||x|
+|OLLAMA         |||x|x|
+|Answer LLM Testing       |x||x||
+|Answer Evaluation        |x||x||
+|Answer Type Router       |x||||
+|Confidence Score       ||x|x|x|
+|Streamlit Interface        ||x||x|
+|Documentation        |x|x|x|x|
+  
 
-## Dominik Ochs
 
 
+We want to reiterate that everyone was involved in all discussions and planning. For the tabular overview, we have decided to only enter the main contributors. Keep in mind that the tasks do not require the same work effort. Everybody contributed to the project equally. Furthermore, commit messages contain the names of everybody that worked on that specific commit, including discussing together, debugging and scrutinizing the code and making code adjustments. Just because somebody is listed in the message of a commit belonging to a specific task from the table doesn’t mean that that someone is listed as a main contributor. For example, Theo and Lukas worked together a lot as they were located in the same room and worked on the same machine (via ssh connection) and hence naturally worked and discussed together a lot.
 
-## Theo Stempel-Hauburger
 
-## Lukas Rapp
+## Challenges we faced
 
-## Benedikt Vidic
+### Dominik Ochs
+
+- Discussions: In the team, there was often a lot of discussion which sometimes stopped us from being productive. 
+- Docker: It is supposed to make things easier but is pain to use on different Operating Systems, especially trying to enable Hardware Acceleration.
+- Teamwork on medium sized project. Our project is too large for 1 person but too small for 4 persons. We had to often work around merge conflicts and implementation issues. 
+- Prompt engineering: Hard to make LLM follow instructions. 
+- Python: For larger projects as this, statically typed languages would be much better to work with. Especially in a team. 
+- Bleeding Edge Libraries: The AI eco system is rapidly evolving and the libraries are still full of bugs.
+- Big data: Hard to work with. Trial-and-error scheme is not applicable. 
+
+
+### Theo Stempel-Hauburger
+
+- Installing nvidia drivers in ubuntu was sadly not so straightforward and resulted in a lot of reinstalls (3) of the operating system and trying of different driver and operating system versions (especially nvidia drivers compatible with docker).
+- trying to enable hardware acceleration within docker for ollama and for opensearch. I would not recommend trying to do this… 
+- Python: for larger projects it does not feel right to use a not strongly typed language. This led to a lot of debugging problems. Pydantic helps with this but is also not a perfect solution.
+- Streamlit: Did need a lot of `code hacking` to get new stuff to work, what I didn’t like and took time
+- Coding Style: Each of us had different ideas on how we would write code or how our repo should be structured. Constantly updating code for fixes or new features made it hard to write commented and extensible code.
+- Opensearch: fiddling with the opensearch-py library and opensearch API itself made a lot of stuff way harder and resulted in a lot of code and working ours to get everything to work nicely. Other databases or abstractions from langchain would probably have been easier in retrospect
+- Documentation: I really did not like how bad the documentation of a lot of tools like ragas or langchain or opensearch-py is. This actually shocked me! Sometimes the best bet was to read the sourcecode..
+- Time Management: A group project this size when all of us on the same time study, work and have exams did make collaboration with the whole group harder to plan. I for myself like a blocked timeslot like 2 full weeks of intensive colab more. Because Lukas and I both enjoyed extensive in person collaboration we also did that most of the time to boost our productivity.
+
+### Lukas Rapp
+
+- Getting of the Ground: It is difficult to get started and conclude on a common path when nobody has real-world experience and the technology is cutting-edge
+- Inconsistent APIs: During data retrieval (PubMed) we fought a lot with the incoming data format. There are a lot of inconsistencies and you have to find a way around the problem to produce a consistent (but reduced) data model
+- Discussions: In the team, there was often a lot of discussion which sometimes stopped us from being productive. 
+- Team Size: The project is too large for one person but too small for four persons.
+- Black-Box Working: Technologies, such as LLMs, are not fully predictable due to their complexity. Effectively they are black boxes. That makes it hard to make founded assumptions or work with them in a reliable manner. In the end, working with them comes down to frustrating trial and error without being able to take and make guarantees.
+- Buggy Cutting-Edge: We encountered several problems with technologies. Either documentation is missing or things mysteriously don’t work (e.g. Hybrid Search on OpenSearch). That hinders development as we now have to carefully craft an alternative solution, which is frustrating.
+
+
+### Benedikt Vidic
+- A lot of the challenges I faced are already explained in detail in the previous documentation.
+- Starting Difficulties: Before taking the lecture I did not have a lot of domain knowledge. Especially in the beginning, I struggled with understanding what is supposed to be our task to implement and at which point we can or should just use already existing libraries and tools. This got a lot better after lecture 8-rag (which was relatively late in the semester)
+- Weakly typed and badly documented libraries: Sometimes I struggled more than necessary with some library functions just because there was no/incomplete/outdated documentation and the signature of the function lacked specific type information.
+- Hardware issues: I do not work with the newest laptop which could sometimes slow down or hinder development on my machine. Sometimes we used workarounds, e.g. I wrote the code for an evaluation for something that we then executed on Theo’s computer.
+- Prompt engineering: This is an annoying task that feels very unscientific to do. I tried to look up some best practices which helped a little bit.
+
+
+# References
+```
+[1.] Cormack, G.V., Clarke, C.L., & Büttcher, S. (2009). Reciprocal rank fusion outperforms condorcet and individual rank learning methods. Proceedings of the 32nd international ACM SIGIR conference on Research and development in information retrieval. https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf
+
+[2.] Gemma Team & Google-Deepmind. (2024). Gemma: Open Models Based on Gemini Research and Technology. Deepmind-Media. https://storage.googleapis.com/deepmind-media/gemma/gemma-report.pdf
+```
 
 **Thank you for reading!**
+
 ![Cute Cat stretching Paws](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
