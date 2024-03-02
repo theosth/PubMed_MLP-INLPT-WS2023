@@ -21,7 +21,7 @@ We are all enrolled in the Master Data and Computer Science.
 
 **Anti-Plagiarism Confirmation**: See file `./plagiarism_declaration_allsigned.pdf`
 
-
+Please find the project report under `management/docs/DOCUMENTATION.md`.
 
 ## Setup project environment
 

@@ -1,0 +1,33 @@
+## Dominik Ochs
+
+
+My (Dominik Ochs’) contributions are listed in the following:
+
+
+- System Setup Architecture.
+- Setup Guide.
+- Docker and Docker-Compose.
+- OpenSearch Setup.
+- PubMed Scraping.
+- Metadata and Abstract extraction from raw scraped data. 
+- Document Model.
+- OpenSearch Ingestion.
+- Speeding up OpenSearch Ingestion.
+- Evaluation of generation backend.
+- Ollama setup.
+- LLM testing for answer generation.
+- Answer generation with ragas framework with Faithfulness, Answer Relevancy.
+- Self-Querying.
+- Hybrid Search via Reciprocal Rank Fusion.
+- Confidence Score and Categories.
+- Documentation.
+
+
+I faced the following challenges:
+- Discussions: In the team, there was often a lot of discussion which sometimes stopped us from being productive. 
+- Docker: It is supposed to make things easier but is pain to use on different Operating Systems, especially trying to enable Hardware Acceleration.
+- Teamwork on medium sized project. Our project is too large for 1 person but too small for 4 persons. We had to often work around merge conflicts and implementation issues. 
+- Prompt engineering: Hard to make LLM follow instructions. 
+- Python: For larger projects as this, statically typed languages would be much better to work with. Especially in a team. 
+- Bleeding Edge Libraries: The AI eco system is rapidly evolving and the libraries are still full of bugs.
+- Big data: Hard to work with. Trial-and-error scheme is not applicable. 
