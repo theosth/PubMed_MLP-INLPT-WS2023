@@ -359,19 +359,23 @@ TODO EVALUATION
 
 ## Natural Language Based Metadata Filtering
 
-### Testing the LangChain OpenSearch Self-Query Retriever
+In order to enable user queries where additional filters are specified, like the publication date of an article, we sought to implement the Self-Query Retriever of Langchain which allows this behavior ([``LangChain Documentation: Self-Query OpenSearch Retriever``](https://python.langchain.com/docs/integrations/retrievers/self_query/opensearch_self_query)). To this end, we implement a custom Vectorstore. It retrieves filters from a user query which can be used in our OpenSearch queries. This is done by querying a GenAI model to extract filter parameters in a vectorstore-agnostic language and then translate this domain specific language to an OpenSearch filter query. We then extend our existing queries by these filter queries.  
 
-In order to enable user queries where additional filters are specified, like the publication date of an article, we sought to implement the Self-Query Retriever of Langchain which allows this behavior ([``LangChain Documentation: Self-Query OpenSearch Retriever``](https://python.langchain.com/docs/integrations/retrievers/self_query/opensearch_self_query)). To this end, we implement a custom Vectorstore. It retrieves filters from a user query which can be used in our OpenSearch queries. This is done by querying a GenAI model to extract filter parameters in a vectorstore-agnostic language and then translate this domain specific language to an OpenSearch filter query. We then extend our existing queries by these filter queries.
+### Model Performance Comparison
 
 As GenAI model for query filter extraction we tested:
 - Llama2: It could not follow the instruction to extract filter parameters at all. Even when playing with the temperature and prompt. Absolutely unsuitable. 
 - Gemma: It was able to extract parameters and was especially proficient in getting mathematical comparisons like greater than or lesser than right. However, it was too strictly adhering to the prompt. For example, when we queried it to extract *the year of the publication* it could only handle queries like "Cancer research after 2015", but not "Cancer research after January 1st 2015". However, when changing the prompt to *the date of the publication*, it could no longer handle "Cancer research after 2015".
-- Mistral: Mistral got this right more easily. It was able to make the abstraction and return the queried parameters, no matter if only a year of specific date was provided. However, Mistral struggled with correctly extracting comparison operators. This is in line with the claims made by Google, which promised Gemma to outperform other small-scale models in terms of mathematical ability. However, by fiddling with the temperature we got Mistral to work and extract greater than/less than correctly.
+- Mistral: Mistral got this right more easily. It was able to make the abstraction and return the queried parameters, no matter if only a year of specific date was provided. However, Mistral struggled with correctly extracting comparison operators. This is in line with the claims made by Google, which promised Gemma to outperform other small-scale models in terms of mathematical ability (Found in this report: [Gemma Team, Google Deep Mind: Gemma: Open Models Based on Gemini
+Research and Technology](https://storage.googleapis.com/deepmind-media/gemma/gemma-report.pdf)). However, by fiddling with the temperature we got Mistral to work and extract greater than/less than correctly.
 
 This is why we eventually chose Mistral to do the self-querying. 
 
+### Results
 
-<!--  -->
+However, Mistral, it not always succeeds to extract filters correctly. Sometimes, it fails to properly format as json, so the output formatter (trying to create a json) crashes and filtering is skipped. Furthermore, it fails to recognize filters in some queries. However, time-based filtering does work quite well now. For example query `cancer research after 2015` correctly extracts `>2015` as filter and applies it to retrieve context. 
+
+
 # Answer Generation
 
 ## Choice of Generation Backend
@@ -440,7 +444,8 @@ We also tested question answering on more complex questions and PubMed abstracts
 
 ### Gemma
 
-At the time of writing this, Google's Gemini-based open-source Gemma model has been released for 13 hours. There are two versions, a 7 billion and 2 billion parameter model. We tested the 4 bit quantized 7 billion parameter model requiring 5.2 GB of disk space. Again, without changing the prompt, context or questions, the answering performance appeared worse than with Mistral. The paper for Google Gemma stresses the model's performance being especially strong on coding and mathematical tasks compared to models of a similar size. In free recall question answering tasks (MMLU) it is comparable to Llama2 or Mistral. However, there is no benchmark on RAG and question answering with provided context. In our tests, it blatantly ignored the instruction to answer to the best of its ability if the answer is not contained within the context. Fiddling with the temperature only made answers worse. Here are the examples:
+At the time of writing this, Google's Gemini-based open-source Gemma model has been released for 13 hours. There are two versions, a 7 billion and 2 billion parameter model. We tested the 4 bit quantized 7 billion parameter model requiring 5.2 GB of disk space. Again, without changing the prompt, context or questions, the answering performance appeared worse than with Mistral. The report for Google Gemma ([Gemma Team, Google Deep Mind: Gemma: Open Models Based on Gemini
+Research and Technology](https://storage.googleapis.com/deepmind-media/gemma/gemma-report.pdf)) stresses the model's performance being especially strong on coding and mathematical tasks compared to models of a similar size. In free recall question answering tasks (MMLU) it is comparable to Llama2 or Mistral. However, there is no benchmark on RAG and question answering with provided context. In our tests, it blatantly ignored the instruction to answer to the best of its ability if the answer is not contained within the context. Fiddling with the temperature only made answers worse. Here are the examples:
 
 Prompt, context, questions same as for llama2  
 Answers:
