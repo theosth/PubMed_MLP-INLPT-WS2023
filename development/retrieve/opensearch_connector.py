@@ -31,8 +31,7 @@ def execute_query(
     :param extra_params: Additional parameters for OpenSearch query execution.
     :return: The response from OpenSearch.
     """
-
-    if filter:
+    if filter and len(filter) > 0:
         query = add_bool_filter_to_query(query, filter)
 
     query_body = {"size": size, "query": query}
