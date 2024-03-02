@@ -19,7 +19,7 @@ We are all enrolled in the Master Data and Computer Science.
 
 **Advisor**: Ashish Chouhan
 
-**Anti-Plagiarism Confirmation**: see ...
+**Anti-Plagiarism Confirmation**: See file `./plagiarism_declaration_allsigned.pdf`
 
 
 
