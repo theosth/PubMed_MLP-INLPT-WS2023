@@ -100,7 +100,7 @@ https://drive.google.com/drive/folders/1RFKnvQT_dRFUv4zJgBV8tarvRsjkxjqL?usp=sha
 ```
 After downloading, place the files in the `development/ingest/data` folder. Then run the `ingestor.py` script.
 
-**Creating the datasets manually**:
+**Creating the datasets manually**:  
 If you want to create the datasets manually, first execute the scraper script `development/scrape/pubmed_scraper.py`.
 Then execute the extractor that sanitizes the data using the `development/scrape/pubmed_extractor.py` script.
 After that, you can execute the scripts `development/ingest/abstracts_dataset_gen.py` and `development/ingest/abstract_fragments_dataset_gen.py` to create the datasets in the folder `development/ingest/data`.
