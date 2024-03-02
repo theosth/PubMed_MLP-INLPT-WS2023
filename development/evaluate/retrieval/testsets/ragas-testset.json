@@ -1,0 +1,92 @@
+[
+  {
+    "question":"What is the relationship between publicly accessible benchmarks and progress in artificial intelligence in the medical practice field?",
+    "contexts":[
+      "publicly accessible benchmarks that allow for assessing and comparing model performances are important drivers of progress in artificial intelligence ( ai ). while recent advances in ai capabilities hold the potential to transform medical practice by assisting and augmenting the cognitive processes of healthcare professionals, the coverage of clinically relevant tasks by ai benchmarks is largely unclear. furthermore, there is a lack of systematized meta - information that allows clinical ai researchers to quickly determine accessibility, scope, content and other characteristics of datasets and benchmark datasets relevant to the clinical domain. to address these issues, we curated and released a comprehensive catalogue of datasets and benchmarks pertaining to the broad domain of clinical and biomedical natural language processing ( nlp ), based on a systematic review of literature and. a total of 450 nlp datasets were manually systematized and annotated with rich metadata, such as targeted tasks, clinical applicability, data types, performance metrics, accessibility and licensing information, and availability of data splits. we then compared tasks covered by ai benchmark datasets with relevant tasks that medical practitioners reported as highly desirable targets for automation in a previous empirical study. our analysis indicates that ai benchmarks of direct clinical relevance are scarce and fail to cover most work activities that clinicians want to see addressed. in particular, tasks associated with routine documentation and patient data administration workflow"
+    ],
+    "ground_truth":"Publicly accessible benchmarks are important drivers of progress in artificial intelligence in the medical practice field.",
+    "evolution_type":"simple",
+    "episode_done":true
+  },
+  {
+    "question":"How does the platform using live cell imaging algorithm and artificial intelligence help in identifying cancer cells with brain metastatic potential?",
+    "contexts":[
+      "brain metastases are the most lethal complication of advanced cancer ; therefore, it is critical to identify when a tumor has the potential to metastasize to the brain. there are currently no interventions that shed light on the potential of primary tumors to metastasize to the brain. we constructed and tested a platform to quantitatively profile the dynamic phenotypes of cancer cells from aggressive triple negative breast cancer cell lines and patient derived xenografts ( pdxs ), generated from a primary tumor and brain metastases from tumors of diverse organs of origin. combining an advanced live cell imaging algorithm and artificial intelligence, we profile cancer cell extravasation within a microfluidic blood - brain niche ( \u03bcbbn ) chip, to detect the minute differences between cells with brain metastatic potential and those without with a ppv of 0. 91 in the context of this study. the results show remarkably sharp and reproducible distinction between cells that do and those which do not metastasize inside of the device."
+    ],
+    "ground_truth":"The platform using live cell imaging algorithm and artificial intelligence helps in identifying cancer cells with brain metastatic potential by profiling cancer cell extravasation within a microfluidic blood-brain niche (\u03bcBBN) chip and detecting the minute differences between cells with brain metastatic potential and those without.",
+    "evolution_type":"simple",
+    "episode_done":true
+  },
+  {
+    "question":"How does the genetic algorithm and artificial neural network contribute to the real-time adaptation of the dynamic multi-layered facade system?",
+    "contexts":[
+      "a genetic algorithm and an artificial neural network are deployed for the design of a dynamic multi - layered facade system that adapts in real - time to different weather and occupants'needs scenarios. the outputs are a set of different performances of the facade insulation cushions, optimized by the previous run of the genetic algorithm. a facade system of etfe cushions is considered for them to learn from environmental data models. each facade cushion is set up as an artificial neuron that is linked to the behavior and temperature of the others. the proposed outputs are a set of different performances of the facade system that are optimized through running the genetic algorithm. facade neurons are configured as genes of the system that is abstractly represented on a digital model. the computational model manages cushion patterns'performances through several phenotypical adaptations, suggesting that the proposed facade system maximizes its thermal efficiency in different scenarios."
+    ],
+    "ground_truth":"The genetic algorithm and artificial neural network contribute to the real-time adaptation of the dynamic multi-layered facade system by optimizing the performances of the facade insulation cushions based on environmental data models.",
+    "evolution_type":"simple",
+    "episode_done":true
+  },
+  {
+    "question":"What potential advancements in understanding and treatment of Bloom syndrome have been found through the literature on rare diseases and the use of artificial intelligence?",
+    "contexts":[
+      "the literature were analyzed. through this scoping review, the researchers were able to identify several publications focusing on bloom syndrome. some common subject areas included the heredity of cte, clinical presentations of cte, and management of cte. in addition, the literature on rare diseases shows the potential advancements in understanding and treatment with artificial intelligence. future studies should address the causes of heterogeneity in presentation and examine potential therapeutic candidates for cte and similarly presenting syndromes. this review illuminated current advances in potential molecular targets or causative pathways in the development of cte as well as clinical features including erythema, increased cancer risk, and growth abnormalities. future studies should continue to explore innovations in this space, especially in regard to the use of artificial intelligence, including machine learning and deep learning, for the diagnosis and clinical management of rare diseases such as cte."
+    ],
+    "ground_truth":"The potential advancements in understanding and treatment of Bloom syndrome found through the literature on rare diseases and the use of artificial intelligence include the identification of potential molecular targets or causative pathways in the development of Bloom syndrome, as well as the exploration of innovations in the use of artificial intelligence, including machine learning and deep learning, for the diagnosis and clinical management of rare diseases such as Bloom syndrome.",
+    "evolution_type":"simple",
+    "episode_done":true
+  },
+  {
+    "question":"What are some important aspects to consider when bringing autonomous AI algorithms into clinical practice, specifically in the context of diabetic retinopathy screening and diagnostic imaging?",
+    "contexts":[
+      "artificial intelligence ( ai ) - based algorithms are rapidly entering the health care field and have the potential to improve patient care. our article focuses on the use of autonomous ai algorithms ( ie, algorithms that can make clinical decisions without human oversight ) in diagnostic imaging. in this article, we have used the example of diabetic retinopathy screening to highlight some important aspects to be considered by developers, policymakers, and end users when bringing autonomous ai algorithms into clinical practice. we have divided these aspects into ( 1 ) following the principles of safety, efficacy, and equity in all phases of development and implementation of the algorithm ; ( 2 ) regulatory processes involving medical records, medical liability, and patient privacy ; ( 3 ) cost and billing ; and ( 4 ) the role of health care providers."
+    ],
+    "ground_truth":"Some important aspects to consider when bringing autonomous AI algorithms into clinical practice, specifically in the context of diabetic retinopathy screening and diagnostic imaging, include following the principles of safety, efficacy, and equity in all phases of development and implementation of the algorithm, regulatory processes involving medical records, medical liability, and patient privacy, cost and billing, and the role of healthcare providers.",
+    "evolution_type":"simple",
+    "episode_done":true
+  },
+  {
+    "question":"What is the purpose of the comprehensive catalogue of datasets and benchmarks for clinical and biomedical NLP, and how does it enable AI in ophthalmology?",
+    "contexts":[
+      "publicly accessible benchmarks that allow for assessing and comparing model performances are important drivers of progress in artificial intelligence ( ai ). while recent advances in ai capabilities hold the potential to transform medical practice by assisting and augmenting the cognitive processes of healthcare professionals, the coverage of clinically relevant tasks by ai benchmarks is largely unclear. furthermore, there is a lack of systematized meta - information that allows clinical ai researchers to quickly determine accessibility, scope, content and other characteristics of datasets and benchmark datasets relevant to the clinical domain. to address these issues, we curated and released a comprehensive catalogue of datasets and benchmarks pertaining to the broad domain of clinical and biomedical natural language processing ( nlp ), based on a systematic review of literature and. a total of 450 nlp datasets were manually systematized and annotated with rich metadata, such as targeted tasks, clinical applicability, data types, performance metrics, accessibility and licensing information, and availability of data splits. we then compared tasks covered by ai benchmark datasets with relevant tasks that medical practitioners reported as highly desirable targets for automation in a previous empirical study. our analysis indicates that ai benchmarks of direct clinical relevance are scarce and fail to cover most work activities that clinicians want to see addressed. in particular, tasks associated with routine documentation and patient data administration workflow"
+    ],
+    "ground_truth":"The purpose of the comprehensive catalogue of datasets and benchmarks for clinical and biomedical NLP is to provide a curated and annotated collection of datasets and benchmarks relevant to the clinical domain. It enables AI in ophthalmology by allowing clinical AI researchers to quickly determine the accessibility, scope, content, and other characteristics of datasets and benchmark datasets in the clinical and biomedical NLP field.",
+    "evolution_type":"multi_context",
+    "episode_done":true
+  },
+  {
+    "question":"\"What methods measure the durability of ni-w-p coated pa fabric and how can the results be used in multi-scene applications?\"",
+    "contexts":[
+      "of durability measurements including 180 \u00b0c heating, ultrasonication treatment, and repetitive peeling tests, respectively. therefore, the prepared ni - w - p coated pa fabric with prominent chemical stability and mechanical robustness endows enormous potential in multi - scene applications."
+    ],
+    "ground_truth":"The methods that measure the durability of ni-w-p coated pa fabric are 180 \u00b0c heating, ultrasonication treatment, and repetitive peeling tests. The results can be used in multi-scene applications to demonstrate the chemical stability and mechanical robustness of the fabric.",
+    "evolution_type":"multi_context",
+    "episode_done":true
+  },
+  {
+    "question":"How does the cost of cmi-guided treatment compare to prior or planned treatment options in terms of outcome results and treatment decision changes?",
+    "contexts":[
+      "tumor profiling is increasingly used in advanced cancer patients to define treatment options, especially in refractory cases where no standard treatment is available. caris molecular intelligence ( cmi ) is a multiplatform tumor profiling service that is comprehensive of next - generation sequencing ( ngs ) of dna and rna, immunohistochemistry ( ihc ) and in situ hybridisation ( fish ). the aim of this study is to compare costs of cmi - guided treatment with prior or planned treatment options in correlation with outcome results. retrospective data from five clinical trials were collected to define the treatment decision prior to the receipt of the cmi report ( n = 137 patients ). a systematic review of treatment data from 11 clinical studies of cmi ( n = 385 patients ) allowed a comparison of planned vs actual ( n = 137 ) and prior vs actual ( n = 229 ) treatment costs. treatment plan was changed in 88 % of cmi - profiled cases. the actual cmi guided treatment cost per cycle was \u00a3995 in 385 treated patients. planned treatment costs were comparable to actual treatment costs ( \u00a3979 vs \u00a3945 ; p = 0. 7123 ) and prior treatment costs were not significantly different to profiling - guided treatments ( \u00a3892 vs \u00a3850 ; p = 0. 631 )"
+    ],
+    "ground_truth":"The cost of cmi-guided treatment is comparable to both prior and planned treatment options in terms of outcome results and treatment decision changes.",
+    "evolution_type":"reasoning",
+    "episode_done":true
+  },
+  {
+    "question":"By using the electrostatic potential values extracted from 3-dimensional grid cubes of the drug-protein binding sites, what method was implemented in this study to predict the binding affinities of checkpoint kinase 1 and caspase 3 inhibitors in drug design?",
+    "contexts":[
+      "understanding the interaction between drug molecules and proteins is one of the main challenges in drug design. several tools have been developed recently to decrease the complexity of the process. artificial intelligence and machine learning methods offer promising results in predicting the binding affinities. it becomes possible to do accurate predictions by using the known protein - ligand interactions. in this study, the electrostatic potential values extracted from 3 - dimensional grid cubes of the drug - protein binding sites are used for predicting binding affinities of related complexes. a new algorithm with a dynamic feature selection method was implemented, which is derived from compressed images for affinity prediction ( cifap ) study, to predict binding affinities of checkpoint kinase 1 and caspase 3 inhibitors."
+    ],
+    "ground_truth":"The method implemented in this study to predict the binding affinities of checkpoint kinase 1 and caspase 3 inhibitors in drug design is the algorithm derived from compressed images for affinity prediction (CIFAP) study.",
+    "evolution_type":"reasoning",
+    "episode_done":true
+  },
+  {
+    "question":"What were the effects of milnacipran administration on attention and information processing in non-depressed individuals with brain injury?",
+    "contexts":[
+      "milnacipran administration improved erp measures of attention and information processing in non - depressed persons with brain injury and also improved scores on three sub - scales of standard neuropsychological tests of cognitive dysfunction. therefore, this intervention merits validation by additional, larger studies."
+    ],
+    "ground_truth":"Milnacipran administration improved measures of attention and information processing in non-depressed individuals with brain injury.",
+    "evolution_type":"simple",
+    "episode_done":true
+  }
+]

@@ -8,7 +8,7 @@ sys.path.append(str(Path(__file__).parent.parent.parent.parent))
 
 import development.commons.env as env
 
-result_name = "retrieval_result_scores_s10_k3_opensearch_hybrid"
+result_name = "retrieval_result_scores_s10_k3_rrf_ragas"
 data_filepath = f"{env.RETRIEVAL_RESULT_FOLDER_PATH}{result_name}.csv"
 result_filepath = f"{env.RETRIEVAL_RESULT_FOLDER_PATH}{result_name}.png" 
 

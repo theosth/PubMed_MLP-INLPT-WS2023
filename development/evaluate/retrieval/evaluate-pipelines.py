@@ -199,10 +199,14 @@ def main():
     k = 3  # specify the value of k for the binary_at_k metric
     eval_metric_settings = [{"k": k}, {}]
 
-    file_path = env.RETRIEVAL_TESTSET_PATH
+    # file_path = env.RETRIEVAL_TESTSET_PATH
+    # output_path_a = f"{env.RETRIEVAL_RESULT_FOLDER_PATH}retrieval_result_scores_s{size}_k{k}_opensearch_hybrid.csv"
+    # output_path_b = f"{env.RETRIEVAL_RESULT_FOLDER_PATH}retrieval_result_scores_s{size}_k{k}_rrf.csv"
     
-    output_path_a = f"{env.RETRIEVAL_RESULT_FOLDER_PATH}retrieval_result_scores_s{size}_k{k}_opensearch_hybrid.csv"
-    output_path_b = f"{env.RETRIEVAL_RESULT_FOLDER_PATH}retrieval_result_scores_s{size}_k{k}_rrf.csv"
+    # For Ragas testset
+    file_path = env.RETRIEVAL_TESTSET_FROM_RAGAS_TESTSET_PATH
+    output_path_a = f"{env.RETRIEVAL_RESULT_FOLDER_PATH}retrieval_result_scores_s{size}_k{k}_opensearch_hybrid_ragas.csv"
+    output_path_b = f"{env.RETRIEVAL_RESULT_FOLDER_PATH}retrieval_result_scores_s{size}_k{k}_rrf_ragas.csv"
     
     first_write = True  # Flag to indicate if header should be written
 

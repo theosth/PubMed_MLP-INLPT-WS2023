@@ -125,7 +125,7 @@ class OwnDatasetEntry(BaseModel):
 def convert_ragas_dataset_to_own_dataset(
     ragas_dataset: list[RagasRefinedDatasetEntry],
     save_to_file: bool = False,
-    file_path: str = env.RETRIEVAL_TESTET_FROM_RAGAS_TESTSET_PATH,
+    file_path: str = env.RETRIEVAL_TESTSET_FROM_RAGAS_TESTSET_PATH,
 ) -> list[OwnDatasetEntry]:
     own_dataset: list[OwnDatasetEntry] = []
     for entry in ragas_dataset:
@@ -152,6 +152,9 @@ def convert_ragas_dataset_to_own_dataset(
             own_dataset_json = json.dumps(
                 own_dataset, indent=2, default=pydantic_encoder
             )
+            # print(file_path)
+            # encase in {questions: [own_dataset_json]}
+            own_dataset_json = f'{{"questions": {own_dataset_json}}}'
             f.write(own_dataset_json)
 
     return own_dataset
