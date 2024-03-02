@@ -34,7 +34,7 @@ metadata_field_info = [
 
 document_content_description = "Abstract of a scientific article"
 
-class CustomOpensearchVectorstore(OpenSearchVectorSearch):
+class FilterReturner(OpenSearchVectorSearch):
     def __init__(self):
         pass 
 
@@ -50,6 +50,12 @@ class CustomOpensearchVectorstore(OpenSearchVectorSearch):
         return new_dict
 
     def search(self, query, search_type, **kwargs):
+        """Returns filters provided by the SelfQueryRetriever.
+        This is done in order to use the SelfQueryRetriever as 
+        framework with minimal implementation even though this might seem very confusing.
+        As a result. The `get_relevant_documents` method of the SelfQueryRetriever 
+        returns *filters* not *documents*.
+        """
         if self.remove_dot_metadata_from_keys:
             return self._remove_dot_metadata_from_keys(kwargs)
         return kwargs
@@ -62,7 +68,7 @@ def get_filters(query: str, remove_dot_metadata_from_keys=True) -> dict:
         temperature = 0.3,
     )
 
-    vectorstore = CustomOpensearchVectorstore()
+    vectorstore = FilterReturner() # returns filters instead of documents
     vectorstore.remove_dot_metadata_from_keys = remove_dot_metadata_from_keys
 
     retriever = SelfQueryRetriever.from_llm(
@@ -74,7 +80,7 @@ def get_filters(query: str, remove_dot_metadata_from_keys=True) -> dict:
     )
 
     try:
-        filters = retriever.get_relevant_documents(query)
+        filters = retriever.get_relevant_documents(query) # RETURNS FILTERS (see FilterReturner)
     except Exception as e:
         filters = {}
 
