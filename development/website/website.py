@@ -18,9 +18,12 @@ SELF_QUERYING_TOGGLE_NOTE = (":gray[Note: By enabling this option, the filtering
 
 LATEST_SOURCES_TITLE = "Sources"
 LATEST_SOURCES_KEY = "latest_sources"
+NO_RECENT_SOURCES_NOTE = (":gray[Since there is no recent question, there are no sources so far... Don't be shy, "
+                          "ask our system!]")
+EMPTY_SOURCES_NOTE = ":gray[No sources have been found for your latest query...]"
+
 LATEST_FILTERS_KEY = "latest_filters"
-EMPTY_SOURCES_NOTE = (":gray[Since there is no recent question, there are no sources so far... Don't be shy, "
-                      "ask our system!]")
+EMPTY_FILTERS_NOTE = ":gray[No filters could be extracted automagically from your latest query...]"
 
 RETRIEVER = retrieve.CustomOpensearchAbstractRetriever()
 GENAI = answer.GenAI()
@@ -60,24 +63,23 @@ def build_chat():
         abstracts = retrieve.convert_langchain_documents_to_abstracts(retrieved_langchain_documents)
         st.session_state[LATEST_SOURCES_KEY] = abstracts
 
-        # Answering
-        latest_filters = None
+        # Extracting Filters
         if len(abstracts) > 0:
-            latest_filters = abstracts[0].filters
-            answer = prompt_model(
-                retrieved_docs=retrieved_langchain_documents,
-                question=prompt
-            )
-
-            st.session_state.messages.append({"role": "assistant", "content": answer})
+            st.session_state[LATEST_FILTERS_KEY] = abstracts[0].filters
         else:
-            st.session_state.messages.append(
-                {"role": "assistant",
-                 "content": "I can't answer your question because I couldn't retrieve any documents."}
-            )
+            self_querying_enabled = st.session_state.get(SELF_QUERYING_TOGGLE_KEY)
+            if self_querying_enabled:
+                st.session_state[LATEST_FILTERS_KEY] = {}
+            else:
+                st.session_state[LATEST_FILTERS_KEY] = None
 
-        print(latest_filters)
-        st.session_state[LATEST_FILTERS_KEY] = latest_filters
+        # Answering
+        answer = prompt_model(
+            retrieved_docs=retrieved_langchain_documents,
+            question=prompt
+        )
+
+        st.session_state.messages.append({"role": "assistant", "content": answer})
 
     # Reprint Conversation
     for msg in st.session_state.messages:
@@ -111,12 +113,19 @@ def write_expander_normal_entry(keyword, content):
 
 
 def write_self_querying_expander():
+    latest_filters = st.session_state.get(LATEST_FILTERS_KEY)
     time_span_min = st.session_state.get("self_querying_time_span_min", "?")
     time_span_max = st.session_state.get("self_querying_time_span_max", "?")
     title = st.session_state.get("self_querying_title", "-")
+    print("Latest Filters: ", latest_filters)
 
-    write_expander_normal_entry("Timespan", f"{time_span_min} - {time_span_max}")
-    write_expander_normal_entry("Title", title)
+    if latest_filters is None:
+        return
+    if len(latest_filters) == 0:
+        st.sidebar.write(EMPTY_FILTERS_NOTE)
+    else:
+        write_expander_normal_entry("Timespan", f"{time_span_min} - {time_span_max}")
+        write_expander_normal_entry("Title", title)
 
 
 def to_colored_confidence_rating(confidence_score):
@@ -152,6 +161,8 @@ def build_lower_sidebar():
     # Show Sources
     last_sources = st.session_state.get(LATEST_SOURCES_KEY)
     if last_sources is None:
+        st.sidebar.write(NO_RECENT_SOURCES_NOTE)
+    elif len(last_sources) == 0:
         st.sidebar.write(EMPTY_SOURCES_NOTE)
     else:
         expander_titles = to_source_expander_titles(last_sources)

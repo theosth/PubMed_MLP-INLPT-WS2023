@@ -77,5 +77,9 @@ def get_filters(query: str, remove_dot_metadata_from_keys=True) -> dict:
         filters = retriever.get_relevant_documents(query)
     except Exception as e:
         filters = {}
+
+    if filters is None:
+        filters = {}
+
     return filters
 
