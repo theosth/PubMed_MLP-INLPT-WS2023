@@ -23,7 +23,6 @@ from pydantic.json import pydantic_encoder
 
 # load the environment variables
 _ = load_dotenv(find_dotenv(raise_error_if_not_found=True))
-os.environ["OPENAI_API_KEY"] = os.getenv("OPEN_API_KEY")
 
 
 from langchain_community.document_loaders import JSONLoader
@@ -211,8 +210,8 @@ def get_matching_abstracts_from_opensearch(
 
 if __name__ == "__main__":
     # abstracts = get_abstract_documents(amount=1000)
-    # abstract_fragments = get_abstract_fragments(amount=1000)
-    # print("Abstract fragments loaded successfully")
+    abstract_fragments = get_abstract_fragments(amount=1000)
+    print("Abstract fragments loaded successfully")
     # choose a testset generator:
     # ! local one (currently not functional)
     # generator = get_local_TestsetGenerator()
@@ -220,19 +219,19 @@ if __name__ == "__main__":
     # openai - generator:
     # ! execution costs money
     # # create a testset generator
-    # generator = TestsetGenerator.with_openai(
-    #     generator_llm="gpt-3.5-turbo-16k",
-    #     embeddings="text-embedding-ada-002",
-    #     critic_llm="gpt-3.5-turbo-16k",
-    # )
+    generator = TestsetGenerator.with_openai(
+        generator_llm="gpt-3.5-turbo-16k",
+        embeddings="text-embedding-ada-002",
+        critic_llm="gpt-3.5-turbo-16k",
+    )
 
-    # generate_testset(generator, abstract_fragments, amount=10)
-    # print("Testset generated successfully")
+    generate_testset(generator, abstract_fragments, amount=100)
+    print("Testset generated successfully")
     # print(abstract_fragments[0])
 
     # get_matching_abstracts_from_opensearch(overwrite_updated_testset=True)
 
-    convert_ragas_dataset_to_own_dataset(
-        ragas_dataset=load_ragas_testset(),
-        save_to_file=True,
-    )
+    # convert_ragas_dataset_to_own_dataset(
+    #     ragas_dataset=load_ragas_testset(),
+    #     save_to_file=True,
+    # )
