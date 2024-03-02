@@ -29,7 +29,7 @@ CLEANED_DATASET_PATH = "development/scrape/data/cleaned_retrieved_dataset.json"
 RAGAS_TESTSET_PATH = "development/evaluate/retrieval/testsets/ragas-testset.json"
 RAGAS_UDATED_TESTSET_PATH = "development/evaluate/retrieval/testsets/ragas-updated-testset.json"
 RETRIEVAL_RAGAS_EVAL_RESULT_PATH = "development/evaluate/retrieval/results/retriever_ragas_eval_result.json"
-RETRIEVAL_TESTSET_FROM_RAGAS_TESTSET_PATH = "development/evaluate/retrieval/results/retrieval_testset_from_ragas_testset.json"
+RETRIEVAL_TESTSET_FROM_RAGAS_TESTSET_PATH = "development/evaluate/retrieval/testsets/retrieval_testset_from_ragas_testset.json"
 
 RETRIEVAL_TESTSET_PATH = "development/evaluate/retrieval/testsets/retrieval-testset.json"
 RETRIEVAL_RESULT_FOLDER_PATH = "development/evaluate/retrieval/results/"
