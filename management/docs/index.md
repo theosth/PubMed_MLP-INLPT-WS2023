@@ -2,10 +2,6 @@
 
 - [Introduction](#introduction)
   - [MoSCoW](#moscow)
-    - [Must-Have Requirements](#must-have-requirements)
-    - [Should-Have Requirements](#should-have-requirements)
-    - [Could-Have / Nice-to-Have Features](#could-have--nice-to-have-features)
-    - [Won't-Have Features](#wont-have-features)
 - [System Architecture](#system-architecture)
   - [Functional Overview](#functional-overview)
   - [Technological Decisions](#technological-decisions)
@@ -13,35 +9,24 @@
   - [Data Scraping](#data-scraping)
   - [Data Extraction](#data-extraction)
   - [Document Model](#document-model)
-    - [Document Splitting Bug](#document-splitting-bug)
 - [Retrieval](#retrieval)
   - [OpenSearch](#opensearch)
-    - [Querying OpenSearch - Hybrid Search](#querying-opensearch---hybrid-search)
-    - [Evaluating Pipeline-Weights](#evaluating-pipeline-weights)
-      - [1. For this we first need to define different pipelines in Opensearch](#1-for-this-we-first-need-to-define-different-pipelines-in-opensearch)
-    - [Hybrid Search via MinMax Normalization vs Reciprocal Rank Fusion](#hybrid-search-via-minmax-normalization-vs-reciprocal-rank-fusion)
   - [Testing the LangChain OpenSearch Self-Query Retriever](#testing-the-langchain-opensearch-self-query-retriever)
-    - [Other Subsections](#other-subsections)
-    - [Rethinking approximate k-NN search](#rethinking-approximate-k-nn-search)
-    - [Confidence](#confidence)
   - [Retrieval Testset Generation](#retrieval-testset-generation)
   - [Testing Retriever](#testing-retriever)
-    - [Idea](#idea)
-    - [Steps](#steps)
 - [Answer Generation](#answer-generation)
   - [Choice of Generation Backend](#choice-of-generation-backend)
   - [Choice of Generation Model](#choice-of-generation-model)
-    - [Llama 2](#llama-2)
-    - [Mistral](#mistral)
-    - [Gemma](#gemma)
   - [Question-type dependent answer generation](#question-type-dependent-answer-generation)
   - [Evaluation](#evaluation)
 - [User Interface](#user-interface)
 - [Related Work](#related-work)
 - [Conclusion / Resulting QA-System](#conclusion--resulting-qa-system)
-- [Thank you for reading!](#thank-you-for-reading)
-
-
+- [Contributions](#contributions)
+  - [Dominik Ochs](#dominik-ochs)
+  - [Theo Stempel-Hauburger](#theo-stempel-hauburger)
+  - [Lukas Rapp](#lukas-rapp)
+  - [Benedikt Vidic](#benedikt-vidic)
 
 
 # Introduction
@@ -537,5 +522,19 @@ relevant context to base your answer on. Be concise and factual.
 
 # Conclusion / Resulting QA-System
 
-# Thank you for reading!
-![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
+# Contributions
+
+The following contains the statements of contribution for each team member as required by the final report specification. However, please keep in mind that we collaborated **highly cooperatively** and everyone is in the loop and know of what goes on in each part of our QA-system. Oftentimes, we discussed our changes. Even though only one person was working on it, everyone contributed to the discussions. In the following texts we try to make clear when we worked cooperatively. However, some topics were worked on in such equal parts that it is hard to make a clear distinction. For example, the documentation we wrote jointly. To that end, we used *Visual Studio Code Live Share* so everyone could edit the report simultaneously. We spent several days sitting in the same room and working together on the project. 
+
+## Dominik Ochs
+
+
+
+## Theo Stempel-Hauburger
+
+## Lukas Rapp
+
+## Benedikt Vidic
+
+**Thank you for reading!**
+![Cute Cat stretching Paws](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)

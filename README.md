@@ -114,7 +114,6 @@ this should not be necessary and the defaults in `commons/env.py` should work fo
 ## Run project
 
 ```bash
-```bash
 cd development/website
 streamlit run website.py
 ```
